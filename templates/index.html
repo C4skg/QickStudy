@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../static/js/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <button class="change"> change </button>
+</body>
+<script>
+    'use strict';
+    $(".change").click(function(){
+        var dark = $('html').attr('data-user-color-scheme');
+        console.log(dark)
+        if(dark === undefined){
+            $('html').attr("data-user-color-scheme","dark")
+        }else{
+            $('html').removeAttr('data-user-color-scheme')
+        }
+    })
+</script>
+</html>

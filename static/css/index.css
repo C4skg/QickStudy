@@ -1,0 +1,26 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+:root:not([data-user-color-scheme]){
+    /* light */
+    /* --body-background: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 60%);
+     */
+    --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
+    --body-background-pos: 100% 100%;
+}
+:root{
+    /* dark */
+    --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
+    --body-background-pos: 0% 0%;
+}
+body{
+    width: 100%;
+    height: 100vh;
+    background-size: 300% 300%;
+    background-image: var(--body-background);
+    background-position: var(--body-background-pos);
+    transition: all .5s;
+}
