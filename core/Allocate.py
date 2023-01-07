@@ -1,7 +1,7 @@
 import argparse,os;
 from core.basic import *;
 from core.config import *;
-from core.server import Web;
+import core.server as Web;
 class Allocate:
     def __init__(self,args:argparse.Namespace) -> None:
         self.args = vars(args);
@@ -20,6 +20,11 @@ class Allocate:
         else:
             mode = self.args.get('mode');
             if mode == 'server':
+                port = self.args.get('port')
+                if port:
+                    Web.run(port);
+                else:
+                    Web.run();
                 pass;
             elif mode == 'console':
                 pass;

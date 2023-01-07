@@ -1,5 +1,10 @@
-from flask import Flask,template_rendered;
+from flask import Flask,render_template,url_for;
 
-class Web:
-    def __init__(self) -> None:
-        pass
+app = Flask(__name__,template_folder='../templates',static_folder='../static')
+
+@app.route('/')
+def main():
+    return render_template('index.html');
+
+def run(port=8080,debug:bool = False):
+    app.run('127.0.0.1',port,debug=debug);
