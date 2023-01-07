@@ -11,7 +11,7 @@ class Argv:
             若无工作目录初始化 init
         '''
         if not self.pwd:
-            self.parser.add_argument('init',type=str,help='startup mode')
+            self.parser.add_argument('init',default='init',type=all)
             self.parser.add_argument('-w','--work',type=str,help='work directory')
 
         '''
