@@ -1,5 +1,4 @@
 from flask import Flask,render_template,url_for,session;
-import darkdetect
 import uuid;
 
 template_folder = "../templates"
@@ -14,10 +13,8 @@ app.config['SECRET_KEY'] = str( uuid.uuid4() ).replace('-','');
 
 @app.route('/')
 def main():
-    if darkdetect.isDark():
-        session['dark'] = "1";
-    else:
-        session['dark'] = "0";
+    if session.get('dark') == None:
+        session['dark'] = '0'
     data = {
         'darkMode':  "dark" if session.get('dark') == "1" else ""
     }
