@@ -27,5 +27,5 @@ body{
     background-size: 300% 300%;
     background-image: var(--body-background);
     background-position: var(--body-background-pos);
-    transition: all .5s;
+    transition: all .3s ease-out;
 }
