@@ -3,7 +3,6 @@ from core.argv import Argv;
 from core.basic import *;
 from core.Allocate import Allocate;
 from core.config import *;
-import random
 def main():
     if not usableFile("config/config.yaml"):
         file_init('config.yaml');

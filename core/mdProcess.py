@@ -1,5 +1,4 @@
 import markdown,os;
-import ColorOut as out;
 
 
 def md2html(md:str):
@@ -56,5 +55,4 @@ def md2HtmlFile(md_file:str,out_path = ''):
             nHTML.write(html);
         return 1;
     except:
-        out.error("write to %s failed" % md_file);
         return 0;
