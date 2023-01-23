@@ -6,7 +6,7 @@ class Argv:
             是否有工作目录
         '''
         self.pwd = pwd;
-    def start(self) -> argparse.Namespace:
+    def inject(self) -> argparse.Namespace:
         '''
             若无工作目录初始化 init
         '''

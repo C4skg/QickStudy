@@ -1,9 +1,11 @@
-import yaml
+import yaml;
+
 from core.basic import *
 
 PATH = 'config/';
 
 def file_init(fileName:str) -> bool:
+    fileName = yamlFill(fileName);
     conf = open(pathJoin(PATH , fileName),'w',encoding='UTF-8')
     n_data = {
         'work_space': '',
@@ -13,6 +15,7 @@ def file_init(fileName:str) -> bool:
     conf.close();
 
 def w2Config(fileName:str,key,value):
+    fileName = yamlFill(fileName);
     path = pathJoin(PATH , fileName);
     data = safe_load(fileName);
     data[key] = value;
@@ -21,5 +24,12 @@ def w2Config(fileName:str,key,value):
     file.close();
 
 def safe_load(fileName:str):
+    fileName = yamlFill(fileName);
     conf = open(pathJoin(PATH , fileName),'r',encoding='UTF-8');
     return yaml.safe_load(conf);
+
+def yamlFill(fileName:str)-> str:
+    if not fileName.endswith('.yaml'):
+        return fileName + '.yaml'
+    else:
+        return fileName;

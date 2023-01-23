@@ -1,6 +1,11 @@
 import time,os;
 from colorama import *
+from random import randint;
 init(autoreset=True)
+
+INFO_TXT = Fore.GREEN;
+WARNING_TXT = Fore.RED; 
+
 def getTime()-> str:
     return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime());
 
@@ -29,4 +34,7 @@ def qcInfo(arg,end:str=''):
 def qcWarning(arg,end:str=''):
     Warning = Fore.RED;            # 提示信息颜色
     print(Warning + str(arg),end=end);
-        
+
+
+def getRandInt(start:int,end:int) -> int:
+    return randint(start,end);

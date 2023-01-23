@@ -1,12 +1,17 @@
-import argparse,os;
+import argparse;
+import pyfiglet;
+from termcolor import colored;
+
 from core.basic import *;
 from core.config import *;
 import core.server as Web;
+
 class Allocate:
     def __init__(self,args:argparse.Namespace) -> None:
         self.args = vars(args);
     
     def start(self):
+        self.showInfos();
         if self.args.get('init'):
             if self.args['work']:
                 dirs = self.args['work'];
@@ -28,8 +33,11 @@ class Allocate:
                 pass;
             elif mode == 'console':
                 pass;
-            else:
-                pass;
-            pass;
 
-    
+    def showInfos(self)->None:
+            render = "QickTools";
+            fonts = pyfiglet.FigletFont.getFonts();
+            random = getRandInt(0,len(fonts));
+            infos =  INFO_TXT + "[%s] Useage: python3 QickTools.py [options]" % getTime();
+            f = pyfiglet.Figlet(font=fonts[random])
+            print(colored(f.renderText(render) + '\n' + infos,'blue', 'on_grey', ['bold', 'blink']));
