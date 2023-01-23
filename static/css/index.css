@@ -14,12 +14,16 @@ a{
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 100% 100%;
     --font-color: rgb(0, 0, 0);
+    --hover-background: #000;
+    --hover-color: #fff;
 }
-:root[data-user-color-scheme='dark']{
+:root[data-user-color-scheme]{
     /* dark */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
     --font-color: rgb(141, 154, 161);
+    --hover-background: rgb(141, 154, 161);
+    --hover-color: #fff;
 }
 body{
     width: 100%;

@@ -10,9 +10,9 @@ window.onload = function(){
         $.ajax({
             url: url.origin + '/api',
             type: 'POST',
-            data: `style=${mode}`,
+            data: `style=${mode == 'dark' ? 'dark' : 'light'}`,
             success: function(r){
-                console.log(r)
+                console.log(r.mode)
             }
         })
         var node = $("*");
