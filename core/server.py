@@ -62,7 +62,6 @@ def api():
         if username and password:
             if login_verify(username,password):
                 response['loginStatus'] = True;
-
     '''
         return paramter;
     '''
