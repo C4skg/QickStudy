@@ -1,6 +1,4 @@
 import argparse;
-import pyfiglet;
-from termcolor import colored;
 
 from core.basic import *;
 from core.config import *;
@@ -11,14 +9,27 @@ class Allocate:
         self.args = vars(args);
     
     def start(self):
-        self.showInfos();
+        showInfos();
         if self.args.get('init'):
             if self.args['work']:
                 dirs = self.args['work'];
-                if useableDir(dirs):
-                    w2Config('config.yaml','work_space',dirs)
+                '''
+                    生成用户
+                '''
+                user = input(WARNING_TXT + 'input your username:');
+                pwd = input(WARNING_TXT + 'and input your password:');
+                pwd1 = input(WARNING_TXT + 'repeat your password:');
+                if pwd == pwd1:
+                    w2Config('config','Username',user);
+                    w2Config('config','Password',pwd1);
                 else:
-                    qcWarning('dir couldn\'t use!');
+                    qcWarning('pwd error!');
+                    exit(0);
+
+                if not useableDir(dirs):
+                    os.mkdir(dirs);
+                w2Config('config','work_space',dirs)
+                qcInfo('create ok!');
             else:
                 qcWarning('plz input your work dir!');
                 return 0;
@@ -34,10 +45,3 @@ class Allocate:
             elif mode == 'console':
                 pass;
 
-    def showInfos(self)->None:
-            render = "QickTools";
-            fonts = pyfiglet.FigletFont.getFonts();
-            random = getRandInt(0,len(fonts));
-            infos =  INFO_TXT + "[%s] Useage: python3 QickTools.py [options]" % getTime();
-            f = pyfiglet.Figlet(font=fonts[random])
-            print(colored("Welcome use \n\n" + f.renderText(render) + '\n' + infos,'blue', 'on_grey', ['bold', 'blink']));

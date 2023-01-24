@@ -15,12 +15,15 @@ def file_init(fileName:str) -> bool:
     conf.close();
 
 def w2Config(fileName:str,key,value):
+    '''
+        追加 + 覆盖
+    '''
     fileName = yamlFill(fileName);
     path = pathJoin(PATH , fileName);
     data = safe_load(fileName);
     data[key] = value;
     file = open(path,'w',encoding='UTF-8');
-    yaml.dump(data,file);
+    yaml.dump(data,file,allow_unicode=True);
     file.close();
 
 def safe_load(fileName:str):
