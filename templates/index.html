@@ -5,11 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../static/js/jquery-3.6.3.min.js"></script>
+    <script src="../static/js/sweetalert.min.js"></script>
+    <script src="../static/js/bootstrap_5.3/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap_5.3/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 </head>
 <body>
-    {{page|safe}}
+    <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">链接</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">链接</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">链接</a>
+                </li>
+                </ul>
+                <div class="btn modeButton change d-none d-sm-block">
+                    <i class="fa fa-lg fa-sun-o fa-moon-o" aria-hidden="true"></i>
+                </div>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Search">
+                    <button class="btn btn-primary" type="button">Search</button>
+                </form>
+            </div>
+        </div>
+      </nav>
+<style>
+    .navbar{
+        background: transparent!important;
+    }
+    .modeButton{
+        margin-right: 5px;
+    }
+</style>
 </body>
 <script src="../static/js/index.js"></script>
 </html>

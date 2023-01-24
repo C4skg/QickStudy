@@ -1,7 +1,7 @@
 window.onload = function(){
     'use strict';
     changeMode();
-    $(".change").click(function(){
+    $(".modeButton").click(function(){
         var mode = isDark() ? '' : 'dark';
         changeMode(mode,this);
     })
@@ -54,13 +54,27 @@ window.onload = function(){
     }
 
     function isDark(){
-        var n_mode = !!($('html').attr('data-user-color-scheme'));
         var dark = localStorage.getItem('dark');
         console.log(typeof dark);
-        if( dark == 'true' || n_mode){
+        if( dark == 'true'){
             return true;
         }else{
             return false;
         }
     }
+}
+
+
+Array.prototype.remove = function(...argv){
+    if(argv.length > 1){
+        argv.forEach(element => {
+            this.remove(element);
+        });
+    }
+    let index = this.indexOf(argv[0]);
+    while(index > -1){
+        this.splice(index,1);
+        index = this.indexOf(argv[0]);
+    }
+    // return this; //会影响本身，建议复制
 }
