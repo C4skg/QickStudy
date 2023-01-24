@@ -3,11 +3,10 @@ import uuid;
 from flask import Flask,render_template,url_for,session,redirect,request;
 
 from core.basic import md5Enc_
-from core.config import safe_load;
+from core.config import *;
 
 
 template_folder = "../templates"
-
 static_folder = "../static"
 
 app = Flask(__name__,template_folder=template_folder,static_folder=static_folder)
@@ -21,22 +20,27 @@ def error_404(error_info):
 
 @app.before_request
 def accessFilter():
-    user = session.get('user');
+    url_filter = [
+        '' # route = '/'
+    ]
     router = request.url.split('/')[3];
-    if session.get('dark') == None:
-        session['dark'] = False;
-    dark = session.get('dark');
-
-@app.route('/')
+    #登录验证
+    for url in url_filter:
+        if router == url:
+            if not is_login():
+                return redirect(url_for('login'));
+    
+@app.route('/',endpoint='/')
 def main():
     datas = {
-        'darkMode':  "dark" if session.get('dark') else ""
+        
     }
     return render_template('index.html',**datas);
 
-@app.route('/login',methods=['POST','GET'])
+@app.route('/login',endpoint='login',methods=['POST','GET'])
 def login():
-            
+    if is_login():
+        return redirect(url_for('/'));
     datas = {
 
     }
@@ -49,38 +53,46 @@ def api():
         
     }
     '''
-        change style
-    '''
-    if request.form.get('style'):
-        style = request.form.get('style');
-        if style == 'dark':
-            session['dark'] = True;
-            response['mode'] = 'dark';
-        else:
-            session['dark'] = False;
-            response['mode'] = 'light';
-    '''
         login
     '''
     if request.form.get('login'):
+        response['loginStatus'] = False;
         username = request.form.get('username');
         password = request.form.get('password');
         if username and password:
-            username = username.strip();
-            password = password.strip();
-            conf = safe_load('config');
-            user1 = conf.get('Username');
-            pwd1 = conf.get('Password');
-            if username == user1 and password == pwd1:
-                session['User'] = md5Enc_(username,user1);
+            if login_verify(username,password):
                 response['loginStatus'] = True;
-            else:
-                response['loginStatus'] = False;
+
     '''
         return paramter;
     '''
     return response;
 
+def is_login() -> bool:
+    value = session.get('User');
+    if not value:
+        return False;
+    else:
+        try:
+            value = str(value);
+            conf = safe_load('config');
+            user = conf.get('Username');
+            return user == value;
+        except:
+            return False;
+def login_verify(username:str,password:str) -> bool:
+    username = md5Enc_(username.strip());
+    password = md5Enc_(password.strip());
+    conf = safe_load('config');
+    user1 = conf.get('Username');
+    pwd1 = conf.get('Password');
+    if username == user1 and password == pwd1:
+        session['User'] = username;
+        # response['loginStatus'] = True;
+        return True;
+    else:
+        # response['loginStatus'] = False;
+        return False;
 
-def run(port=8080,debug:bool = False):
-    app.run('127.0.0.1',port,debug=debug);
+def run(ip:str='127.0.0.1',port:int=8080,debug:bool = False):
+    app.run(ip,port,debug=debug);

@@ -20,8 +20,8 @@ class Allocate:
                 pwd = input(WARNING_TXT + 'and input your password:');
                 pwd1 = input(WARNING_TXT + 'repeat your password:');
                 if pwd == pwd1:
-                    w2Config('config','Username',user);
-                    w2Config('config','Password',pwd1);
+                    w2Config('config','Username',md5Enc_(user));
+                    w2Config('config','Password',md5Enc_(pwd1));
                 else:
                     qcWarning('pwd error!');
                     exit(0);
@@ -36,12 +36,13 @@ class Allocate:
         else:
             mode = self.args.get('mode');
             if mode == 'server':
-                port = self.args.get('port')
+                port = self.args.get('port');
+                public = self.args.get('public');
+                ip = getIp() if public else '127.0.0.1';
                 if port:
-                    Web.run(port);
+                    Web.run(ip,port);
                 else:
-                    Web.run();
-                pass;
+                    Web.run(ip);
             elif mode == 'console':
                 pass;
 

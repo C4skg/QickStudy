@@ -25,6 +25,7 @@ class Argv:
             run in browser
         '''
         self.parser.add_argument('-p','--port',type=int,help="web server port")
+        self.parser.add_argument('--public',action='store_true',help="use this option to make your website public");
 
         # export file handle
         '''

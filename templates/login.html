@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../static/highlight/highlight.min.js"></script>
+    <script src="static/js/jquery-3.6.3.min.js"></script>
+    <script src="../static/js/highlight/highlight.min.js"></script>
     <script src="../static/js/globalFunc.js"></script>
+    <script src="../static/js/sweetalert.min.js"></script>
+    <script src="static/js/bootstrap_5.3/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/css/bootstrap_5.3/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/highlight/styles/github-dark.min.css">
+    <link rel="stylesheet" href="../static/css/highlight/github-dark.min.css">
     <link rel="stylesheet" href="../static/css/index.css">
     <link rel="stylesheet" href="../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
     <script>
         hljs.highlightAll();
+        {{jsCode|safe}}
     </script>
     <title>Document</title>
 </head>
@@ -24,16 +28,17 @@
         <div class="btn modeButton change">
             <i class="fa fa-lg fa-sun-o fa-moon-o" aria-hidden="true"></i>
         </div>
-        <form>
+        <form id="login-form">
             <div class="mb-3 mt-3">
               <label for="user" class="form-label">用户名:</label>
-              <input type="user" class="form-control" id="user" placeholder="用户名" name="user">
+              <input type="user" class="form-control" id="user" placeholder="用户名" name="username">
             </div>
             <div class="mb-3">
               <label for="pwd" class="form-label">密码：</label>
-              <input type="password" class="form-control" id="pwd" placeholder="密码" name="pwd">
+              <input type="password" class="form-control" id="pwd" placeholder="密码" name="password">
+              <input type="text" value="login" hidden name="login">
             </div>
-            <button type="button" class="container btn btn-primary mt-auto">登录
+            <button id="login_button" type="button" class="container btn btn-primary mt-auto">登录
                 <!-- <span class="spinner-border spinner-border-sm"></span> -->
             </button>
         </form>
@@ -64,7 +69,36 @@
         display: none!important;
     }
 </style>
-<script src="static/js/jquery-3.6.3.min.js"></script>
-<script src="static/js/bootstrap_5.3/bootstrap.min.js"></script>
 <script src="../static/js/index.js"></script>
+<script>
+    var button = $('#login_button');
+    var form = $('#login-form');
+    button.click(function(){
+        button.append('<span class="spinner-border spinner-border-sm"></span>');
+        button.attr('disabled','1');
+        setTimeout(()=>{
+            $.ajax({
+                url: '/api',
+                type:'post',
+                data: form.serialize(),
+                success:(e)=>{
+                    if(e['loginStatus']){
+                        swal("登录成功","点击跳转", "success").then((e)=>{
+                            window.location = '/';
+                        })
+                    }else{
+                        swal("登录失败","用户名或密码错误", "warning");
+                    }
+                },
+                error:(e)=>{
+                    swal("登录失败","服务器错误", "warning");
+                },
+                complete:(e)=>{
+                    button.children('span').remove();
+                    button.removeAttr('disabled');
+                }
+            })
+        },~~(Math.random()*5)*100);
+    })
+</script>
 </html>

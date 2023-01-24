@@ -4,6 +4,7 @@ from termcolor import colored;
 from colorama import *
 from random import randint;
 from hashlib import md5;
+from socket import gethostbyname,gethostname;
 init(autoreset=True)
 
 INFO_TXT = Fore.GREEN;
@@ -44,14 +45,17 @@ def qcWarning(arg,end:str=''):
 def getRandInt(start:int,end:int) -> int:
     return randint(start,end);
 
-def md5Enc_(text:str,key:str):
+def md5Enc_(text:str,key:str=''):
     text = text + key;
     return md5(text.encode()).hexdigest();
 
-def showInfos()->None:
+def showInfos():
     render = "QickTools";
     fonts = pyfiglet.FigletFont.getFonts();
     random = getRandInt(0,len(fonts));
-    infos =  INFO_TXT + "[%s] Useage: python3 QickTools.py [options]" % getTime();
+    infos =  INFO_TXT + "[%s] Useage: `python3 QickTools.py -h` to get help" % getTime();
     f = pyfiglet.Figlet(font=fonts[random])
     print(colored("Welcome use \n\n" + f.renderText(render) + '\n' + infos,'blue', 'on_grey', ['bold', 'blink']));
+
+def getIp():
+    return  gethostbyname(gethostname());
