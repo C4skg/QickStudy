@@ -23,11 +23,16 @@ window.onload = function(){
             if(typeof(element) === "object"){
                 element = $(element);
                 let signal = element.attr('data-dark-change');
-                if (signal == 'true'){
+                if (signal){
+                    signal = String(signal).split(';');
                     let values = element.attr('class').split(' ');
                     values.remove('bg-dark','text-light');
                     if(mode == 'dark'){
-                        values.push('bg-dark','text-light');
+                        if(signal.includes("color")){
+                            values.push('text-light');
+                        }else if(signal.includes("back")){
+                            values.push('bg-dark');
+                        }
                     }
                     element.attr('class',values.join(' '));
                 }
@@ -62,8 +67,23 @@ window.onload = function(){
             return false;
         }
     }
+
+    window.addEventListener('scroll',(e)=>{
+        let top = this.ScrollPos().top;
+        if(top >= 1000){
+            
+        }
+    })
+    
 }
 
+var ScrollPos = function(){
+    // 浏览器适配
+    return {
+        left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+        top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+    };
+}
 
 Array.prototype.remove = function(...argv){
     if(argv.length > 1){

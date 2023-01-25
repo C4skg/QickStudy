@@ -11,6 +11,7 @@ static_folder = "../static"
 
 app = Flask(__name__,template_folder=template_folder,static_folder=static_folder)
 KEY = str( uuid.uuid4() ).replace('-','');
+ROOT = False;
 app.config['SECRET_KEY'] = KEY;
 
 @app.errorhandler(404)
@@ -94,4 +95,8 @@ def login_verify(username:str,password:str) -> bool:
         return False;
 
 def run(ip:str='127.0.0.1',port:int=8080,debug:bool = False):
+    if ip == '127.0.0.1':
+        global ROOT;
+        ROOT = True;
     app.run(ip,port,debug=debug);
+    
