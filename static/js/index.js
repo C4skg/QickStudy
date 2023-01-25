@@ -1,13 +1,22 @@
 window.onload = function(){
     'use strict';
-    changeMode();
+    // 运行时检查
+    (function(){
+        changeMode();
+        checkDev();
+    })();
+
     $(".modeButton").click(function(){
         var mode = isDark() ? '' : 'dark';
-        changeMode(mode,this);
+        changeMode(mode);
     })
-
-    function changeMode(mode=null,btn=null){
-        if(!mode && !btn){
+    $(".scrollTop").click(function(){
+        $('body,html').animate({
+            scrollTop:0
+        },1);
+    })
+    function changeMode(mode=null){
+        if(mode == null){
             mode = isDark() ? 'dark' : '';
             console.log(mode)
         }else{
@@ -39,20 +48,23 @@ window.onload = function(){
             }
         }
         // 按钮
-        if(btn){
-            var children = $(btn).children('i');
-            for(let child of children){
-                let jQChild = $(child);
-                let attr = jQChild.attr('class').split(' ');
-                if(attr.includes('fa')){
-                    attr.remove('fa-sun-o','fa-moon-o');
-                    if(mode == 'dark'){
-                        attr.push('fa-sun-o');
-                    }else{
-                        attr.push('fa-moon-o');
+        var btn = $('.modeButton');
+        if(btn.length >= 1){
+            for(let eve of btn){
+                var children = $(eve).children('i');
+                for(let child of children){
+                    let jQChild = $(child);
+                    let attr = jQChild.attr('class').split(' ');
+                    if(attr.includes('fa')){
+                        attr.remove('fa-sun-o','fa-moon-o');
+                        if(mode == 'dark'){
+                            attr.push('fa-sun-o');
+                        }else{
+                            attr.push('fa-moon-o');
+                        }
+                        jQChild.attr('class',attr.join(' '))
+                        break; 
                     }
-                    jQChild.attr('class',attr.join(' '))
-                    break; 
                 }
             }
         }
@@ -68,11 +80,26 @@ window.onload = function(){
         }
     }
 
-    window.addEventListener('scroll',(e)=>{
-        let top = this.ScrollPos().top;
-        if(top >= 1000){
-            
+    function checkDev(){
+        let top = ScrollPos().top,
+            hidened = true;
+        let dev = $('.rightbottom');
+        if(dev.length == 0) return;
+        if(top >= 1000 && hidened){
+            let values = dev.attr('class').split(' ');
+            values.remove('hidden');
+            dev.attr('class',values.join(' '));
+            hidened = false;
+        }else if(top < 1000){
+            let values = dev.attr('class').split(' ');
+            values.remove('hidden').push('hidden');
+            dev.attr('class',values.join(' '));
+            hidened = true;
         }
+    }
+
+    window.addEventListener('scroll',(e)=>{
+        checkDev();
     })
     
 }
@@ -96,5 +123,5 @@ Array.prototype.remove = function(...argv){
         this.splice(index,1);
         index = this.indexOf(argv[0]);
     }
-    // return this; //会影响本身，建议复制
+    return this; //会影响本身，建议复制
 }

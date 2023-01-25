@@ -4,6 +4,15 @@
     border: 0;
     box-sizing: border-box;
 }
+*::-webkit-scrollbar-thumb{
+    width: 5px;
+    background-color: #00000080;
+    border-radius: 20px;
+}
+*::-webkit-scrollbar{
+    width: 5px;
+    background-color: #ccc!important;
+}
 a{
     text-decoration: none !important;
 }
@@ -33,4 +42,12 @@ body{
     background-position: var(--body-background-pos);
     background-attachment: fixed;
     transition: all .3s ease-out;
+}
+.rightbottom{
+    position: fixed;
+    right: 5px;
+    bottom: 10px;
+}
+.hidden{
+    display: none;
 }

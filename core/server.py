@@ -19,7 +19,7 @@ def error_404(error_info):
     # file = open("templates/404.html",'r',encoding='utf-8').read();
     return render_template("404.html"),404;
 
-# @app.before_request
+@app.before_request
 def accessFilter():
     url_filter = [
         '' # route = '/'

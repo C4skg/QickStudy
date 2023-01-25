@@ -32,7 +32,7 @@
                     <a class="nav-link" href="javascript:void(0)">链接</a>
                 </li>
                 </ul>
-                <div class="btn modeButton change d-none d-sm-block">
+                <div class="btn modeButton change d-none d-sm-block" data-dark-change="color">
                     <i class="fa fa-lg fa-sun-o fa-moon-o" aria-hidden="true"></i>
                 </div>
                 <form class="d-flex">
@@ -45,35 +45,26 @@
 
       <!-- 导航栏 -->
 
-      <!-- <div style="width: 100%; height: 5000px;"></div> -->
+      <div style="width: 100%; height: 5000px;"></div>
 
       <!-- 右下角折叠 -->
-    <div class="rightbottom">
+    <div class="rightbottom hidden">
         <div class="collapse" id="collapseBtn">
-            <div class="btn">
+            <div class="btn scrollTop">
                 <i class="fa fa-2x fa-telegram" aria-hidden="true" data-dark-change="color"></i>
             </div>
-            <div class="btn change d-none d-sm-block">
+            <div class="btn modeButton change d-block d-sm-none" data-dark-change="color">
                 <i class="fa fa-lg fa-sun-o fa-moon-o" aria-hidden="true"></i>
             </div>
         </div>
         <div class="btn" data-bs-toggle="collapse" data-bs-target="#collapseBtn" data-dark-change="color">
             <i class="fa fa-2x fa-bars" aria-hidden="true"></i>
         </div>
-        
     </div>
     <!-- 右下角折叠 -->
 <style>
     .navbar{
         background: transparent!important;
-    }
-    .modeButton{
-        margin-right: 5px;
-    }
-    .rightbottom{
-        position: fixed;
-        right: 50px;
-        bottom: 50px;
     }
 </style>
 </body>
