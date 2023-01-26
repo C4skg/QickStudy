@@ -37,21 +37,42 @@
                 </div>
                 <form class="d-flex">
                     <input class="form-control me-2" type="text" placeholder="Search">
-                    <button class="btn btn-primary" type="button">Search</button>
+                    <button class="btn btn-primary" type="button">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
                 </form>
             </div>
         </div>
-      </nav>
+    </nav>
 
-      <!-- 导航栏 -->
+    <!-- 导航栏 -->
 
-      <div style="width: 100%; height: 5000px;"></div>
+    <div class="container main">
+        <!-- 工具栏  靠右固定 -->
+        <div class="devTools container-fluid">
+            <!-- Example split danger button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger">Action</button>
+                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 工具栏 -->
+    </div>
 
-      <!-- 右下角折叠 -->
+    <!-- 右下角折叠 -->
     <div class="rightbottom hidden">
         <div class="collapse" id="collapseBtn">
             <div class="btn scrollTop">
-                <i class="fa fa-2x fa-telegram" aria-hidden="true" data-dark-change="color"></i>
+                <i class="fa fa-2x fa-angle-up" aria-hidden="true" data-dark-change="color"></i>
             </div>
             <div class="btn modeButton change d-block d-sm-none" data-dark-change="color">
                 <i class="fa fa-lg fa-sun-o fa-moon-o" aria-hidden="true"></i>
@@ -64,7 +85,19 @@
     <!-- 右下角折叠 -->
 <style>
     .navbar{
+        border-bottom: 1px solid var(--border-color);
         background: transparent!important;
+    }
+    .container{
+        border: 1px solid #000;
+        box-shadow: 0px 0px 5px #888;
+        background-color: transparent;
+    }
+    .main{
+        margin-top: 50px;
+    }
+    .devTools{
+        text-align: right;
     }
 </style>
 </body>

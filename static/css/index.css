@@ -25,6 +25,7 @@ a{
     --font-color: rgb(0, 0, 0);
     --hover-background: #000;
     --hover-color: #fff;
+    --border-color: #ccc;
 }
 :root[data-user-color-scheme]{
     /* dark */
@@ -33,6 +34,7 @@ a{
     --font-color: rgb(141, 154, 161);
     --hover-background: rgb(141, 154, 161);
     --hover-color: #fff;
+    --border-color: #eee;
 }
 body{
     width: 100%;
@@ -40,13 +42,16 @@ body{
     background-size: 300% 300%;
     background-image: var(--body-background);
     background-position: var(--body-background-pos);
-    background-attachment: fixed;
+    background-attachment: fixed !important;
     transition: all .3s ease-out;
 }
 .rightbottom{
     position: fixed;
     right: 5px;
     bottom: 10px;
+}
+.rightbottom .collapse{
+    text-align: center;
 }
 .hidden{
     display: none;
