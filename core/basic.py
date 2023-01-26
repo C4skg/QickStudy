@@ -33,11 +33,11 @@ def createDir(path,dirName) -> bool:
 def pathJoin(path,fileName) -> str:
     return os.path.abspath(os.path.join(path+"/"+fileName));
 
-def qcInfo(arg,end:str=''):
+def qcInfo(arg,end:str='\n'):
     Info = Fore.GREEN;            # 提示信息颜色
     print(Info + str(arg),end=end);
 
-def qcWarning(arg,end:str=''):
+def qcWarning(arg,end:str='\n'):
     Warning = Fore.RED;            # 提示信息颜色
     print(Warning + str(arg),end=end);
 
