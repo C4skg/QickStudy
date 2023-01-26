@@ -12,7 +12,6 @@ def main():
     else:
         create = Argv(__file__,None);
     userIn = create.inject();
-    print(userIn)
     
     factory = Allocate(userIn);
     factory.start();
