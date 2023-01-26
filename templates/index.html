@@ -8,9 +8,16 @@
     <script src="../static/js/popper.min.js"></script>
     <script src="../static/js/sweetalert.min.js"></script>
     <script src="../static/js/bootstrap_5.3/bootstrap.min.js"></script>
+    <script src="../static/js/highlight/highlight.min.js"></script>
+    <!-- <link rel="stylesheet" href="../static/css/highlight/github-dark.min.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/highlight/github.min.css"> -->
     <link rel="stylesheet" href="../static/css/bootstrap_5.3/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/index.css">
     <link rel="stylesheet" href="../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script>
+        hljs.highlightAll();
+        {{jsCode|safe}}
+    </script>
     <title>Document</title>
 </head>
 <body>
@@ -52,21 +59,71 @@
         <!-- 工具栏  靠右固定 -->
         <div class="devTools">
             <div class="btn-group">
-                <button type="button" class="btn bg-success text-light" data-bs-toggle="tooltip" title="添加新内容">Add New</button>
-                <button type="button" class="btn dropdown-toggle dropdown-toggle-split bg-success text-light" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <button type="button" class="btn bg-success text-light btn-sm" data-bs-toggle="tooltip" title="添加新内容">Add New</button>
+                <button type="button" class="btn dropdown-toggle dropdown-toggle-split bg-success text-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"> + 新目录</a></li>
+                    <li><a class="dropdown-item" href="#"> <span class="badge bg-secondary">+</span> 新目录</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#"> + 新工具</a></li>
+                    <li><a class="dropdown-item" href="#"> <span class="badge bg-secondary">+</span> 新工具</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#"> + 目录说明</a></li>
+                    <li><a class="dropdown-item" href="#"> <span class="badge bg-secondary">+</span> 目录说明</a></li>
                 </ul>
             </div>
         </div>
         <!-- 工具栏 -->
         <!-- 内容 -->
-        <div class="context">
-            Context
+        <div class="context" data-dark-change="color">
+            <div class="NoneTxt">
+                <p class="h1">Nothing here~</p>
+            </div>
+            <!-- 
+                <div id="accordion">
+                <div class="card">
+                  <div class="card-header">
+                    <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+                      可折叠组项目 #1
+                    </a>
+                  </div>
+                  <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                    <div class="card-body">
+                      <h3>春日</h3>
+                      <p>胜日寻芳泗水滨，无边光景一时新。</p>
+                      <p>等闲识得东风面，万紫千红总是春。</p>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
+                      可折叠组项目 #2
+                    </a>
+                  </div>
+                  <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                    <div class="card-body">
+                      <h3>初夏绝句</h3>
+                      <p>纷纷红紫已成尘，布谷声中夏令新。</p>
+                      <p>夹路桑麻行不尽，始知身是太平人。</p>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
+                      可折叠组项目 #3
+                    </a>
+                  </div>
+                  <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                    <div class="card-body">
+                      <h3>山行</h3>
+                      <p>远上寒山石径斜，白云生处有人家。</p>
+                      <p>停车坐爱枫林晚，霜叶红于二月花。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             -->
         </div>
         <!-- 内容 -->
 
@@ -106,7 +163,16 @@
     .devTools{
         text-align: right;
     }
+    .context{
+        background-color: #00000020;
+    }
+    .NoneTxt{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70vh;
+    }
 </style>
 </body>
 <script src="../static/js/index.js"></script>
-</html>
+</html> 

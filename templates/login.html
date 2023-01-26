@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="static/js/jquery-3.6.3.min.js"></script>
+    <script src="../static/js/jquery-3.6.3.min.js"></script>
     <script src="../static/js/highlight/highlight.min.js"></script>
     <script src="../static/js/sweetalert.min.js"></script>
     <script src="../static/js/bootstrap_5.3/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap_5.3/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../static/css/bootstrap_5.3/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/highlight/github-dark.min.css">
     <link rel="stylesheet" href="../static/css/index.css">
     <link rel="stylesheet" href="../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
     <script>
         hljs.highlightAll();
-        {{jsCode|safe}}
     </script>
     <title>Document</title>
 </head>
@@ -27,15 +27,18 @@
         <div class="btn modeButton change">
             <i class="fa fa-lg fa-sun-o fa-moon-o" aria-hidden="true"></i>
         </div>
-        <form id="login-form">
+        <form id="login-form" class="was-validated">
             <div class="mb-3 mt-3">
-              <label for="user" class="form-label">用户名:</label>
-              <input type="user" class="form-control" id="user" placeholder="用户名" name="username">
+                <label for="uname" class="form-label">用户名：</label>
+                <input type="text" class="form-control" id="uname" placeholder="请输入用户名" name="username" required>
+                <div class="valid-feedback">有效的。</div>
+                <div class="invalid-feedback">请填写此字段。</div>
             </div>
             <div class="mb-3">
-              <label for="pwd" class="form-label">密码：</label>
-              <input type="password" class="form-control" id="pwd" placeholder="密码" name="password">
-              <input type="text" value="login" hidden name="login">
+                <label for="pwd" class="form-label">密码：</label>
+                <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="password" required>
+                <div class="valid-feedback">有效的。</div>
+                <div class="invalid-feedback">请填写此字段。</div>
             </div>
             <button id="login_button" type="button" class="container btn btn-primary mt-auto">登录
                 <!-- <span class="spinner-border spinner-border-sm"></span> -->

@@ -4,6 +4,9 @@
     border: 0;
     box-sizing: border-box;
 }
+::selection{
+    
+}
 *::-webkit-scrollbar-thumb{
     width: 5px;
     background-color: #00000080;
