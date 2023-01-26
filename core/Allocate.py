@@ -38,7 +38,7 @@ class Allocate:
             if mode == 'server':
                 port = self.args.get('port');
                 public = self.args.get('public');
-                ip = getIp() if public else '127.0.0.1';
+                ip = '0.0.0.0' if public else '127.0.0.1';
                 if port:
                     Web.run(ip,port);
                 else:

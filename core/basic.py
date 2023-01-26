@@ -56,6 +56,3 @@ def showInfos():
     infos =  INFO_TXT + "[%s] Useage: `python3 QickTools.py -h` to get help" % getTime();
     f = pyfiglet.Figlet(font=fonts[random])
     print(colored("Welcome use \n\n" + f.renderText(render) + '\n' + infos,'blue', 'on_grey', ['bold']));
-
-def getIp():
-    return  gethostbyname(gethostname());
