@@ -26,11 +26,7 @@ window.onload = function(){
         }else{
             localStorage.setItem('dark',mode == 'dark');  
         }
-        var node = $("*"),
-            revList = {
-                "dropdown-menu": '-dark'
-            }
-
+        var node = $("*");
         if(mode == 'dark'){
             $('html').attr('data-user-color-scheme','1')
         }else{
@@ -55,8 +51,11 @@ window.onload = function(){
                     }
                 }
                 // bootstrap
-                for(let key in revList){
-                    let zoom = key + revList[key];
+                var bootstrapList = {
+                    "dropdown-menu": '-dark'
+                }
+                for(let key in bootstrapList){
+                    let zoom = key + bootstrapList[key];
                     if(values.includes(key) || values.includes(zoom)){
                         values.remove(zoom);
                         if(mode == 'dark'){
