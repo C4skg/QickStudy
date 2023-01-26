@@ -4,7 +4,7 @@ from termcolor import colored;
 from colorama import *
 from random import randint;
 from hashlib import md5;
-from socket import gethostbyname,gethostname;
+
 init(autoreset=True)
 
 INFO_TXT = Fore.GREEN;
