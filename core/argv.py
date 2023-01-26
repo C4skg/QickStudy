@@ -19,7 +19,7 @@ class Argv:
              - server
              - console
         '''
-        self.parser.add_argument('-m','--mode',type=str,help='startup mode')
+        self.parser.add_argument('-m','--mode',type=str,help='startup mode,you can choose `server` or `console`');
 
         '''
             run in browser
