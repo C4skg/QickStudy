@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../static/js/jquery-3.6.3.min.js"></script>
+    <script src="../static/js/popper.min.js"></script>
     <script src="../static/js/sweetalert.min.js"></script>
     <script src="../static/js/bootstrap_5.3/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/css/bootstrap_5.3/bootstrap.min.css">
@@ -49,23 +50,26 @@
 
     <div class="container main">
         <!-- 工具栏  靠右固定 -->
-        <div class="devTools container-fluid">
-            <!-- Example split danger button -->
+        <div class="devTools">
             <div class="btn-group">
-                <button type="button" class="btn btn-danger">Action</button>
-                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
+                <button type="button" class="btn bg-success text-light" data-bs-toggle="tooltip" title="添加新内容">Add New</button>
+                <button type="button" class="btn dropdown-toggle dropdown-toggle-split bg-success text-light" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    <li><a class="dropdown-item" href="#"> + 新目录</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"> + 新工具</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"> + 目录说明</a></li>
                 </ul>
             </div>
         </div>
         <!-- 工具栏 -->
+        <!-- 内容 -->
+        <div class="context">
+            Context
+        </div>
+        <!-- 内容 -->
+
     </div>
 
     <!-- 右下角折叠 -->
@@ -89,9 +93,12 @@
         background: transparent!important;
     }
     .container{
-        border: 1px solid #000;
-        box-shadow: 0px 0px 5px #888;
         background-color: transparent;
+    }
+    .context{
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid var(--border-color);
     }
     .main{
         margin-top: 50px;

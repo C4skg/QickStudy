@@ -25,7 +25,7 @@ a{
     --font-color: rgb(0, 0, 0);
     --hover-background: #000;
     --hover-color: #fff;
-    --border-color: #ccc;
+    --border-color: #d0d7de;
 }
 :root[data-user-color-scheme]{
     /* dark */
@@ -34,7 +34,7 @@ a{
     --font-color: rgb(141, 154, 161);
     --hover-background: rgb(141, 154, 161);
     --hover-color: #fff;
-    --border-color: #eee;
+    --border-color: #30363d;
 }
 body{
     width: 100%;
