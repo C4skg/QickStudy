@@ -1,16 +1,15 @@
 window.onload = function(){
     'use strict';
-    // 运行时检查
-    (function(){
+    // while runtime
+    (function(doc,win){
         changeMode();
         checkDev();
-
-        //
+        //drop-menu
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
-    })();
+    })(document,window);
 
     $(".modeButton").click(function(){
         var mode = isDark() ? '' : 'dark';
@@ -24,11 +23,14 @@ window.onload = function(){
     function changeMode(mode=null){
         if(mode == null){
             mode = isDark() ? 'dark' : '';
-            console.log(mode)
         }else{
             localStorage.setItem('dark',mode == 'dark');  
         }
-        var node = $("*");
+        var node = $("*"),
+            revList = {
+                "dropdown-menu": '-dark'
+            }
+
         if(mode == 'dark'){
             $('html').attr('data-user-color-scheme','1')
         }else{
@@ -37,20 +39,32 @@ window.onload = function(){
         for(let element of node){
             if(typeof(element) === "object"){
                 element = $(element);
-                let signal = element.attr('data-dark-change');
+                let signal = element.attr('data-dark-change'),
+                    values = (element.attr('class') || '').split(' ');
+                // signals
                 if (signal){
                     signal = String(signal).split(';');
-                    let values = element.attr('class').split(' ');
                     values.remove('bg-dark','text-light');
                     if(mode == 'dark'){
                         if(signal.includes("color")){
                             values.push('text-light');
-                        }else if(signal.includes("back")){
+                        }
+                        if(signal.includes("back")){
                             values.push('bg-dark');
                         }
                     }
-                    element.attr('class',values.join(' '));
                 }
+                // bootstrap
+                for(let key in revList){
+                    let zoom = key + revList[key];
+                    if(values.includes(key) || values.includes(zoom)){
+                        values.remove(zoom);
+                        if(mode == 'dark'){
+                            values.push(zoom);
+                        }
+                    }
+                }
+                element.attr('class',values.join(' '));
             }
         }
         // 按钮
@@ -78,7 +92,6 @@ window.onload = function(){
 
     function isDark(){
         var dark = localStorage.getItem('dark');
-        console.log(typeof dark);
         if( dark == 'true'){
             return true;
         }else{
