@@ -31,7 +31,7 @@ class Allocate:
                 w2Config('config','work_space',dirs)
                 qcInfo('create ok!');
             else:
-                qcWarning('plz input your work dir!');
+                qcWarning('use `-w [path]` to appoint your work dir');
                 return 0;
         else:
             mode = self.args.get('mode');
