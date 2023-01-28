@@ -5,7 +5,8 @@
     box-sizing: border-box;
 }
 ::selection{
-    
+    color: #fff;
+    background-color: #00000080;
 }
 *::-webkit-scrollbar-thumb{
     width: 5px;
@@ -30,7 +31,7 @@ a{
     --hover-color: #fff;
     --border-color: #d0d7de;
 }
-:root[data-user-color-scheme]{
+:root[data-bs-theme="dark"]{
     /* dark */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
@@ -58,4 +59,9 @@ body{
 }
 .hidden{
     display: none;
+}
+.text-overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

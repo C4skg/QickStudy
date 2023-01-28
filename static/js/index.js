@@ -28,43 +28,9 @@ window.onload = function(){
         }
         var node = $("*");
         if(mode == 'dark'){
-            $('html').attr('data-user-color-scheme','1')
+            $('html').attr('data-bs-theme','dark')
         }else{
-            $('html').removeAttr('data-user-color-scheme')
-        }
-        for(let element of node){
-            if(typeof(element) === "object"){
-                element = $(element);
-                let signal = element.attr('data-dark-change'),
-                    values = (element.attr('class') || '').split(' ');
-                // signals
-                if (signal){
-                    signal = String(signal).split(';');
-                    values.remove('bg-dark','text-light');
-                    if(mode == 'dark'){
-                        if(signal.includes("color")){
-                            values.push('text-light');
-                        }
-                        if(signal.includes("back")){
-                            values.push('bg-dark');
-                        }
-                    }
-                }
-                // bootstrap
-                var bootstrapList = {
-                    "dropdown-menu": '-dark'
-                }
-                for(let key in bootstrapList){
-                    let zoom = key + bootstrapList[key];
-                    if(values.includes(key) || values.includes(zoom)){
-                        values.remove(zoom);
-                        if(mode == 'dark'){
-                            values.push(zoom);
-                        }
-                    }
-                }
-                element.attr('class',values.join(' '));
-            }
+            $('html').removeAttr('data-bs-theme')
         }
         // 按钮
         var btn = $('.modeButton');
@@ -90,12 +56,9 @@ window.onload = function(){
     }
 
     function isDark(){
-        var dark = localStorage.getItem('dark');
-        if( dark == 'true'){
-            return true;
-        }else{
-            return false;
-        }
+        var dark = localStorage.getItem('dark') == 'true';
+        var html = $('html').attr('data-bs-theme') == 'dark';
+        return !!(dark || html);
     }
 
     function checkDev(){

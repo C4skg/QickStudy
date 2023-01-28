@@ -2,9 +2,9 @@ import uuid;
 
 from flask import Flask,render_template,url_for,session,redirect,request;
 
+import core.Woker
 from core.basic import md5Enc_
 from core.config import *;
-
 
 template_folder = "../templates"
 static_folder = "../static"
@@ -81,6 +81,11 @@ def api():
         
     }
     
+    #*添加新目录
+
+    #*添加新工具
+
+    #*添加目录说明
 
     '''
         return paramter;
