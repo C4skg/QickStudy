@@ -78,7 +78,7 @@
         button.attr('disabled','1');
         setTimeout(()=>{
             $.ajax({
-                url: '/api',
+                url: '/login',
                 type:'post',
                 data: form.serialize(),
                 success:(e)=>{

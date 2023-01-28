@@ -9,10 +9,17 @@ from core.config import *;
 template_folder = "../templates"
 static_folder = "../static"
 
+class ServerPanInfo:
+    def __init__(self) -> None:
+        self.key = str( uuid.uuid4() ).replace('-','');
+        self.root = False;
+
+
+ServiceInfo = ServerPanInfo();
+
 app = Flask(__name__,template_folder=template_folder,static_folder=static_folder)
-KEY = str( uuid.uuid4() ).replace('-','');
-ROOT = False;
-app.config['SECRET_KEY'] = KEY;
+app.config['SECRET_KEY'] = ServiceInfo.key;
+
 
 @app.errorhandler(404)
 def error_404(error_info):
@@ -22,7 +29,8 @@ def error_404(error_info):
 @app.before_request
 def accessFilter():
     url_filter = [
-        '' # route = '/'
+        '', # route = '/'
+        'api'
     ]
     router = request.url.split('/')[3];
     #登录验证
@@ -42,6 +50,25 @@ def main():
 def login():
     if is_login():
         return redirect(url_for('/'));
+    
+    if request.form.get('login'):
+        response = {
+        
+        }
+        '''
+            login
+        '''
+        response['loginStatus'] = False;
+        username = request.form.get('username');
+        password = request.form.get('password');
+        if username and password:
+            if login_verify(username,password):
+                response['loginStatus'] = True;    
+        '''
+            return paramter;
+        '''
+        return response;
+    
     datas = {
 
     }
@@ -53,16 +80,8 @@ def api():
     response = {
         
     }
-    '''
-        login
-    '''
-    if request.form.get('login'):
-        response['loginStatus'] = False;
-        username = request.form.get('username');
-        password = request.form.get('password');
-        if username and password:
-            if login_verify(username,password):
-                response['loginStatus'] = True;
+    
+
     '''
         return paramter;
     '''
@@ -80,6 +99,7 @@ def is_login() -> bool:
             return user == value;
         except:
             return False;
+
 def login_verify(username:str,password:str) -> bool:
     username = md5Enc_(username.strip());
     password = md5Enc_(password.strip());
@@ -96,7 +116,7 @@ def login_verify(username:str,password:str) -> bool:
 
 def run(ip:str='127.0.0.1',port:int=8080,debug:bool = False):
     if ip == '127.0.0.1':
-        global ROOT;
-        ROOT = True;
+        global ServiceInfo;
+        ServiceInfo.root = True;
     app.run(ip,port,debug=debug);
     
