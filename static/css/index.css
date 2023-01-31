@@ -30,6 +30,8 @@ a{
     --hover-background: #000;
     --hover-color: #fff;
     --border-color: #d0d7de;
+    --scroll-bar-color: #d1d5da; 
+    --code--back-color: rgba(27, 31, 35, .05);
 }
 :root[data-bs-theme="dark"]{
     /* dark */
@@ -39,6 +41,14 @@ a{
     --hover-background: rgb(141, 154, 161);
     --hover-color: #fff;
     --border-color: #30363d;
+    --scroll-bar-color: #d1d5da; 
+    --code--back-color: rgba(66, 133, 244, .36);
+}
+*{
+    font-size: 16px;
+    line-height: 1.5;
+    font-variant-ligatures: no-common-ligatures;
+      font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols" !important;
 }
 body{
     width: 100%;
@@ -49,6 +59,30 @@ body{
     background-attachment: fixed !important;
     transition: all .3s ease-out;
 }
+
+
+code{
+    background-color: var(--code-color);
+    padding: 0.1em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    border-radius: 3px;
+    word-break: break-word;
+    background-size: 20px 20px;
+    /* white-space: pre-wrap; */
+ }
+ pre code{
+    border-radius: 5px;
+    padding: .5em !important;
+ }
+ pre code::-webkit-scrollbar{
+    height: 5px;
+ }
+ pre code::-webkit-scrollbar-thumb{
+    border-radius: 8px;
+    background-color: var(--scroll-bar-color);
+ }
+
 .rightbottom{
     position: fixed;
     right: 5px;
