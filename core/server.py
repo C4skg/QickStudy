@@ -1,6 +1,12 @@
 import uuid;
 
-from flask import Flask,render_template,url_for,session,redirect,request;
+from flask import (
+    Flask,
+    render_template,
+    url_for,session,
+    redirect,
+    request
+)
 
 import core.Woker
 from core.basic import md5Enc_
