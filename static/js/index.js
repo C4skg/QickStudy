@@ -79,12 +79,12 @@ $(function(){
             hidened = true;
         let dev = $('.rightbottom');
         if(dev.length == 0) return;
-        if(top >= 1000 && hidened){
+        if(top >= 600 && hidened){
             let values = dev.attr('class').split(' ');
             values.remove('hidden');
             dev.attr('class',values.join(' '));
             hidened = false;
-        }else if(top < 1000){
+        }else if(top < 600){
             let values = dev.attr('class').split(' ');
             values.remove('hidden').push('hidden');
             dev.attr('class',values.join(' '));
