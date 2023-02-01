@@ -48,7 +48,6 @@ a{
     font-size: 16px;
     line-height: 1.5;
     font-variant-ligatures: no-common-ligatures;
-      font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols" !important;
 }
 body{
     width: 100%;
@@ -61,19 +60,35 @@ body{
 }
 
 
-code{
-    background-color: var(--code-color);
+table{
+    color: inherit;
+    white-space: inherit;
+    font-size: inherit;
+ }
+ tbody{
+    color: inherit;
+    white-space: inherit;
+    font-size: inherit;
+ }
+ code{
+    /* background-color: rgba(27, 31, 35, .05); */
+    background-color: rgba(66, 133, 244, .36);
     padding: 0.1em 0.4em;
     margin: 0;
     font-size: 85%;
     border-radius: 3px;
-    word-break: break-word;
     background-size: 20px 20px;
-    /* white-space: pre-wrap; */
+    white-space: pre;
+    font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+ }
+ pre{
+    white-space: pre;
+    font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
  }
  pre code{
     border-radius: 5px;
-    padding: .5em !important;
+    padding: .5em;
+    white-space: pre;
  }
  pre code::-webkit-scrollbar{
     height: 5px;
@@ -81,6 +96,22 @@ code{
  pre code::-webkit-scrollbar-thumb{
     border-radius: 8px;
     background-color: var(--scroll-bar-color);
+ }
+ .hljs-ln-numbers{
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #ccc;
+    vertical-align: top;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-right: 10px !important;
+    white-space: pre;
+    display: block;
+    margin-right: .2em;
  }
 
 .rightbottom{
