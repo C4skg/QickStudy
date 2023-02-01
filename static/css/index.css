@@ -3,6 +3,9 @@
     margin: 0;
     border: 0;
     box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.5;
+    font-variant-ligatures: no-common-ligatures;
 }
 ::selection{
     color: #fff;
@@ -15,10 +18,8 @@
 }
 *::-webkit-scrollbar{
     width: 5px;
+    height: 5px;
     background-color: #ccc!important;
-}
-a{
-    text-decoration: none !important;
 }
 :root{
     /* light */
@@ -30,8 +31,9 @@ a{
     --hover-background: #000;
     --hover-color: #fff;
     --border-color: #d0d7de;
-    --scroll-bar-color: #d1d5da; 
+    --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(27, 31, 35, .05);
+    --background-color: #fff;
 }
 :root[data-bs-theme="dark"]{
     /* dark */
@@ -41,14 +43,11 @@ a{
     --hover-background: rgb(141, 154, 161);
     --hover-color: #fff;
     --border-color: #30363d;
-    --scroll-bar-color: #d1d5da; 
+    --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(66, 133, 244, .36);
+    --background-color: #000;
 }
-*{
-    font-size: 16px;
-    line-height: 1.5;
-    font-variant-ligatures: no-common-ligatures;
-}
+
 body{
     width: 100%;
     height: 100vh;
@@ -58,46 +57,50 @@ body{
     background-attachment: fixed !important;
     transition: all .3s ease-out;
 }
-
+a{
+    text-decoration: none !important;
+}
 
 table{
     color: inherit;
     white-space: inherit;
     font-size: inherit;
- }
+}
  tbody{
     color: inherit;
     white-space: inherit;
     font-size: inherit;
- }
- code{
-    /* background-color: rgba(27, 31, 35, .05); */
-    background-color: rgba(66, 133, 244, .36);
+}
+code{
+    max-width: 100% !important;
+    background-color: var(--code--back-color);
     padding: 0.1em 0.4em;
     margin: 0;
     font-size: 85%;
     border-radius: 3px;
     background-size: 20px 20px;
+    /* white-space: pre; */
+    font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+}
+pre{
+    max-width: 100%;
+    width: 700px;
     white-space: pre;
     font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
- }
- pre{
-    white-space: pre;
-    font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
- }
- pre code{
+}
+pre code{
     border-radius: 5px;
     padding: .5em;
     white-space: pre;
- }
- pre code::-webkit-scrollbar{
+}
+pre code::-webkit-scrollbar{
     height: 5px;
- }
- pre code::-webkit-scrollbar-thumb{
+}
+pre code::-webkit-scrollbar-thumb{
     border-radius: 8px;
     background-color: var(--scroll-bar-color);
- }
- .hljs-ln-numbers{
+}
+.hljs-ln-numbers{
     text-align: center;
     color: #ccc;
     border-right: 1px solid #ccc;
@@ -112,12 +115,34 @@ table{
     white-space: pre;
     display: block;
     margin-right: .2em;
- }
+}
+.center{
+    width: 100%;
+    max-height: 600px;
+    margin: 0 auto;
+    overflow: auto;
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+.center img{
+    width: 100%;
+}
 
 .rightbottom{
     position: fixed;
     right: 5px;
     bottom: 10px;
+    z-index: 100;
+}
+.rightbottom .btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
 }
 .rightbottom .collapse{
     text-align: center;

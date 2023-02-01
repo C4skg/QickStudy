@@ -1,4 +1,4 @@
-window.onload = function(){
+$(function(){
     'use strict';
     // while runtime
     (function(doc,win){
@@ -53,6 +53,19 @@ window.onload = function(){
                 }
             }
         }
+        //!codeBlock
+        var codeBlock = $('#hljsCodeBlockColor');
+        if(typeof codeBlock === 'object'){
+            let href = codeBlock.attr('href');
+            if(href && typeof href === 'string'){
+                if(mode == 'dark'){
+                    href = href.replace('emacs.css','native.css')
+                }else{
+                    href = href.replace('native.css','emacs.css')
+                }
+                codeBlock.attr('href',href);
+            }
+        }
     }
 
     function isDark(){
@@ -83,7 +96,7 @@ window.onload = function(){
         checkDev();
     })
     
-}
+})
 
 var ScrollPos = function(){
     // 浏览器适配
