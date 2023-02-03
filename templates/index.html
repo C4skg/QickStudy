@@ -60,8 +60,7 @@
             }
             var mathObj = document.getElementsByClassName('language-math');
             for(let element of mathObj){
-                let render = element.innerHTML;
-                render = htmlDecode(render)
+                let render = htmlDecode(element.innerHTML);
                 katex.render(render,element)
             }
         })
