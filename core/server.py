@@ -8,7 +8,7 @@ from flask import (
     request
 )
 
-import core.Woker
+from core.Woker import WokeSpaceDataAllocate;
 from core.basic import md5Enc_
 from core.config import *;
 

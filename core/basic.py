@@ -28,10 +28,14 @@ def createDir(path,dirName) -> bool:
             os.mkdir(pathJoin(path,dirName));
             return True;
         except:
-            return False;
+            pass;
+    return False;
 
-def pathJoin(path,fileName) -> str:
-    return os.path.abspath(os.path.join(path+"/"+fileName));
+def pathJoin(path:str,path2:str="") -> str:
+    if path2 != "":
+        return os.path.abspath(os.path.join(path+"/"+path2));
+    else:
+        return os.path.abspath(os.path.join(path));
 
 def qcInfo(arg,end:str='\n'):
     Info = Fore.GREEN;            # 提示信息颜色
