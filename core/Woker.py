@@ -16,6 +16,7 @@ class WokeSpaceDataAllocate:
             exit(0);
 
     def createDir(self,dirName:str) -> int:
+        absPath = pathJoin(self.path,dirName);
         '''
             @return:{
                 -1: 失败
@@ -24,10 +25,50 @@ class WokeSpaceDataAllocate:
             }
         '''
         status = -1;
-        if useableDir(dirName):
+        if useableDir(absPath):
             status = 0;
         else:
-            status = int(Basic.createDir(self.path,dirName));
+            # ^ confirm not tools dir
+            if self.typeDistinguish(absPath) == 0:
+                status = int(Basic.createDir(self.path,dirName));
         return status;
     
+
+    def createTools(self,toolsName:str,toolsPath:str)->bool:
+        pass;
+
+    def createDotType(self,path:str) -> bool:
+        if useableDir(path):
+            typed = pathJoin(path,'.type');
+            try:
+                file = open(typed,'rw');
+                file.write("type:Tools");
+                file.close();
+                return True;
+            except:
+                pass;
+        return False;
+
+    def typeDistinguish(self,path:str) -> int:
+        '''
+            return: int{
+                -1: require Failed
+                0:  dir
+                1:  tools
+            }
+        '''
+        if useableDir(path):
+            typed = pathJoin(path,'.type');
+            if usableFile(typed):
+                try:
+                    data = open(typed,'rb').read().decode();
+                    if 'Tools' in data:
+                        return 1;
+                except:
+                    pass;
+            else:
+                return 0;
+            
+        return -1;
+
     # def createTools()
