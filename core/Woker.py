@@ -40,7 +40,7 @@ class WokeSpaceDataAllocate:
         toolsPath:str,
         desc:str,
         toolsType:int=0,
-        openWith:str=''
+        openWith:str=''        
     )->bool:
         pass;
 
