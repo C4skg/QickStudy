@@ -34,7 +34,14 @@ class WokeSpaceDataAllocate:
         return status;
     
 
-    def createTools(self,toolsName:str,toolsPath:str)->bool:
+    def createTools(
+        self,
+        toolsName:str,
+        toolsPath:str,
+        desc:str,
+        toolsType:int=0,
+        openWith:str=''
+    )->bool:
         pass;
 
     def createDotType(self,path:str) -> bool:
