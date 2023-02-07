@@ -1,5 +1,3 @@
-import uuid;
-
 from flask import (
     Flask,
     render_template,
@@ -7,10 +5,12 @@ from flask import (
     redirect,
     request
 )
-
 from core.Woker import WokeSpaceDataAllocate;
 from core.basic import md5Enc_
 from core.config import *;
+
+import uuid;
+
 
 template_folder = "../templates"
 static_folder = "../static"
