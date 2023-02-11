@@ -43,24 +43,27 @@
             });  
         }); 
         $(function(){
-            var htmlDecode = (encode)=>{
-                var s = "";
-                if (encode.length === 0) {
-                    return "";
+            var mathJaxTrans = function(){
+                var htmlDecode = (encode)=>{
+                    var s = "";
+                    if (encode.length === 0) {
+                        return "";
+                    }
+                    s = encode.replace(/&amp;/g, "&");
+                    s = s.replace(/&lt;/g, "<");
+                    s = s.replace(/&gt;/g, ">");
+                    s = s.replace(/&nbsp;/g, " ");
+                    s = s.replace(/'/g, "\'");
+                    s = s.replace(/&quot;/g, "\"");
+                    return s;
                 }
-                s = encode.replace(/&amp;/g, "&");
-                s = s.replace(/&lt;/g, "<");
-                s = s.replace(/&gt;/g, ">");
-                s = s.replace(/&nbsp;/g, " ");
-                s = s.replace(/'/g, "\'");
-                s = s.replace(/&quot;/g, "\"");
-                return s;
+                var mathObj = document.getElementsByClassName('language-math');
+                for(let element of mathObj){
+                    let render = htmlDecode(element.innerHTML);
+                    katex.render(render,element)
+                }
             }
-            var mathObj = document.getElementsByClassName('language-math');
-            for(let element of mathObj){
-                let render = htmlDecode(element.innerHTML);
-                katex.render(render,element)
-            }
+            mathJaxTrans();
         })
     </script>
 
