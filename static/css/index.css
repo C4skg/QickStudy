@@ -61,12 +61,7 @@ a{
     text-decoration: none !important;
 }
 
-table{
-    color: inherit;
-    white-space: inherit;
-    font-size: inherit;
-}
- tbody{
+table,tbody{
     color: inherit;
     white-space: inherit;
     font-size: inherit;
