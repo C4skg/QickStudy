@@ -119,3 +119,16 @@ Array.prototype.remove = function(...argv){
     }
     return this; //会影响本身，建议复制
 }
+String.prototype.decode = function(){
+    if (this.length === 0) {
+        return this;
+    }
+    let s = this;
+    s = s.replace(/&amp;/g, "&");
+    s = s.replace(/&lt;/g, "<");
+    s = s.replace(/&gt;/g, ">");
+    s = s.replace(/&nbsp;/g, " ");
+    s = s.replace(/'/g, "\'");
+    s = s.replace(/&quot;/g, "\"");
+    return s;
+}
