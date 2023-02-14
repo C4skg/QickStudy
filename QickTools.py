@@ -2,7 +2,7 @@ from core.argv import Argv;
 from core.basic import *;
 from core.Allocate import Allocate;
 from core.config import *;
-# from core.sysControl import 
+from core.sysControl import SystemRunnerImprove
 
 def main():
     if not usableFile("config/config.yaml"):
@@ -18,4 +18,7 @@ def main():
     factory.start();
 
 if __name__ == '__main__':
-    main();
+    #In root
+    root = SystemRunnerImprove();
+    if root.code == 42:
+        main();
