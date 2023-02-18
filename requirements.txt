@@ -1,6 +1,6 @@
 colorama==0.4.6
 Flask==2.2.2
-Markdown==3.3.7
 pyfiglet==0.8.post1
+pywin32==305
 PyYAML==6.0
 termcolor==2.2.0
