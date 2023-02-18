@@ -29,4 +29,4 @@ if SYSTEM == 'win32':
                         time.sleep(0.3);
                         break;
             else:
-                pass;
+                self.code = 42;
