@@ -2,7 +2,6 @@
 It works in windows
 '''
 import sys
-from core.basic import qcWarning
 SYSTEM = sys.platform
 
 if SYSTEM == 'win32':
@@ -32,6 +31,8 @@ if SYSTEM == 'win32':
             else:
                 self.code = 42;
 else:
+    from core.basic import qcWarning
+    
     class SystemRunnerImprove():
         def __init__(self) -> None:
             self.code = 0;
