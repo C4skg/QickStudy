@@ -108,7 +108,7 @@ var ScrollPos = function(){
 
 Array.prototype.remove = function(...args){
     while(args.length > 1){
-        this.removes(args.pop());
+        this.remove(args.pop());
     }
     let index = this.indexOf(args[0]);
     while(index > -1){
