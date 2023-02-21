@@ -2,6 +2,7 @@
 It works in windows
 '''
 import sys
+from core.basic import qcWarning
 SYSTEM = sys.platform
 
 if SYSTEM == 'win32':
@@ -30,3 +31,9 @@ if SYSTEM == 'win32':
                         break;
             else:
                 self.code = 42;
+else:
+    class SystemRunnerImprove():
+        def __init__(self) -> None:
+            self.code = 0;
+            qcWarning("use `sudo python3 QickTools.py`");
+            exit(0);
