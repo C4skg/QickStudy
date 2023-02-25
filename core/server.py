@@ -30,7 +30,6 @@ app.config['SECRET_KEY'] = ServiceInfo.key;
 
 @app.errorhandler(404)
 def error_404(error_info):
-    # file = open("templates/404.html",'r',encoding='utf-8').read();
     return render_template("404.html"),404;
 
 @app.before_request
@@ -82,7 +81,7 @@ def login():
     return render_template('login.html',**datas)
 
 
-@app.route('/api',methods=['GET','POST'])
+@app.route('/api',methods=['POST'])
 def api():
     response = {
         
