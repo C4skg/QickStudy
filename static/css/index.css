@@ -27,9 +27,9 @@
      */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 100% 100%;
-    --font-color: rgb(0, 0, 0);
+    --font-color: rgb(22, 22, 22);
+    --hover-color: rgb(0, 0, 0);
     --hover-background: #000;
-    --hover-color: #fff;
     --border-color: #d0d7de;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(27, 31, 35, .05);
@@ -39,9 +39,9 @@
     /* dark */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
-    --font-color: rgb(141, 154, 161);
-    --hover-background: rgb(141, 154, 161);
+    --font-color: #adb5bd;
     --hover-color: #fff;
+    --hover-background: rgb(141, 154, 161);
     --border-color: #30363d;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(66, 133, 244, .36);
@@ -59,6 +59,10 @@ body{
 }
 a{
     text-decoration: none !important;
+    color: var(--font-color) ;
+}
+a:hover{
+    color: var(--hover-color);
 }
 
 table,tbody{
@@ -110,6 +114,11 @@ pre code::-webkit-scrollbar-thumb{
     display: block;
     margin-right: .2em;
 }
+
+.button{
+    cursor: pointer;
+}
+
 .center{
     width: 100%;
     max-height: 600px;

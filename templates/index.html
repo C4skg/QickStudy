@@ -113,33 +113,52 @@
             <!-- <div class="NoneTxt">
                 <p class="h1">Nothing here~</p>
             </div> -->
-            <div id="accordion">
-                <div class="card">
+            <div class="accordion">
+                 <!-- !单个类型或工具 -->
+                <div class="card" data-list-type="tools">
                     <div class="d-flex p-2 justify-content-between" data-bs-toggle="collapse" href="#collapseThree">
-                        <div class="text-overflow">Title</div>
-                        <div class="infos d-flex">
-                            <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
-                            <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                        <div class="text-overflow button">Title</div>
+                        <div class="tools d-flex">
+                            <div class="opened d-flex">
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                            </div>
+                            <div class="infos d-flex">
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                            </div>
                         </div>
                     </div>
                     <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
-                        <div class="card-body">
-                            <div class="infos d-flex">
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
-                            </div>
-                            <div class="infos d-flex">
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
-                            </div>
-                            
-                            <div class="center">
-                                {{}} <!--In-->
+                        <div class="card-body">                            
+                            <div class="center"> <!--*mardkwon doc-->
+                                {{1+2}} <!--In-->
                             </div>
                         </div>
                     </div>
-                </div>   
+                </div>
+                <!-- !类型目录 -->
+                <div class="card" data-list-type="dir">
+                    <div class="d-flex p-2 justify-content-between">
+                        <div class="text-overflow button link">
+                            <a href="404.html">404.html</a>
+                        </div>
+                        <div class="tools d-flex">
+                            <div class="opened d-flex">
+                                
+                            </div>
+                            <div class="infos d-flex">
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- !类型目录 -->
             </div>
+            
         </div>
         <!-- 内容 -->
 
@@ -171,7 +190,7 @@
     .context{
         margin-top: 10px;
         border-radius: 5px;
-        border: 1px solid var(--border-color);
+        /* border: 1px solid var(--border-color); */
     }
     .main{
         margin-top: 50px;
@@ -179,14 +198,15 @@
     .devTools{
         text-align: right;
     }
-    .context{
-        background-color: #00000020;
-    }
     .NoneTxt{
         display: flex;
         align-items: center;
         justify-content: center;
         height: 60vh;
+        background-color: #00000020;
+    }
+    .accordion .card{
+        margin: 5px 0px;
     }
 </style>
 </body>
