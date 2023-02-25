@@ -43,7 +43,8 @@ def accessFilter():
     for url in url_filter:
         if router == url:
             if not is_login():
-                return redirect(url_for('login'));
+                print(router);
+                return redirect(url_for('login',ori=router));
     
 @app.route('/',endpoint='/')
 def main():
@@ -56,7 +57,7 @@ def main():
 def login():
     if is_login():
         return redirect(url_for('/'));
-    
+
     if request.form.get('login'):
         response = {
         
@@ -69,7 +70,8 @@ def login():
         password = request.form.get('password');
         if username and password:
             if login_verify(username,password):
-                response['loginStatus'] = True;    
+                response['loginStatus'] = True;
+                response['router'] = request.args.get('ori');
         '''
             return paramter;
         '''
