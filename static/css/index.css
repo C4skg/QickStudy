@@ -27,8 +27,7 @@
      */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 100% 100%;
-    --font-color: rgb(22, 22, 22);
-    --hover-color: rgb(0, 0, 0);
+    --font-color: rgb(0, 0, 0);
     --hover-background: #000;
     --border-color: #d0d7de;
     --scroll-bar-color: #7d8794; 
@@ -40,7 +39,6 @@
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
     --font-color: #adb5bd;
-    --hover-color: #fff;
     --hover-background: rgb(141, 154, 161);
     --border-color: #30363d;
     --scroll-bar-color: #7d8794; 
@@ -60,9 +58,6 @@ body{
 a{
     text-decoration: none !important;
     color: var(--font-color) ;
-}
-a:hover{
-    color: var(--hover-color);
 }
 
 table,tbody{
