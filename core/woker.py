@@ -14,14 +14,13 @@ class WokeSpaceDataAllocate:
         目录: 单纯目录，可读取 readme.md
         工具: 也是目录形式，但是目录中多了个 .type 文件用于识别属于工具栏目
     '''
-    def __init__(self,name:str,path:str) -> None:
-        self.name = name;
-        if useableDir(path):
-            self.path = path;
-        else:
-            self.path = '/';
+    def __init__(self,workSpace:str) -> None:
+        self.space = workSpace
 
-    
+    def createDir(
+            
+    ) -> int:
+        return False;
 
     def createTools(
             toolName:str,
