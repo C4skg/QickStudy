@@ -46,11 +46,13 @@ def accessFilter():
                 print(router);
                 return redirect(url_for('login',ori=router));
     
-@app.route('/',endpoint='/')
+@app.route('/',endpoint='/',methods=['GET'])
 def main():
     datas = {
         
     }
+    tDir = request.args.get('tDir','/');
+    
     return render_template('index.html',**datas);
 
 @app.route('/login',endpoint='login',methods=['POST','GET'])
@@ -71,7 +73,7 @@ def login():
         if username and password:
             if login_verify(username,password):
                 response['loginStatus'] = True;
-                response['router'] = request.args.get('ori');
+                response['router'] = request.args.get('ori','/');
         '''
             return paramter;
         '''

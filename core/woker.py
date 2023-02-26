@@ -1,6 +1,8 @@
 import core.basic as Basic
 from core.config import *
 
+
+
 class WokeSpaceDataAllocate:
     '''
         以文件形式存放万物
@@ -8,12 +10,11 @@ class WokeSpaceDataAllocate:
         工具: 也是目录形式，但是目录中多了个 .type 文件用于识别属于工具栏目
     '''
     def __init__(self,name:str,path:str) -> None:
-        self.path = name;
+        self.name = name;
         if useableDir(path):
             self.path = path;
         else:
-            qcWarning("work path error");
-            exit(0);
+            self.path = '/';
 
     def createDir(self,dirName:str) -> int:
         absPath = pathJoin(self.path,dirName);

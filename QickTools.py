@@ -22,3 +22,5 @@ if __name__ == '__main__':
     root = SystemRunnerImprove();
     if root.code == 42:
         main();
+    else:
+        qcWarning("open QickTools.py in [Administrator|root] mode");
