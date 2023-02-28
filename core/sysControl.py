@@ -35,6 +35,4 @@ else:
     
     class SystemRunnerImprove():
         def __init__(self) -> None:
-            self.code = 0;
-            qcWarning("use `sudo python3 QickTools.py`");
-            exit(0);
+            self.code = 42;
