@@ -21,7 +21,6 @@ class ServerPanInfo:
         self.key = str( uuid.uuid4() ).replace('-','');
         self.root = False;
 
-
 ServiceInfo = ServerPanInfo();
 
 app = Flask(__name__,template_folder=template_folder,static_folder=static_folder)
@@ -32,13 +31,14 @@ app.config['SECRET_KEY'] = ServiceInfo.key;
 def error_404(error_info):
     return render_template("404.html"),404;
 
-if not ServiceInfo.root:
-    @app.before_request
-    def accessFilter():
-        url_filter = [
-            '', # route = '/'
-            'api'
-        ]
+
+@app.before_request
+def accessFilter():
+    url_filter = [
+        '', # route = '/'
+        'api'
+    ]
+    if not ServiceInfo.root:
         router = request.url.split('/')[3];
         #登录验证
         for url in url_filter:
@@ -56,7 +56,7 @@ def main():
         }
     }
     tDir = request.args.get('tDir','/');
-    
+
     return render_template('index.html',**datas);
 
 @app.route('/login',endpoint='login',methods=['POST','GET'])
@@ -136,7 +136,7 @@ def login_verify(username:str,password:str) -> bool:
 
 def run(ip:str='127.0.0.1',port:int=8080,debug:bool = False):
     if ip == '127.0.0.1':
-        global ServiceInfo;
         ServiceInfo.root = True;
+    
     app.run(ip,port,debug=debug);
     
