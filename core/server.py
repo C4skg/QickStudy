@@ -32,24 +32,28 @@ app.config['SECRET_KEY'] = ServiceInfo.key;
 def error_404(error_info):
     return render_template("404.html"),404;
 
-@app.before_request
-def accessFilter():
-    url_filter = [
-        '', # route = '/'
-        'api'
-    ]
-    router = request.url.split('/')[3];
-    #登录验证
-    for url in url_filter:
-        if router == url:
-            if not is_login():
-                print(router);
-                return redirect(url_for('login',ori=router));
+if not ServiceInfo.root:
+    @app.before_request
+    def accessFilter():
+        url_filter = [
+            '', # route = '/'
+            'api'
+        ]
+        router = request.url.split('/')[3];
+        #登录验证
+        for url in url_filter:
+            if router == url:
+                if not is_login():
+                    print(router);
+                    return redirect(url_for('login',ori=router));
     
 @app.route('/',endpoint='/',methods=['GET'])
 def main():
     datas = {
-        
+        "root" : ServiceInfo.root,
+        'context' : {
+            
+        }
     }
     tDir = request.args.get('tDir','/');
     
@@ -88,8 +92,9 @@ def login():
 @app.route('/api',methods=['POST'])
 def api():
     response = {
-        
+        "status" : 'ok'
     }
+    # if ServiceInfo.root and 
     
     #*添加新目录
 
