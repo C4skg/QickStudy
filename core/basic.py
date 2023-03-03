@@ -31,6 +31,12 @@ def createDir(path,dirName) -> bool:
             pass;
     return False;
 
+def isCleanDir(path) -> bool:
+    if useableDir(path):
+        return True if  os.listdir(path) == 0 else False;
+
+    return False
+
 def pathJoin(path:str,path2:str="") -> str:
     if path2 != "":
         return os.path.abspath(os.path.join(path+"/"+path2));

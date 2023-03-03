@@ -6,7 +6,7 @@ from flask import (
     session,
     request
 )
-from core.woker import WokeSpaceDataAllocate;
+from core.woker import WorkSpaceDataAllocate;
 from core.basic import md5Enc_
 from core.config import *;
 
