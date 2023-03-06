@@ -30,9 +30,26 @@ if SYSTEM == 'win32':
                         break;
             else:
                 self.code = 42;
+
+    class winRegeditController:
+        '''
+        flags = wincon.KEY_ALL_ACCESS
+        key = winapi.RegOpenKey(wincon.HKEY_CLASSES_ROOT,'*\\shell',0,flags);
+        winapi.RegCreateKey(key,'QickTools')
+        print(winapi.RegQueryInfoKey(key))
+
+        # close
+
+        winapi.RegCloseKey(key);
+        '''
+        def __init__(self) -> None:
+            self.flags = wincon.KEY_ALL_ACCESS
+            
 else:
     from core.basic import qcWarning
     
     class SystemRunnerImprove():
         def __init__(self) -> None:
             self.code = 42;
+
+
