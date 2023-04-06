@@ -18,9 +18,8 @@
         },
         width: 1000,
         height: 1000,
-        
         tab: '  ',
-        cdn: '../static/Vditor3.9.0',
+        cdn: '/static/Vditor3.9.0',
         // 初始化的内容
         // toolbar: ['emoji', 'br', 'bold', '|', 'line','help'],
         counter: {
@@ -29,9 +28,6 @@
         // *主题设置
         theme:'',
         preview:{
-            theme:{
-                current:''
-            },
             hljs:{
                 enable:true,
                 style:'emacs',  //emacs, dark:native
@@ -39,13 +35,12 @@
             },
             math:{
                 inlineDigit: true
-            },
-
+            }
         },
         upload:{
-            url: '/uploaded',
-            success: function(e){
-                console.log('success',e);
+            url: '/upload',
+            success: function(e,res){
+                console.log('success',res);
             },
             error: function(e){
                 console.log('error',{e});

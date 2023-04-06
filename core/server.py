@@ -64,6 +64,12 @@ def main():
 def editor():
     return render_template('editor.html');
 
+
+@app.route('/upload',methods=['POST'])
+def fileUploaded():
+
+    return request.form
+
 @app.route('/login',endpoint='login',methods=['POST','GET'])
 def login():
     if is_login():
