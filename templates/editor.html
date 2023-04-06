@@ -20,6 +20,7 @@
         height: 1000,
         
         tab: '  ',
+        cdn: '../static/Vditor3.9.0',
         // 初始化的内容
         // toolbar: ['emoji', 'br', 'bold', '|', 'line','help'],
         counter: {
@@ -38,6 +39,16 @@
             },
             math:{
                 inlineDigit: true
+            },
+
+        },
+        upload:{
+            url: '/uploaded',
+            success: function(e){
+                console.log('success',e);
+            },
+            error: function(e){
+                console.log('error',{e});
             }
         },
         after(){
