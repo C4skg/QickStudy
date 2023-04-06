@@ -29,14 +29,15 @@ app.config['SECRET_KEY'] = ServiceInfo.key;
 
 @app.errorhandler(404)
 def error_404(error_info):
-    return render_template("404.html"),404;
+    return redirect(url_for('404'));
 
 
 @app.before_request
 def accessFilter():
     url_filter = [
         '', # route = '/'
-        'api'
+        'api',
+        'editor'
     ]
     if not ServiceInfo.root:
         router = request.url.split('/')[3];
@@ -58,6 +59,10 @@ def main():
     tDir = request.args.get('tDir','/');
 
     return render_template('index.html',**datas);
+
+@app.route('/editor',methods=['GET','POST'])
+def editor():
+    return render_template('editor.html');
 
 @app.route('/login',endpoint='login',methods=['POST','GET'])
 def login():
@@ -88,6 +93,9 @@ def login():
     }
     return render_template('login.html',**datas)
 
+@app.route('/404',endpoint='404',methods=['GET','POST'])
+def error_404():
+    return render_template('404.html');
 
 @app.route('/api',methods=['POST'])
 def api():
