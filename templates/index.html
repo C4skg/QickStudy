@@ -16,32 +16,13 @@
     <link rel="stylesheet" href="../static/css/highlight/native.css" id="hljsCodeBlockColor">     <!--^ dark: native ;  light: emacs-->
     <script src="../static/js/highlight/highlight.min.js"></script>
     <script src="../static/js/highlight/highlightjs-line-numbers.min.js"></script>
-    <script>
-        hljs.highlightAll();
-        hljs.initLineNumbersOnLoad ({ singleLine:true });
-    </script>
 
     <!-- ^kateX.js -->
     <link rel="stylesheet" href="../static/katex/katex.min.css">
     <script src="../static/katex/katex.min.js"></script>
     <script src="../static/katex/contrib/auto-render.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {  
-            renderMathInElement(document.body, {  
-            delimiters: [  
-                {left: "$$", right: "$$", display: true},
-                {left: "\\(", right: "\\)", display: false},
-                {left: "\\begin{equation}", right: "\\end{equation}", display: true},
-                {left: "\\begin{align}", right: "\\end{align}", display: true},
-                {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
-                {left: "\\begin{gather}", right: "\\end{gather}", display: true},
-                {left: "\\begin{CD}", right: "\\end{CD}", display: true},
-                {left: "\\[", right: "\\]", display: true}
-            ],  
-            // • rendering keys, e.g.:  
-            throwOnError : false  
-            });  
-        }); 
+        
         $(function(){
             var mathJaxTrans = function(){
                 var mathObj = document.getElementsByClassName('language-math');
@@ -52,9 +33,11 @@
             }
             mathJaxTrans();
         })
+        console.log(document)
     </script>
-
-
+    <script src="../static/js/function.js"></script>
+    <script src="../static/js/config.js"></script>
+    <script src="../static/js/md2html.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -217,5 +200,5 @@
     }
 </style>
 </body>
-<script src="../static/js/index.js"></script>
+<script src="../static/js/style.js"></script>
 </html> 
