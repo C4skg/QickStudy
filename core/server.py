@@ -52,7 +52,7 @@ def main():
     datas = {
         "root" : ServiceInfo.root,
         'context' : {
-            
+            'a':[]
         }
     }
     tDir = request.args.get('tDir','/');

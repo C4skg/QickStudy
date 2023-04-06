@@ -33,6 +33,7 @@
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(27, 31, 35, .05);
     --background-color: #fff;
+    --block-left-border: #30363d80;
 }
 :root[data-bs-theme="dark"]{
     /* dark */
@@ -44,6 +45,7 @@
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(66, 133, 244, .36);
     --background-color: #000;
+    --block-left-border: #8391a080;
 }
 
 body{
@@ -92,6 +94,10 @@ pre code::-webkit-scrollbar{
 pre code::-webkit-scrollbar-thumb{
     border-radius: 8px;
     background-color: var(--scroll-bar-color);
+}
+blockquote{
+    padding-left: 10px;
+    border-left: 5px solid var(--block-left-border) !important;
 }
 .hljs-ln-numbers{
     text-align: center;

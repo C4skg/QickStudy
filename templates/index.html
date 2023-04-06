@@ -21,20 +21,10 @@
     <link rel="stylesheet" href="../static/katex/katex.min.css">
     <script src="../static/katex/katex.min.js"></script>
     <script src="../static/katex/contrib/auto-render.min.js"></script>
-    <script>
-        
-        $(function(){
-            var mathJaxTrans = function(){
-                var mathObj = document.getElementsByClassName('language-math');
-                for(let element of mathObj){
-                    let render = element.innerHTML.decode();
-                    katex.render(render,element)
-                }
-            }
-            mathJaxTrans();
-        })
-        console.log(document)
-    </script>
+
+    <!-- ^Vditor/method.min.js -->
+    <script src="../static/Vditor3.9.0/method.min.js"></script>
+
     <script src="../static/js/function.js"></script>
     <script src="../static/js/config.js"></script>
     <script src="../static/js/md2html.js"></script>
@@ -120,9 +110,137 @@
                     </div>
                     <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
                         <div class="card-body">                            
-                            <div class="center"> <!--!mardkwon doc-->
-                                
-                            </div>
+                            <div class="center" data-type="md"># QickCmd
+
+### 一、简介
+
+- 使用 `Python` 编写的自定义命令输入行，使用简单的代码实现较为基础的功能。
+
+- 可以同时使用系统命令不受影响，也可以通过自定义命令来对系统命令进行覆盖，也可以通过函数接收每次输入的命令和参数。
+
+
+### 二、使用方法
+
+1. 基本使用
+
+   ```python
+   from QickCmd import QickTerminal
+   
+   cmd = QickTerminal('C4skg','./')
+   
+   @cmd.startCmd()
+   def start(*args):
+   	print("命令返还 -> ", args);
+   ```
+
+2. 添加命令并执行
+
+   当 `QickCmd` 捕获到添加的指令后，会自动调用该方法，并传入命令后的所有参数
+
+   ```python
+   def hello(*args):
+       print('hello ?')
+   
+   cmd.addCommands('hello!',hello);
+   ```
+
+3. 命令相关
+
+   + 命令优先级
+
+     ` 自定义命令 > 系统命令 > 返还命令 `
+
+
+   + 命令历史
+
+     通过配置可以更改是否生成命令的历史记录
+
+     ```python
+     '''
+     	开 = 1 //默认值
+     	关 = 0
+     '''
+     cmd.CONFIG['history'] = 1
+     ```
+
+4. 使用模板
+   ![](asset/code.png)
+
+
+### 三、写在最后
+
++ 通过简单的一些方法混合使用得到的可以自定义的命令窗口，功能会慢慢加上
+
++ 若有更好的建议，代码问题，侵权相关请开 `issue`
+
+> asd
+
+# 极限
+
+### 极限概念
+
+​	描述某个事物在一定条件下的趋势。
+
+​	有**极限（极限不为无穷）就成为收敛，没有极限（极限为无穷）就是发散**
+
+### 极限及其四则运算
+
+#### 基本要点
+
+1. 函数极限 *
+
+   $\lim\limits_{x \to x_0}f(x)=A$ ，A为某个确定的数，且必须是一 一对应的关系 
+
+
+
+2. 数列极限 *
+
+   $\lim\limits_{n \to \infty}X_n=B$ ，B为某个确定的数。$X_n$ 代表某个数列
+
+   注： 
+
+   + $n \to +\infty$
+   + 若 $X_n \to A$ ，那么 $X_{2n+1} \to A \quad,\quad X_{2n} \to A $，（任一子列，也收敛）
+
+3. 左右极限
+
+   + 左极限
+
+     $\lim\limits_{x \to x_{0}^-}f(x)$
+
+   + 右极限
+
+     $\lim\limits_{x \to x_{0}^+}f(x)$
+
+4. 极限存在
+
+   **左右极限存在且相等** 
+
+5. 函数极限某点关系
+
+   函数 $f(x)$ 在某点 $X_0$ 处的极限值 $y_0$ 与**该函数在该点的函数值无关**
+
+   简单来说，$f(x)$ 在某点的**极限**值，并不能通过 $f(x)$ 本身的函数定义计算得到 $f(x_0)!= y_0$
+
+   + 原因
+
+     极限描述的是左右侧无限趋近的性质，并不是讨论某个点的性质，简单来说，某个点无限接近于 0，但并不等于0
+
+
+
+#### 极限运算
+
+1. 基本运算
+
+   设 $\lim f(x)=A,\lim g(x)=B$
+
+   + $\lim[f(x) \pm g(x)]=\lim f(x) \pm \lim g(x)=A \pm B$ 
+   + $\lim[f(x) * g(x)]=\lim f(x) * \lim g(x)=A * B$
+   + $\lim \frac{f(x)}{g(x)}=\frac{\lim f(x)}{\lim g(x)}=\frac{A}{B}(B \neq 0)$
+
+   以上等式成立条件：**极限必须存在**
+
+</div>
                         </div>
                     </div>
                 </div>
