@@ -29,7 +29,7 @@
     --body-background-pos: 100% 100%;
     --font-color: rgb(0, 0, 0);
     --hover-background: #000;
-    --border-color: #d0d7de;
+    --border-color: #57585a;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(27, 31, 35, .05);
     --background-color: #fff;
@@ -42,7 +42,7 @@
     --body-background-pos: 0% 0%;
     --font-color: #adb5bd;
     --hover-background: rgb(141, 154, 161);
-    --border-color: #30363d;
+    --border-color: #b8b8b8;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(66, 133, 244, .36);
     --background-color: #000;
@@ -114,6 +114,16 @@ blockquote{
     padding-left: 10px;
     border-left: 5px solid var(--block-left-border) !important;
 }
+.language-math{
+    display: inline-block;
+    padding: 6px 2px;
+    box-sizing: border-box;
+    border: 2px dashed transparent;
+}
+.language-math:hover{
+    border: 2px dashed var(--border-color);
+}
+
 .hljs-ln-numbers{
     text-align: center;
     color: #ccc;
