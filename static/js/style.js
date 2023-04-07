@@ -26,7 +26,6 @@ $(function(){
         }else{
             localStorage.setItem('dark',mode == 'dark');  
         }
-        var node = $("*");
         if(mode == 'dark'){
             $('html').attr('data-bs-theme','dark')
         }else{
@@ -61,6 +60,22 @@ $(function(){
                 }
                 codeBlock.attr('href',href);
             }
+        }
+        //!imgChange
+        var img = $('img');
+        for(let i of img){
+            if ($(i).attr('data-mode-change') != 'true'){
+                continue;
+            }
+            let src = i.src.split('\/'),
+                filename = src[src.length-1].split('.')
+            if(mode == 'dark'){
+                filename[0] = filename[0].split('-')[0]
+            }else{
+                filename[0] += '-dark';
+            }
+            src[src.length - 1] = filename.join('.')
+            i.src=src.join('\/')
         }
     }
 

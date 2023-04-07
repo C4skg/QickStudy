@@ -140,9 +140,9 @@ blockquote{
     display: block;
     margin-right: .2em;
 }
-.modeButton img{
-    width: 30px;
-    height: 30px;
+.btn img{
+    width: 25px;
+    height: 25px;
 }
 
 .button{
@@ -175,7 +175,7 @@ blockquote{
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: var(--background-color);
+    /* background-color: var(--background-color); */
     display: flex !important;
     justify-content: center;
     align-items: center;
