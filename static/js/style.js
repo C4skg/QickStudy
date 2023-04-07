@@ -36,20 +36,16 @@ $(function(){
         var btn = $('.modeButton');
         if(btn.length >= 1){
             for(let eve of btn){
-                var children = $(eve).children('i');
+                var children = $(eve).children('img');
                 for(let child of children){
                     let jQChild = $(child);
-                    let attr = jQChild.attr('class').split(' ');
-                    if(attr.includes('fa')){
-                        attr.remove('fa-sun-o','fa-moon-o');
-                        if(mode == 'dark'){
-                            attr.push('fa-sun-o');
-                        }else{
-                            attr.push('fa-moon-o');
-                        }
-                        jQChild.attr('class',attr.join(' '))
-                        break; 
+                    let attr = jQChild.attr('src');
+                    if(mode == 'dark'){
+                        attr = attr.replace('sun.png','moon.png')
+                    }else{
+                        attr = attr.replace('moon.png','sun.png')
                     }
+                    jQChild.attr('src',attr)
                 }
             }
         }

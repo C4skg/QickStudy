@@ -130,6 +130,10 @@ blockquote{
     display: block;
     margin-right: .2em;
 }
+.modeButton img{
+    width: 30px;
+    height: 30px;
+}
 
 .button{
     cursor: pointer;
