@@ -67,8 +67,10 @@ def editor():
 
 @app.route('/upload',methods=['POST'])
 def fileUploaded():
+    data = (request.files['file[]'].stream.read());
+    filename = request.files['file[]'].filename;
 
-    return request.form
+    return 'ok';
 
 @app.route('/login',endpoint='login',methods=['POST','GET'])
 def login():

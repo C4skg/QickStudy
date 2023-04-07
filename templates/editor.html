@@ -35,10 +35,16 @@
             },
             math:{
                 inlineDigit: true
-            }
+            },
+
         },
         upload:{
             url: '/upload',
+            token: 'test',
+            accept: 'image/*',
+            filename:function(name){
+                console.log({name})
+            },  
             success: function(e,res){
                 console.log('success',res);
             },
@@ -47,7 +53,22 @@
             }
         },
         after(){
-            console.log(vditor.getHTML())
+            // console.log(vditor.getHTML())
+        },
+        hint:{
+            extend:[
+                {
+                    key: "@",
+                    hint: (key)=>{
+                        return [
+                            {
+                                value: '@Author: C4skg',
+                                html: '<img src="https://static.c4skg.top/c4skg/logo.jpg"/> C4skg'
+                            }
+                        ]
+                    }
+                }
+            ]
         }
       });
 </script>
