@@ -61,11 +61,10 @@ def main():
             'Inner':{
                 'type': 'tools',
                 'keys': ['Web','Math','code','markdown'],
-                'readme': open('F:\CTF\应急响应\应急响应1.md','r',encoding='utf-8').read()
+                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
             }
         }
     }
-    tDir = request.args.get('tDir','/');
 
     return render_template('index.html',**datas);
 
