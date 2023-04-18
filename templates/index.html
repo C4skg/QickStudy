@@ -88,219 +88,44 @@
                 <p class="h1">Nothing here~</p>
             </div>
             {% else %}
-
+                
             <div class="accordion">
-                 <!-- !单个类型或工具 -->
-                <div class="card" data-list-type="tools">
-                    <div class="d-flex p-2 justify-content-between">
-                        <div class="text-overflow button"  data-bs-toggle="collapse" href="#collapseThree">Title</div>
-                        <div class="tools d-flex">
-                            <div class="opened d-flex">
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                {% for name,e in context.items() %}
+                    {% if e.type == 'tools' or e.type == 'dir'%}
+                    <div class="card" data-list-type="{{e.type}}">
+                        <div class="d-flex p-2 justify-content-between">
+                            {% if e.type == 'tools' %}
+                            <div class="text-overflow button"  data-bs-toggle="collapse" href="#{{name}}">{{name}}</div>
+                            {% else %}
+                            <div class="text-overflow button link">
+                                <a href="{{e.link}}">name</a>
                             </div>
-                            <div class="infos d-flex">
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
+                            {% endif %}
+                            <div class="tools d-flex">
+                                <div class="infos d-flex">
+                                {% for key,values in e.items()%}
+                                    {% if key == 'keys' and values|length != 0%}
+                                        {% for icon in values %}
+                                        <div class="badge bg-secondary d-flex align-items-center mx-1">{{icon}}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
                             </div>
                         </div>
+                        {% if e.type == 'tools'%}
+                        <div id="{{name}}" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">                            
+                                <div class="center" data-type="md">{{e.readme}}</div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
-                        <div class="card-body">                            
-                            <div class="center" data-type="md"># QickCmd
-
-### 一、简介
-
-- 使用 `Python` 编写的自定义命令输入行，使用简单的代码实现较为基础的功能。
-
-- 可以同时使用系统命令不受影响，也可以通过自定义命令来对系统命令进行覆盖，也可以通过函数接收每次输入的命令和参数。
-
-
-### 二、使用方法
-
-1. 基本使用
-
-   ```python
-    from QickCmd import QickTerminal
-
-    cmd = QickTerminal('C4skg','./')
-
-    @cmd.startCmd()
-    def start(*args):
-        print("命令返还 -> ", args);
-   ```
-
-2. 添加命令并执行
-
-   当 `QickCmd` 捕获到添加的指令后，会自动调用该方法，并传入命令后的所有参数
-
-   ```python
-   def hello(*args):
-       print('hello ?')
-   
-   cmd.addCommands('hello!',hello);
-   ```
-
-3. 命令相关
-
-   + 命令优先级
-
-     ` 自定义命令 > 系统命令 > 返还命令 `
-
-
-   + 命令历史
-
-     ~通过配置可以更改是否生成命令的历史记录~
-
-     ```python
-     '''
-     	开 = 1 //默认值
-     	关 = 0
-     '''
-     cmd.CONFIG['history'] = 1
-     ```
-
-4. 使用模板
-   > 一级
-   >> 二级
-   >>> 三级
-***
-   ![](../static/img/code.png)
-
-
-### 三、写在最后
-
-+ 通过简单的一些方法混合使用得到的可以自定义的命令窗口，功能会慢慢加上
-
-+ 若有更好的建议，代码问题，侵权相关请开 `issue`
-
-> 这是一个块，用于测试markdown的解析效果
-> 这是一个块，用于测试markdown的解析效果
-> 这是一个块，用于测试markdown的解析效果
-> 这是一个块，用于测试markdown的解析效果
-
-
-| 时间 | 项目名称 | 项目动态 |
-|----|-----------|--------------------------|
-|2023-03-27|[**veinmind-tools**](detail/veinmind-tools.md)|更新 [v2.1.0](detail/veinmind-tools.md#最近更新) 版本|
-|2023-03-21|[**pocsuite3**](detail/pocsuite3.md)|更新 [v2.0.3](detail/pocsuite3.md#最近更新) 版本|
-|2023-03-12|[**CDK**](detail/CDK.md)|更新 [v1.5.2](detail/CDK.md#最近更新) 版本|
-|2023-03-01|[**Antenna**](detail/Antenna.md)|更新 [v1.3.2](detail/Antenna.md#最近更新) 版本|
-|2023-02-22|[**HaE**](detail/HaE.md)|更新 [v2.4.6](detail/HaE.md#最近更新) 版本|
-|2023-02-15|[**GShark**](detail/gshark.md)|更新 [v1.1.4](detail/gshark.md#最近更新) 版本|
-|2023-02-13|[**ENScanGo**](detail/ENScanGo.md)|更新 [v0.0.9](detail/ENScanGo.md#最近更新) 版本|
-|2023-02-05|[**Viper**](detail/Viper.md)|更新 [v1.5.25](detail/Viper.md#最近更新) 版本|
-|2023-02-04|[**afrog**](detail/afrog.md)|更新 [v2.2.1](detail/afrog.md#最近更新) 版本|
-|2023-02-03|[**passive-scan-client**](detail/passive-scan-client.md)|更新 [v0.3.1](detail/passive-scan-client.md#最近更新) 版本|
-
-
-数学公式测试
-$$
-\frac{1}{
-  \Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{
-  \frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {
-    1+\frac{e^{-6\pi}}
-    {1+\frac{e^{-8\pi}}{1+\cdots}}
-  }
-}
-$$
-
-
-# 极限
-
-### 极限概念
-
-​	描述某个事物在一定条件下的趋势。
-
-​	有**极限（极限不为无穷）就成为收敛，没有极限（极限为无穷）就是发散**
-
-### 极限及其四则运算
-
-#### 基本要点
-
-1. 函数极限 *
-
-   $\lim\limits_{x \to x_0}f(x)=A$ ，A为某个确定的数，且必须是一 一对应的关系 
-
-
-
-2. 数列极限 *
-
-   $\lim\limits_{n \to \infty}X_n=B$ ，B为某个确定的数。$X_n$ 代表某个数列
-
-   注： 
-
-   + $n \to +\infty$
-   + 若 $X_n \to A$ ，那么 $X_{2n+1} \to A \quad,\quad X_{2n} \to A $，（任一子列，也收敛）
-
-3. 左右极限
-
-   + 左极限
-
-     $\lim\limits_{x \to x_{0}^-}f(x)$
-
-   + 右极限
-
-     $\lim\limits_{x \to x_{0}^+}f(x)$
-
-4. 极限存在
-
-   **左右极限存在且相等** 
-
-5. 函数极限某点关系
-
-   函数 $f(x)$ 在某点 $X_0$ 处的极限值 $y_0$ 与**该函数在该点的函数值无关**
-
-   简单来说，$f(x)$ 在某点的**极限**值，并不能通过 $f(x)$ 本身的函数定义计算得到 $f(x_0)!= y_0$
-
-   + 原因
-
-     极限描述的是左右侧无限趋近的性质，并不是讨论某个点的性质，简单来说，某个点无限接近于 0，但并不等于0
-
-
-
-#### 极限运算
-
-1. 基本运算
-
-   设 $\lim f(x)=A,\lim g(x)=B$
-
-   + $\lim[f(x) \pm g(x)]=\lim f(x) \pm \lim g(x)=A \pm B$ 
-   + $\lim[f(x) * g(x)]=\lim f(x) * \lim g(x)=A * B$
-   + $\lim \frac{f(x)}{g(x)}=\frac{\lim f(x)}{\lim g(x)}=\frac{A}{B}(B \neq 0)$
-
-   以上等式成立条件：**极限必须存在**
-
-</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- !类型目录 -->
-                <div class="card" data-list-type="dir">
-                    <div class="d-flex p-2 justify-content-between">
-                        <div class="text-overflow button link">
-                            <a href="editor">editor.html</a>
-                        </div>
-                        <div class="tools d-flex">
-                            <div class="opened d-flex">
-                                
-                            </div>
-                            <div class="infos d-flex">
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">CTF</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">Python</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- !类型目录 -->
-            </div>
-
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         </div>
         <!-- 内容 -->
-
     </div>
 
     <!-- 右下角折叠 -->

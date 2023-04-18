@@ -13,8 +13,8 @@ var mathJaxTrans = function(){
 $(function(){
     // *md2html
     var center = document.getElementsByClassName("center")[0]
-    Vditor.md2html(center.innerHTML.decode(),).then(function(e){
-        center.innerHTML = e.decode();
+    Vditor.md2html(center.innerHTML.decode()).then(function(e){
+        center.innerHTML = e
         hljs.highlightAll();
         hljs.initLineNumbersOnLoad ({ singleLine:true });
         mathJaxTrans();

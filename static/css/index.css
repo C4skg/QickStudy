@@ -28,12 +28,14 @@
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 100% 100%;
     --font-color: rgb(0, 0, 0);
+    --important-font-color: #4183C4;
     --hover-background: #000;
     --border-color: #57585a;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(27, 31, 35, .05);
     --background-color: #fff;
     --block-left-border: #30363d80;
+    --block-background-color: #fafafa;
     --table-tr-2-background: #f6f8fa;
 }
 :root[data-bs-theme="dark"]{
@@ -41,12 +43,14 @@
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
     --font-color: #adb5bd;
+    --important-font-color: #4183C4;
     --hover-background: rgb(141, 154, 161);
     --border-color: #b8b8b8;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(66, 133, 244, .36);
     --background-color: #000;
     --block-left-border: #8391a080;
+    --block-background-color: #00000030;
     --table-tr-2-background: #161b22;
 }
 
@@ -61,21 +65,33 @@ body{
 }
 a{
     text-decoration: none !important;
-    color: var(--font-color) ;
+    color: var(--important-font-color) ;
+}
+
+/* h1~h6 */
+h1,h2,h3,h4,h5,h6{
+    margin: 20px 0px;
+}
+h1{
+    border-bottom: 1px dashed var(--border-color);
 }
 
 /* markdown table */
+table:not(.hljs-ln){
+    margin: 10px 0px;
+}
 table:not(.hljs-ln) td,
 table:not(.hljs-ln) th
 {
     padding: 6px 13px;
-    border: 1px solid #d0d7de;
+    border: 1px solid var(--border-color);
 }
 
 table:not(.hljs-ln) tr:nth-child(2n)
 {
     background-color: var(--table-tr-2-background);
 }
+/* markdown table */
 
 table,tbody{
     color: inherit;
@@ -111,8 +127,12 @@ pre code::-webkit-scrollbar-thumb{
     background-color: var(--scroll-bar-color);
 }
 blockquote{
-    padding-left: 10px;
+    padding: 0px 10px;
+    border-radius: 0px 3px 3px 0px;
     border-left: 5px solid var(--block-left-border) !important;
+    width: 700px;
+    max-width: 100%;
+    background-color: var(--block-background-color);
 }
 .language-math{
     display: inline-block;

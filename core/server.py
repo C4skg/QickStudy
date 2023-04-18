@@ -53,7 +53,16 @@ def main():
     datas = {
         "root" : ServiceInfo.root,
         'context' : {
-            'a':[]
+            'Test': {
+                'type': 'dir',
+                'keys': ['CTF','Python','测试'],
+                'link': '/editor'
+            },
+            'Inner':{
+                'type': 'tools',
+                'keys': ['Web','Math','code','markdown'],
+                'readme': open('F:\CTF\应急响应\应急响应1.md','r',encoding='utf-8').read()
+            }
         }
     }
     tDir = request.args.get('tDir','/');
