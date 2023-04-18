@@ -17,6 +17,7 @@
   ```
 
 	> 因为运行该 php 文件后，已经将该脚本读入并作为 opcode 进行运行
+    > opcode 缓存
 
 
 
@@ -46,6 +47,18 @@ $$
   }
 }
 $$
+
+常见函数定义域如下
+
++ $y=\frac{a}{b}\Rightarrow(x\neq0)$
++ $y=\sqrt[2n]{x}\Rightarrow(x\geq0)$
++ $y=\sqrt[2n+1]{x}\quad\Rightarrow (x\in(-\infty,+\infty),x\in R)$
++ $y=\log_a{x}\Rightarrow(x>0)\quad$
++ $y=\tan{x}\Rightarrow(x \neq k\pi+\frac{\pi}{2})$
++ $y=\cot{x}\Rightarrow(x\neq k\pi)$
++ $y=\arctan{x},y=arccot{x}\Rightarrow(x\in R,x\in(-\infty,+\infty))$
++ $y=\arcsin{x},y=\arccos{x}\Rightarrow(x\in[-1,1])$
+
 
 ### 不同代码块测试
 
