@@ -62,56 +62,6 @@ def main():
                 'type': 'tools',
                 'keys': ['Web','Math','code','markdown'],
                 'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'zxzcs':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'zxc':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'we':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'qsxc':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'jrt':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'rty':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'usef':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'were':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'wfdvbsefere':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'gnrtyyd4rtgrdydrfdrgdrgdr':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
             }
         }
     }
