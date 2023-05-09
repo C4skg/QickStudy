@@ -48,6 +48,7 @@ def accessFilter():
                     print(router);
                     return redirect(url_for('login',ori=router));
     
+    
 @app.route('/',endpoint='/',methods=['GET'])
 def main():
     datas = {
