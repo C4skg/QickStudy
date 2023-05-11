@@ -60,6 +60,13 @@ $$
 + $y=\arcsin{x},y=\arccos{x}\Rightarrow(x\in[-1,1])$
 
 
+### 图片测试
+1. 图片
+   + 图片1
+    ![](../static/img/code.png)
+
+   + 图片2
+    ![](../static/img/1683785041599.jpg)
 ### 不同代码块测试
 
 ```python
