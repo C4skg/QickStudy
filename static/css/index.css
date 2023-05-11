@@ -176,8 +176,6 @@ blockquote{
     margin: 0 auto;
     overflow: auto;
     margin-top: 20px;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
 }
 
 

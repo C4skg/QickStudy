@@ -1,3 +1,40 @@
++ 测试代码块
+
+  1. asd
+
+     + asd
+
+     + d
+
+       1. asd
+
+          2. asd
+
+             3. ds
+
+                ```python
+                from api import api
+                from flask import BluePrint,g
+                from flask import (
+                    redirct,
+                    url_for
+                )
+                from . import main
+                
+                main.register_blueprint(api,url_prefix='api');
+                
+                @main.before_request
+                def before_request():
+                    if g.user and g.user.is_anymouse:
+                        return redirct(url_for('/'));
+                    else:
+                        return redirct(url_for('404'));
+                
+                main.run();
+                ```
+
+                
+
 + 简单的不死马示例
 
   ```php
@@ -16,7 +53,7 @@
   ?>
   ```
 
-	> 因为运行该 php 文件后，已经将该脚本读入并作为 opcode 进行运行
+  > 因为运行该 php 文件后，已经将该脚本读入并作为 opcode 进行运行
     > opcode 缓存
 
 
