@@ -55,9 +55,7 @@ $(function(){
             let t = mathJaxTrans(e);
             emitHighlight(t);
             ele.innerHTML = "";
-            console.log(t);
             $(ele).append(t)
         });
-        
     }
 })
