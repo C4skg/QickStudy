@@ -63,11 +63,6 @@ def main():
                 'type': 'tools',
                 'keys': ['Web','Math','code','markdown'],
                 'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'asd':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/error.md','r',encoding='utf-8').read()
             }
         }
     }
