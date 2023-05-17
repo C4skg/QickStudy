@@ -67,22 +67,7 @@ def main():
             'asd':{
                 'type': 'tools',
                 'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'csadaw':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'asdaw':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            'xzvdw':{
-                'type': 'tools',
-                'keys': ['Web','Math','code','markdown'],
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
+                'readme': open(f'WorkSpace/error.md','r',encoding='utf-8').read()
             }
         }
     }
