@@ -70,6 +70,9 @@
         e.preventDefault();
     })
     button.click(function(){
+        let signal = document.getElementsByTagName("form")[0].checkValidity();
+        if(!signal) return false;
+        
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
         setTimeout(()=>{
