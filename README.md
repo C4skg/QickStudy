@@ -1,5 +1,6 @@
 # QickStudy
-<span style="display:block;width:50px;"><img src='img/logo.svg'></span>
+<img src='img/logo.svg' width="50px">
+
 1. 积分制
 2. 每日打卡
 3. 点赞功能
