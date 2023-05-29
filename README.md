@@ -25,6 +25,7 @@
    ```
 
 2. 启动命令
+   
    启动前需开启 `mysql` 数据库，并编辑 `config.py` 中的 `SQLALCHEMY_DATABASE_URI` 值
    ```python
     SQLALCHEMY_DATABASE_URI = 'mysql+pymsql://用户名:密码@ip:port/数据库名'
@@ -39,6 +40,7 @@
    ```
 
 ### 0x04 所参考的开源项目
+
 + `flasky`
   
   [https://github.com/miguelgrinberg/flasky](https://github.com/miguelgrinberg/flasky)
