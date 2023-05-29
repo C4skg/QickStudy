@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/bootstrap_5.3/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/base.css') }}">
+
+    
+    <script src="{{ url_for('themes.static',path='js/jquery-3.6.3.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/sweetalert.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/bootstrap_5.3/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/bootstrap_5.3/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
+
+    <!-- ^icon -->
+    <link rel="icon" href="{{ url_for('themes.static',path='img/logo.svg') }}">
+    
+    <title>{{title}}</title>
+</head> 
+<body>
+    <div class="container-sm p-5" id="login-container" data-dark-change="color;back">
+        <h1>
+            Hi!
+        </h1>
+        <P>欢迎使用 <kbd> {{title}} </kbd></P>
+        <div class="btn modeButton change">
+            <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+        </div>
+        <form id="login-form" class="was-validated">
+            <div class="mb-3 mt-3">
+                <label for="uname" class="form-label">用户名：</label>
+                <input type="text" class="form-control" id="uname" placeholder="请输入邮箱" name="email" required>
+                <div class="valid-feedback">有效的。</div>
+                <div class="invalid-feedback">请填写此字段。</div>
+            </div>
+            <div class="mb-3">
+                <label for="pwd" class="form-label">密码：</label>
+                <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required>
+                <div class="valid-feedback">有效的。</div>
+                <div class="invalid-feedback">请填写此字段。</div>
+            </div>
+            <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+            <button id="login_button" type="submit" class="container btn btn-primary mt-auto">登录
+                <!-- <span class="spinner-border spinner-border-sm"></span> -->
+            </button>
+            <div class="toRegister" style="text-align: center;">
+                <a href="{{ url_for('auth.UserRegister') }}">注册</a>
+            </div>
+        </form>
+    </div>
+</body>
+<style>
+    body{
+        position: relative;
+    }
+    #login-container{
+        max-width: 500px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background: transparent!important;
+        box-shadow: 0px 0px 5px #888;
+    }
+    .modeButton{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .hidden{
+        display: none!important;
+    }
+</style>
+<script src="{{ url_for('themes.static',path='js/style.js') }}"></script>
+<script>
+    var button = $('#login_button');
+    var form = $('#login-form');
+    form.submit((e)=>{
+        e.preventDefault();
+    })
+
+    button.click(function(){
+        let signal = document.getElementsByTagName("form")[0].checkValidity();
+        if(!signal) return false;
+        
+        button.append('<span class="spinner-border spinner-border-sm"></span>');
+        button.attr('disabled','1');
+        setTimeout(()=>{
+            $.ajax({
+                type:'post',
+                data: form.serialize(),
+                success:(e)=>{
+                    if(e['status'] == '1'){
+                        swal("登录成功","点击跳转", "success").then(()=>{
+                            let router = e['router'] ?? '/';
+                            window.location = router;
+                        })
+                    }else{
+                        swal("登录失败","用户名或密码错误", "warning");
+                    }
+                },
+                error:(e)=>{
+                    swal("登录失败","网络错误", "warning");
+                },
+                complete:(e)=>{
+                    button.children('span').remove();
+                    button.removeAttr('disabled');
+                }
+            })
+        },~~(Math.random()*5)*100);
+    })
+</script>
+</html>

@@ -1,0 +1,110 @@
+/* h1~h6 */
+h1,h2,h3,h4,h5,h6{
+    margin: 20px 0px;
+}
+h1{
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* markdown table */
+table:not(.hljs-ln){
+    max-width: 700px;
+    margin: 10px 0px;
+}
+table:not(.hljs-ln) td,
+table:not(.hljs-ln) th
+{
+    padding: 6px 13px;
+    border: 1px solid var(--border-color);
+}
+
+table:not(.hljs-ln) tr:nth-child(2n)
+{
+    background-color: var(--table-tr-2-background);
+}
+/* markdown table */
+
+table,tbody{
+    color: inherit;
+    white-space: inherit;
+    font-size: inherit;
+}
+code{
+    max-width: 100% !important;
+    background-color: var(--code--back-color);
+    padding: 0.1em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    border-radius: 3px;
+    background-size: 20px 20px;
+    /* white-space: pre; */
+    font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
+}
+pre{
+    max-width: 100%;
+    min-width: 300px;
+    width: 700px;
+    white-space: pre;
+}
+pre code{
+    border-radius: 5px;
+    padding: .5em;
+    white-space: pre;
+}
+pre code::-webkit-scrollbar{
+    height: 5px;
+}
+pre code::-webkit-scrollbar-thumb{
+    border-radius: 8px;
+    background-color: var(--scroll-bar-color);
+}
+blockquote{
+    padding: 0px 10px;
+    border-radius: 0px 3px 3px 0px;
+    border-left: 5px solid var(--block-left-border) !important;
+    width: 700px;
+    max-width: 100%;
+    background-color: var(--block-background-color);
+}
+.language-math{
+    display: inline-block;
+    padding: 6px 2px;
+    box-sizing: border-box;
+    border: 2px dashed transparent;
+}
+.language-math:hover{
+    border: 2px dashed var(--border-color);
+}
+
+.hljs-ln-numbers{
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #ccc;
+    vertical-align: top;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-right: 10px !important;
+    white-space: pre;
+    display: block;
+    margin-right: .2em;
+}
+
+.center{
+    width: 100%;
+    max-height: calc(100vh - 100px);
+    margin: 0 auto;
+    overflow: auto;
+    margin-top: 20px;
+}
+
+
+.center img{
+    max-width: 700px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

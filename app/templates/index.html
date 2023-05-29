@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('themes.static',path='js/jquery-3.6.3.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/bootstrap_5.3/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/bootstrap_5.3/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/base.css') }}">
+
+    <!-- ^hljs -->
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/styles/emacs.css') }}"> <!--^ dark: native ;  light: emacs-->
+    <script src="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/highlight.pack.js') }}"></script>
+    
+    <script src="{{ url_for('themes.static',path='js/highlight/highlightjs-line-numbers.min.js') }}"></script>
+
+    <!-- ^kateX.js -->
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/katex/katex.min.css') }}">
+    <script src="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/katex/katex.min.js') }}"></script>
+
+    <!-- ^Vditor/method.min.js -->
+    <script src="{{ url_for('themes.static',path='Vditor3.9.0/method.min.js') }}"></script>
+
+
+    <!-- ^self -->
+    <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/md2html.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/picture.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/style.js') }}"></script>
+    
+    <!-- ^icon -->
+    <link rel="icon" href="{{ url_for('themes.static',path='img/logo.svg') }}">
+    
+    <title>{{title}}</title>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+            <div class="logo">
+                <a class="navbar-brand" href=".">
+                    <img src="{{ url_for('themes.static',path='img/logo.svg') }}" alt=""> i c k
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">链接</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">链接</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">链接</a>
+                    </li>
+                </ul>
+                <div class="btn modeButton change d-none d-sm-block">
+                    <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+                </div>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Search">
+                    <button class="btn btn-primary" type="button">
+                        <img src="{{ url_for('themes.static',path='img/search.png') }}" alt="">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 导航栏 -->
+
+    <div class="container main">
+        
+        {% if root %}
+        <!-- 工具栏  靠右固定 -->
+        <div class="devTools">
+            <div class="btn-group">
+                <button type="button" class="btn bg-success text-light btn-sm" data-bs-toggle="tooltip" title="添加新内容">Add New</button>
+                <button type="button" class="btn dropdown-toggle dropdown-toggle-split bg-success text-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">新目录</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">新工具</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">目录说明</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 工具栏 -->
+        {% endif %}
+        <!-- 内容 -->
+        <div class="context" >
+            {% if context|length == 0 %}
+            <div class="NoneTxt">
+                <p class="h1">Nothing here~</p>
+            </div>
+            {% else %}
+                
+            <div class="accordion">
+                {% for name,e in context.items() %}
+                    {% if e.type == 'tools' or e.type == 'dir'%}
+                    <div class="card" data-list-type="{{e.type}}">
+                        <div class="d-flex p-2 justify-content-between">
+                            {% if e.type == 'tools' %}
+                            <div class="text-overflow button"  data-bs-toggle="collapse" href="#{{name}}">{{name}}</div>
+                            {% else %}
+                            <div class="text-overflow button link">
+                                <a href="{{e.link}}">name</a>
+                            </div>
+                            {% endif %}
+                            <div class="tools d-flex">
+                                <div class="infos d-flex">
+                                {% for key,values in e.items()%}
+                                    {% if key == 'keys' and values|length != 0%}
+                                        {% for icon in values %}
+                                        <div class="badge bg-secondary d-flex align-items-center mx-1">{{icon}}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if e.type == 'tools'%}
+                        <div id="{{name}}" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">                            
+                                <div class="center" data-type="md">{{e.readme}}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- 内容 -->
+    </div>
+
+    <!-- 右下角折叠 -->
+    <div class="rightbottom hidden">
+        <div class="collapse" id="collapseBtn">
+            <div class="btn scrollTop">
+                <img src="{{ url_for('themes.static',path='img/top.png') }}" alt="" data-mode-change="true">
+            </div>
+            <div class="btn modeButton change d-block d-sm-none" >
+                <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+            </div>
+        </div>
+        <div class="btn" data-bs-toggle="collapse" data-bs-target="#collapseBtn" >
+            <img src="{{ url_for('themes.static',path='img/menu.png') }}" alt="" data-mode-change="true">
+        </div>
+    </div>
+    <!-- 右下角折叠 -->
+
+    <!-- 模态 -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                
+            </div>
+        </div>
+    </div>
+<style>
+    .navbar{
+        border-bottom: 1px solid var(--border-color);
+        background: transparent!important;
+    }
+    .container{
+        background-color: transparent;
+    }
+    .context{
+        margin-top: 10px;
+        border-radius: 5px;
+        /* border: 1px solid var(--border-color); */
+    }
+    .main{
+        margin-top: 50px;
+    }
+    .devTools{
+        text-align: right;
+    }
+    .NoneTxt{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 60vh;
+        background-color: #00000020;
+    }
+    .accordion .card{
+        margin: 5px 0px;
+    }
+</style>
+</body>
+</html> 
