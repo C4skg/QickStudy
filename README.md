@@ -43,4 +43,8 @@
 
 + `flasky`
   
-  [https://github.com/miguelgrinberg/flasky](https://github.com/miguelgrinberg/flasky)
+   [https://github.com/miguelgrinberg/flasky](https://github.com/miguelgrinberg/flasky)
+
++ `vditor`
+
+   [https://github.com/Vanessa219/vditor](https://github.com/Vanessa219/vditor)
