@@ -8,7 +8,6 @@ themes = Blueprint('themes',__name__)
 @themes.route('/static/<path:path>')
 def static(path):
     file = safe_join(current_app.root_path,'static',path)
-    print(file)
     if os.path.isfile(file):
         return send_file(file);
         
