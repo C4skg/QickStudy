@@ -7,6 +7,22 @@ from . import main
 @main.route('/',methods=['GET','POST'])
 @login_required
 def index():
-    path = request.args.get('path','/',type=str)
+    datas = {
+        "root" : 1,
+        'context' : {
+            'Test': {
+                'type': 'dir',
+                'keys': ['CTF','Python','测试'],
+                'link': '/editor'
+            },
+            'Inner文章内容内容内容内容':{
+                'type': 'article',
+                'keys': ['Web','Math','code','markdown'],
+                'author': 'C4skg',
+                'time': '2023-06-01',
+                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
+            }
+        }
+    }
 
-    return render_template('index.html');
+    return render_template('index.html',**datas);

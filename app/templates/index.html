@@ -2,9 +2,9 @@
 
 {% block extends %}
 <script src="{{ url_for('themes.static',path='js/popper.min.js') }}"></script>
-<link rel="stylesheet" href="{{ url_for('themes.static',path='css/index.css') }}">
+<script src="../static/js/bootstrap_5.3/bootstrap.min.js"></script>
 <!-- ^hljs -->
-<link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/styles/emacs.css') }}"> <!--^ dark: native ;  light: emacs-->
+<link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/styles/emacs.css') }}" id="hljsCodeBlockColor"> <!--^ dark: native ;  light: emacs-->
 <script src="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/highlight.pack.js') }}"></script>
 <script src="{{ url_for('themes.static',path='js/highlight/highlightjs-line-numbers.min.js') }}"></script>
 <!-- ^kateX.js -->
@@ -14,6 +14,8 @@
 <script src="{{ url_for('themes.static',path='Vditor3.9.0/method.min.js') }}"></script>
 <!-- ^self -->
 <script src="{{ url_for('themes.static',path='js/picture.js') }}"></script>
+<script src="{{ url_for('themes.static',path='js/md2html.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/index.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -22,7 +24,7 @@
     <div class="container-fluid">
         <div class="logo">
             <a class="navbar-brand" href=".">
-                <img src="{{ url_for('themes.static',path='img/logo.svg') }}" alt=""> i c k
+                <img src="{{ url_for('themes.static',path='img/logo.svg') }}" alt="">
             </a>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -49,6 +51,12 @@
                     <img src="{{ url_for('themes.static',path='img/search.png') }}" alt="">
                 </button>
             </form>
+            <div class="user">
+                <div class="userLogo">
+                    <img src="" alt="">
+                </div>
+                <div class="extends"></div>
+            </div>
         </div>
     </div>
 </nav>
@@ -61,14 +69,14 @@
     <!-- 工具栏  靠右固定 -->
     <div class="devTools">
         <div class="btn-group">
-            <button type="button" class="btn bg-success text-light btn-sm" data-bs-toggle="tooltip" title="添加新内容">Add New</button>
+            <button type="button" class="btn bg-success text-light btn-sm" data-bs-toggle="tooltip" title="添加新内容">发布新内容</button>
             <button type="button" class="btn dropdown-toggle dropdown-toggle-split bg-success text-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"></button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">新目录</a></li>
+                <li><a class="dropdown-item" href="#">文章</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">新工具</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">目录说明</a></li>
+                <li><a class="dropdown-item" href="#">说说</a></li>
+                <!-- <li><hr class="dropdown-divider"></li> -->
+                <!-- <li><a class="dropdown-item" href="#">公告</a></li> -->
             </ul>
         </div>
     </div>
@@ -81,20 +89,19 @@
             <p class="h1">Nothing here~</p>
         </div>
         {% else %}
-            
         <div class="accordion">
             {% for name,e in context.items() %}
-                {% if e.type == 'tools' or e.type == 'dir'%}
-                <div class="card" data-list-type="{{e.type}}">
-                    <div class="d-flex p-2 justify-content-between">
-                        {% if e.type == 'tools' %}
-                        <div class="text-overflow button"  data-bs-toggle="collapse" href="#{{name}}">{{name}}</div>
+            <div class="card" data-list-type="{{e.type}}">
+                <div class="p-2">
+                    <div class="d-flex justify-content-between">
+                        {% if e.type == 'article' %}
+                        <div class="text-overflow button title"  data-bs-toggle="collapse" href="#{{name}}">{{name}}</div>
                         {% else %}
                         <div class="text-overflow button link">
                             <a href="{{e.link}}">name</a>
                         </div>
                         {% endif %}
-                        <div class="tools d-flex">
+                        <div class="article d-flex">
                             <div class="infos d-flex">
                             {% for key,values in e.items()%}
                                 {% if key == 'keys' and values|length != 0%}
@@ -106,15 +113,35 @@
                             </div>
                         </div>
                     </div>
-                    {% if e.type == 'tools'%}
-                    <div id="{{name}}" class="collapse" data-bs-parent="#accordion">
-                        <div class="card-body">                            
-                            <div class="center" data-type="md">{{e.readme}}</div>
+                    
+                    {% if e.type == 'article' %}
+                    <div class="d-flex justify-content-between actions">
+                        <!-- !author -->
+                        <div class="about">
+                            <span class="author">{{e.author}}</span>
+                            <span class="time">{{e.time}}</span>
+                        </div>
+                        <!-- !功能 -->
+                        <div class="function">
+                            <div class="vote">
+                                <div class="btn-group dropup">
+                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-sm"></button>
+                                    <button type="button" class="btn btn-sm" data-bs-toggle="tooltip" title="点赞数">1000k</button>
+                                </div>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-sm"></button>
+                            </div>
                         </div>
                     </div>
                     {% endif %}
                 </div>
+                {% if e.type == 'article'%}
+                <div id="{{name}}" class="collapse" data-bs-parent="#accordion">
+                    <div class="card-body">                            
+                        <div class="center" data-type="md">{{e.readme}}</div>
+                    </div>
+                </div>
                 {% endif %}
+            </div>
             {% endfor %}
         {% endif %}
     </div>
@@ -174,8 +201,43 @@
         height: 60vh;
         background-color: #00000020;
     }
+    /* 文章标签样式 */
+    
     .accordion .card{
         margin: 5px 0px;
     }
+    .accordion .title{
+        font-size: 20px;
+    }
+    .accordion .title:hover{
+        text-decoration: underline;
+    }
+    .accordion .collapse{
+        border-top: 1px solid var(--border-color);
+    }
+    .accordion .card .actions{
+        margin-top: 30px;
+    }
+    .accordion .card .actions .function .vote button{
+        color: rgba(5,109,232);
+        background-color: rgba(5,109,232,.1);
+    }
+    .accordion .card .actions .function .vote button[--is-activate]{
+        color: white;
+        background-color: #056de8;
+    }
+    .accordion .card .about{
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+    }
+    .accordion .card .about .author{
+        border-right: 1px solid var(--border-color);
+        padding-right: 10px;
+        margin-right: 10px;
+    }
+    /* 文章标签样式 */
+
+    
 </style>
 {% endblock %}

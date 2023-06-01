@@ -8,8 +8,10 @@ h1{
 
 /* markdown table */
 table:not(.hljs-ln){
+    display: block;
     max-width: 700px;
     margin: 10px 0px;
+    overflow: auto;
 }
 table:not(.hljs-ln) td,
 table:not(.hljs-ln) th
@@ -104,6 +106,7 @@ blockquote{
 
 .center img{
     max-width: 700px;
+    width: 100%;
     border-radius: 5px;
     cursor: pointer;
 }
