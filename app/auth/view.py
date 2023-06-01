@@ -8,7 +8,6 @@ from flask_login import login_required,login_user,logout_user
 
 from ..models import User,UserAttend,InfoError
 from ..email import send_email
-from ..config import html
 from .verify import isVaildRegister,registerUserExisit
 from .. import db
 from . import auth
@@ -41,7 +40,7 @@ def UserLogin():
                 e['router'] = request.args.get('next',url_for('main.index'),type=str);
 
         return e;
-    return render_template('auth/login.html',title=html['title'])
+    return render_template('auth/login.html')
 
 
 
@@ -80,7 +79,7 @@ def UserRegister():
             }
             
 
-    return render_template('auth/register.html',title=html['title']);
+    return render_template('auth/register.html');
 
 @auth.route('/logout')
 @login_required
@@ -102,13 +101,13 @@ def logout():
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        return render_template('info.html',info='你的账户此前已被激活，请勿重复激活',title=html['title'])
+        return render_template('info.html',info='你的账户此前已被激活，请勿重复激活')
     try:
         flag = current_user.confirmToken(token)
         db.session.commit();
-        return render_template('info.html',info='恭喜！你已经成功激活你的账户！',title=html['title'])
+        return render_template('info.html',info='恭喜！你已经成功激活你的账户！')
     except InfoError as e:
-        return render_template('info.html',info=str(e),title=html['title'])
+        return render_template('info.html',info=str(e))
 
 
 

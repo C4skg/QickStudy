@@ -1,57 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/bootstrap_5.3/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/base.css') }}">
-
-    
-    <script src="{{ url_for('themes.static',path='js/jquery-3.6.3.min.js') }}"></script>
+{% extends "themes/base.html" %}
+{% block extends %}
     <script src="{{ url_for('themes.static',path='js/sweetalert.min.js') }}"></script>
-    <script src="{{ url_for('themes.static',path='js/bootstrap_5.3/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('themes.static',path='js/bootstrap_5.3/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
+{% endblock %}
+<!-- ^body -->
+{% block body%}
 
-    <!-- ^icon -->
-    <link rel="icon" href="{{ url_for('themes.static',path='img/logo.svg') }}">
-    
-    <title>{{title}}</title>
-</head> 
-<body>
-    <div class="container-sm p-5" id="login-container" data-dark-change="color;back">
-        <h1>
-            Hi!
-        </h1>
-        <P>欢迎注册 <kbd>{{ title }}</kbd></P>
-        <div class="btn modeButton change">
-            <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
-        </div>
-        <form id="login-form" class="was-validated">
-            <div class="mb-2">
-                <label for="email" class="form-label">邮箱：</label>
-                <input type="text" class="form-control" id="email" placeholder="请输入邮箱" name="email" required pattern="^\w+@\w+\.[a-z]{1,}$">
-                <div class="valid-feedback">有效的。</div>
-                <div class="invalid-feedback">请输入正确格式的邮箱</div>
-            </div>
-            <div class="mb-2">
-                <label for="pwd" class="form-label">密码：</label>
-                <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
-                <div class="valid-feedback">有效的。</div>
-                <div class="invalid-feedback">密码中应至少包括字母和数字且长度高于6位。</div>
-            </div>
-            <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
-            <button id="login_button" type="submit" class="container btn btn-primary mt-auto">
-                注册
-            </button>
-            <div class="toLogin" style="text-align: center;">
-                <a href="{{ url_for('auth.UserLogin') }}">登录</a>
-            </div>
-        </form>
+<div class="container-sm p-5" id="login-container" data-dark-change="color;back">
+    <h1>
+        Hi!
+    </h1>
+    <P>欢迎注册 <kbd>{{ title }}</kbd></P>
+    <div class="btn modeButton change">
+        <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
     </div>
-</body>
+    <form id="login-form" class="was-validated">
+        <div class="mb-2">
+            <label for="email" class="form-label">邮箱：</label>
+            <input type="text" class="form-control" id="email" placeholder="请输入邮箱" name="email" required pattern="^\w+@\w+\.[a-z]{1,}$">
+            <div class="valid-feedback">有效的。</div>
+            <div class="invalid-feedback">请输入正确格式的邮箱</div>
+        </div>
+        <div class="mb-2">
+            <label for="pwd" class="form-label">密码：</label>
+            <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
+            <div class="valid-feedback">有效的。</div>
+            <div class="invalid-feedback">密码中应至少包括字母和数字且长度高于6位。</div>
+        </div>
+        <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+        <button id="login_button" type="submit" class="container btn btn-primary mt-auto">
+            注册
+        </button>
+        <div class="toLogin" style="text-align: center;">
+            <a href="{{ url_for('auth.UserLogin') }}">登录</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+<!-- ^style -->
+{% block style %}
 <style>
     body{
         position: relative;
@@ -74,7 +63,10 @@
         display: none!important;
     }
 </style>
-<script src="{{ url_for('themes.static',path='js/style.js') }}"></script>
+{% endblock %}
+
+<!-- ^script -->
+{% block script %}
 <script>
     var button = $('#login_button');
     var form = $('#login-form');
@@ -110,4 +102,4 @@
         },~~(Math.random()*5)*100);
     })
 </script>
-</html>
+{% endblock %}
