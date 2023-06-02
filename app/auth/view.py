@@ -57,7 +57,7 @@ def UserRegister():
                     'info': '该邮箱已注册'
                 }
             user = User(
-                uname='用户_'+''.join(choices(list(ascii_letters+digits),k=6)),
+                name='用户_'+''.join(choices(list(ascii_letters+digits),k=6)),
                 pwd = pwd,
                 email = email.lower()
             )
@@ -92,8 +92,7 @@ def logout():
             setTimeout(function(){
                 window.location = '%s'
             },3000)
-        ''' % url_for( 'main.index' ),
-        title=html['title']
+        ''' % url_for( 'main.index' )
     )
 
 
@@ -119,7 +118,7 @@ def userInfo():
     if id:
         return id;
     else:
-        return current_user.uname;
+        return current_user.name;
 
 
 @auth.route('/attend')

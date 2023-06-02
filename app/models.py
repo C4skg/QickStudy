@@ -3,14 +3,15 @@ from flask import current_app
 from flask_login import UserMixin,AnonymousUserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
+from uuid import uuid4
 
 from . import db , loginManager
 
 class Permission:
-    LOOK  = 1;  #^ 仅查看权限
-    WRITE = 2;  #* 可以创建文章
-    ADVAN = 4;  #& 审核文章，提升用户权限，删除/隐藏文章,即进阶用户
-    ADMIN = 8;  #! 系统控制人
+    BASE    = 1;  #^ 仅查看权限
+    ADVENCE = 2;  #* 可以创建文章
+    CONTROL = 4;  #& 审核文章，提升 BASE 用户权限，删除/隐藏文章,即进阶用户
+    ADMIN   = 8;  #! 系统控制人
 
 class InfoError(ValueError):
     pass
@@ -20,7 +21,6 @@ class UserAttend(db.Model):
     __tablename__ = 'Qc_UserAttend'
     id = db.Column(db.Integer,primary_key = True);
     attendDate = db.Column(db.DateTime(),default = datetime.now);
-
     userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
 
     def signIn(self):
@@ -33,12 +33,13 @@ class UserAttend(db.Model):
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'
     id = db.Column(db.Integer,primary_key = True)
-    uname = db.Column('username',db.String(50),unique=True,index=True)
+    name = db.Column('username',db.String(50),unique=True,index=True)
     pwd_hash = db.Column('password',db.String(128))
     # phone = db.Column('phone',db.String(11),nullable=True,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
+    permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
 
     attend = db.relationship('UserAttend',backref='UserAttend',lazy='select')
 
@@ -114,3 +115,15 @@ loginManager.anonymous_user = AnonymousUser
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
+def initDB():
+    admin = User.query.filter_by(name='admin').first()
+    if not admin:
+        cache = str(uuid4())[:6]
+        user = User(name='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
+        db.session.add(user)
+        db.session.commit()
+        print( 
+            'username:','admin',
+            'password:',cache
+         )

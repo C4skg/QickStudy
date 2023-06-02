@@ -1,6 +1,7 @@
 from flask import request,current_app
 from flask import render_template
 from flask_login import login_required
+from flask_login import current_user
 
 from . import main
 
@@ -8,7 +9,7 @@ from . import main
 @login_required
 def index():
     datas = {
-        "root" : 1,
+        'permission' : current_user.permission,
         'context' : {
             'Test': {
                 'type': 'dir',

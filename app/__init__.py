@@ -13,7 +13,7 @@ db = SQLAlchemy()
 loginManager = LoginManager()
 loginManager.login_view = 'auth.UserLogin'
         
-def create_app( envname ):
+def create_app( envname:str ):
     app = Flask(__name__)
     
     #^ set config
