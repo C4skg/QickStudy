@@ -1,5 +1,5 @@
-# QickStudy
-<div align="center"><img src='/img/logo.png' width="50px"></div>
+# QickStudy(快学平台)
+<div align="center"><img src='img/logo.png' width="50px"></div>
 
 ### 0x01 前言
 
@@ -31,11 +31,11 @@
     SQLALCHEMY_DATABASE_URI = 'mysql+pymsql://用户名:密码@ip:port/数据库名'
    ```
    初始化数据库
-   ```python
+   ```bash
     python QickStudy.py db upgrade
    ```
    启动服务
-   ```python
+   ```bash
     python QickStudy.py runserver -h ip -p port --threaded
    ```
 
