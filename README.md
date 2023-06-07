@@ -22,6 +22,7 @@
    ```bash
     conda create -n QickEnv python=3.7
     conda activate QickEnv
+    cd requirements
     pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
 
