@@ -1,5 +1,5 @@
 # QickStudy
-<div align="center"><img src='img/logo.svg' width="50px"></div>
+<div align="center"><img src='/img/logo.svg' width="50px"></div>
 
 ### 0x01 前言
 
