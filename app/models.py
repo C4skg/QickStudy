@@ -59,7 +59,7 @@ class User(UserMixin,db.Model):
         header = {'alg': 'HS256'}
         data = {
             'id': self.id,
-            'uname': self.uname,
+            'uname': self.name,
             'timestamp': time
         }
         key = current_app.config['SECRET_KEY']
@@ -88,7 +88,7 @@ class User(UserMixin,db.Model):
             db.session.commit()
             raise InfoError("token 超时激活，请重新注册");
         
-        if data.get('id') != self.id or data.get('uname') != self.uname:
+        if data.get('id') != self.id or data.get('uname') != self.name:
             raise InfoError("You token is invalid");
 
         #! token verify success

@@ -16,6 +16,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
+    #HTML INFO
+    TITLE = 'QickStudy'
+
 
 class TestingEnv(Config):
     DEBUG = True
@@ -24,10 +27,6 @@ class TestingEnv(Config):
 
 class ProductionEnv(Config):
     DEBUG = False
-
-html = {
-    'title': 'QickStudy'
-}
 
 config = {
     'TestingEnv': TestingEnv,
