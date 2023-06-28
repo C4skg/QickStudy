@@ -139,8 +139,9 @@
                         <div class="center" data-type="md">{{e.context}}</div>
                     </div>
 
-                    <div class="releaseTime d-flex justify-content-center">
-                        发布时间: {{e.time}}
+                    <div class="releaseTime">
+                        <span>发布人: {{e.author}}</span>
+                        <span>发布时间: {{e.time}}</span>
                     </div>
                     {% endif %}
 
@@ -259,6 +260,9 @@
         padding: 0 5%;
     }
     .releaseTime{
+        padding: 0 5%;
+        display: flex;
+        justify-content: space-between;
         color: var(--second-font-color);
     }
 </style>
