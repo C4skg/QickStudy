@@ -91,37 +91,35 @@
         {% else %}
         <div class="accordion">
             {% for name,e in context.items() %}
-            <div class="card" data-list-type="{{e.type}}">
+            <div class="card" data-list-type="{{e.type}}" data-level="{{e.level}}">
                 <div class="p-2">
                     <div class="d-flex justify-content-between">
                         {% if e.type == 'article' %}
                         <div class="text-overflow button title"  data-bs-toggle="collapse" href="#{{name}}">{{name}}</div>
-                        {% else %}
-                        <div class="text-overflow button link">
-                            <a href="{{e.link}}">name</a>
-                        </div>
-                        {% endif %}
                         <div class="article d-flex">
                             <div class="infos d-flex">
-                            {% for key,values in e.items()%}
-                                {% if key == 'keys' and values|length != 0%}
-                                    {% for icon in values %}
-                                    <div class="badge bg-secondary d-flex align-items-center mx-1">{{icon}}</div>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
+                                <div class="badge bg-secondary d-flex align-items-center mx-1">{{e.time}}</div>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
+                    {% if e.type == 'notice' %}
+                    <!-- *公告 -->
+                    <div class="d-flex justify-content-around">
+                        <div class="text-overflow button link" style="font-size: 25px;color: var(--font-color);">
+                            {{name}}
+                        </div>
+                    </div>
+                    <!-- *公告 -->
+                    {% endif %}
                     
                     {% if e.type == 'article' %}
                     <div class="d-flex justify-content-between actions">
                         <!-- !author -->
                         <div class="about">
                             <span class="author">{{e.author}}</span>
-                            <span class="time">{{e.time}}</span>
                         </div>
-                        <!-- !功能 -->
+                        <!-- !功能 - 文章-->
                         <div class="function">
                             <div class="vote">
                                 <div class="btn-group dropup">
@@ -131,8 +129,27 @@
                                 <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-sm"></button>
                             </div>
                         </div>
+                        <!-- !功能 - 文章-->
                     </div>
                     {% endif %}
+
+                    <!-- *公告内容 -->
+                    {% if e.type == 'notice' %}
+                    <div class="notice">                            
+                        <div class="center" data-type="md">{{e.context}}</div>
+                    </div>
+
+                    <div class="releaseTime d-flex justify-content-center">
+                        发布时间: {{e.time}}
+                    </div>
+                    {% endif %}
+
+                    <!-- 时间 -->
+                    
+                    <!-- *公告内容 -->
+
+
+
                 </div>
                 {% if e.type == 'article'%}
                 <div id="{{name}}" class="collapse" data-bs-parent="#accordion">
@@ -232,12 +249,17 @@
         font-size: 13px;
     }
     .accordion .card .about .author{
-        border-right: 1px solid var(--border-color);
-        padding-right: 10px;
-        margin-right: 10px;
+        /* padding-right: 10px; */
+        /* margin-right: 10px; */
     }
     /* 文章标签样式 */
 
-    
+    /* 公告标签样式 */
+    .notice{
+        padding: 0 5%;
+    }
+    .releaseTime{
+        color: var(--second-font-color);
+    }
 </style>
 {% endblock %}

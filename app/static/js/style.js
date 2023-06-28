@@ -4,6 +4,7 @@ $(function(){
     (function(doc,win){
         changeMode();
         checkDev();
+        topNotice();
         //drop-menu
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -106,7 +107,27 @@ $(function(){
     window.addEventListener('scroll',(e)=>{
         checkDev();
     })
-    
+
+    // 置顶公告
+    function topNotice(){
+        let accordion = $('.accordion'),
+            children = accordion.children();
+        accordion.empty();
+        let ready = []
+        for(let card of children){
+            ready.push(card)
+        }
+        ready.sort(
+            (a,b)=>{
+                let a1 =  $(a).attr('data-level') || 0,
+                    b1 = $(b).attr('data-level') || 0
+                return a1 < b1
+            }
+        )
+        accordion.append(
+           ready 
+        )
+    }
 })
 
 var ScrollPos = function(){

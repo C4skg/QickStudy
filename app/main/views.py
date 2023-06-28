@@ -11,19 +11,28 @@ def index():
     datas = {
         'permission' : current_user.permission,
         'context' : {
-            'Test': {
-                'type': 'dir',
-                'keys': ['CTF','Python','测试'],
-                'link': '/editor'
-            },
             'Inner文章内容内容内容内容':{
                 'type': 'article',
-                'keys': ['Web','Math','code','markdown'],
                 'author': 'C4skg',
                 'time': '2023-06-01',
                 'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
+            },
+            '紧急公告':{
+                'type': 'notice',
+                'author': 'Admin',
+                'time': '2023-06-01',
+                'level': 99,
+                'context': open(f'WorkSpace/notice.md','r',encoding='utf-8').read()
+            },
+            '紧急公告2':{
+                'type': 'notice',
+                'author': 'Admin',
+                'time': '2023-06-01',
+                'level': 2,
+                'context': open(f'WorkSpace/notice.md','r',encoding='utf-8').read()
             }
         }
     }
+    
 
     return render_template('index.html',**datas);
