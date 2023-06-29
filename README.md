@@ -1,5 +1,10 @@
 # QickStudy(快学平台)
+
 <div align="center"><img src='img/logo.png' width="50px"></div>
+<br>
+<div align="center">
+<a href='https://www.murphysec.com/console/report/1674402525447217152/1674402525975699456'><img src='https://www.murphysec.com/platform3/v31/badge/1674402525975699456.svg'></a>
+</div>
 
 ### 0x01 前言
 
@@ -19,24 +24,29 @@
 ### 0x03 部署
 
 1. 安装依赖
+
    ```bash
     conda create -n QickEnv python=3.7
     conda activate QickEnv
     cd requirements
     pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
-
 2. 启动命令
-   
+
    启动前需开启 `mysql` 数据库，并编辑 `config.py` 中的 `SQLALCHEMY_DATABASE_URI` 值
+
    ```python
     SQLALCHEMY_DATABASE_URI = 'mysql+pymsql://用户名:密码@ip:port/数据库名'
    ```
-   初始化数据库
+
+   部署
+
    ```bash
-    python QickStudy.py db upgrade
+    python QickStudy.py db deploy
    ```
+
    启动服务
+
    ```bash
     python QickStudy.py runserver -h ip -p port --threaded
    ```
@@ -44,9 +54,8 @@
 ### 0x04 所参考的开源项目
 
 + `flasky`
-  
-   [https://github.com/miguelgrinberg/flasky](https://github.com/miguelgrinberg/flasky)
 
+  [https://github.com/miguelgrinberg/flasky](https://github.com/miguelgrinberg/flasky)
 + `vditor`
 
-   [https://github.com/Vanessa219/vditor](https://github.com/Vanessa219/vditor)
+  [https://github.com/Vanessa219/vditor](https://github.com/Vanessa219/vditor)
