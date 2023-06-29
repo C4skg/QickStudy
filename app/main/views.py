@@ -36,3 +36,8 @@ def index():
     
 
     return render_template('index.html',**datas);
+
+
+@main.route('/about')
+def about():
+    return render_template('about.html');
