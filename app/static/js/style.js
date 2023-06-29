@@ -119,11 +119,12 @@ $(function(){
         }
         ready.sort(
             (a,b)=>{
-                let a1 =  $(a).attr('data-level') || 0,
-                    b1 = $(b).attr('data-level') || 0
-                return a1 < b1
+                let a1 = parseInt($(a).attr('data-level')) || -1,
+                    b1 = parseInt($(b).attr('data-level')) || -1;
+                return (a1<b1)-(b1<a1)  //! 修复 chrome sort 问题
             }
         )
+        // console.log(ready);
         accordion.append(
            ready 
         )

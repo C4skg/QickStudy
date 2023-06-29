@@ -1,5 +1,5 @@
 from flask import request,session
-from flask import render_template,url_for
+from flask import render_template,url_for,redirect
 from random import choices
 from string import ascii_letters,digits
 
@@ -100,7 +100,9 @@ def logout():
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        return render_template('info.html',info='你的账户此前已被激活，请勿重复激活')
+        return redirect(
+            url_for('main.index')
+        )
     try:
         flag = current_user.confirmToken(token)
         db.session.commit();

@@ -15,6 +15,7 @@ def index():
                 'type': 'article',
                 'author': 'C4skg',
                 'time': '2023-06-01',
+                'level': '0',
                 'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
             },
             '紧急公告':{
