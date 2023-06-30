@@ -23,7 +23,9 @@
 {% endblock %}
 {% block script%}
 <script>
-    {{ script | safe }}
+    swal("{{ title }}","{{context}}", "{{ type }}").then(()=>{
+        window.location = "{{ location }}"
+    })
 </script>
 {% endblock%}
 </html>

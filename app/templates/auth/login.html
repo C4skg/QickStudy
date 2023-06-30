@@ -1,7 +1,6 @@
 {% extends "themes/base.html" %}
 {% block extends %}
     <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
-    <script src="{{ url_for('themes.static',path='js/sweetalert.min.js') }}"></script>
 {% endblock %}
 <!-- ^body -->
 {% block body%}
@@ -32,7 +31,7 @@
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
         <div class="toRegister" style="text-align: center;">
-            <a href="{{ url_for('auth.UserRegister') }}">注册</a>
+            <a href="{{ url_for('auth.register') }}">注册</a>
         </div>
     </form>
 </div>

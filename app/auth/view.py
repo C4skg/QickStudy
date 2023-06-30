@@ -19,7 +19,7 @@ def before_request():
         pass;
 
 @auth.route('/login',methods=['GET','POST'])
-def UserLogin():
+def login():
     email = request.form.get('email',False,type=str);
     pwd  = request.form.get('pwd',False,type=str);
 
@@ -45,7 +45,7 @@ def UserLogin():
 
 
 @auth.route('/register',methods=['GET','POST'])
-def UserRegister():
+def register():
     email = request.form.get('email',False,type=str);
     pwd = request.form.get('pwd',False,type=str);
     if email and pwd:
@@ -85,14 +85,15 @@ def UserRegister():
 @login_required
 def logout():
     logout_user();
+    data = {
+        'title': '你已退出登录',
+        'context': '',
+        'type': 'info',
+        'location': url_for('auth.login')
+    }
     return render_template(
         'info.html',
-        info='你已退出登录',
-        script='''
-            setTimeout(function(){
-                window.location = '%s'
-            },3000)
-        ''' % url_for( 'main.index' )
+        **data
     )
 
 
@@ -103,12 +104,24 @@ def confirm(token):
         return redirect(
             url_for('main.index')
         )
+    data = {
+        'title': '',
+        'context': '',
+        'type': 'success',
+        'location': ''
+    }
     try:
         flag = current_user.confirmToken(token)
         db.session.commit();
-        return render_template('info.html',info='恭喜！你已经成功激活你的账户！')
+        data['title'] = "恭喜！你已经成功激活你的账户！"
+        data['location'] = url_for('main.index')
+        
     except InfoError as e:
-        return render_template('info.html',info=str(e))
+        data['title'] = '激活失败'
+        data['context'] = str(e)
+        data['type'] = 'error'
+
+    return render_template('info.html',**data)
 
 
 

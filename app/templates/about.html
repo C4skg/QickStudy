@@ -1,5 +1,133 @@
 {% extends "themes/base.html" %}
+{% block extends %}
+<script src="{{ url_for('themes.static',path='js/popper.min.js') }}"></script>
+<script src="../static/js/bootstrap_5.3/bootstrap.min.js"></script>
+<!-- ^hljs -->
+<link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/styles/emacs.css') }}" id="hljsCodeBlockColor"> <!--^ dark: native ;  light: emacs-->
+<script src="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/highlight.js/highlight.pack.js') }}"></script>
+<script src="{{ url_for('themes.static',path='js/highlight/highlightjs-line-numbers.min.js') }}"></script>
+<!-- ^kateX.js -->
+<link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/katex/katex.min.css') }}">
+<script src="{{ url_for('themes.static',path='Vditor3.9.0/dist/js/katex/katex.min.js') }}"></script>
+<!-- ^Vditor/method.min.js -->
+<script src="{{ url_for('themes.static',path='Vditor3.9.0/method.min.js') }}"></script>
+<!-- ^self -->
+<script src="{{ url_for('themes.static',path='js/picture.js') }}"></script>
+<script src="{{ url_for('themes.static',path='js/md2html.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/index.css') }}">
+{% endblock %}
 
 {% block title %}
 -关于
+{% endblock %}
+
+{% block body%}
+<div class="container main">
+<!-- 内容 -->
+<div class="context" >
+    {% if context|length == 0 %}
+    <div class="NoneTxt">
+        <p class="h1">Nothing here~</p>
+    </div>
+    {% else %}
+    <div class="accordion">
+        <div class="card">
+            <div class="p-2">
+                <!-- *公告 -->
+                <div class="d-flex justify-content-around">
+                    <div class="text-overflow button link" style="font-size: 25px;color: var(--font-color);">
+                        {{ title }}
+                    </div>
+                </div>
+                <!-- *公告 -->
+
+                <!-- *公告内容 -->
+                <div class="notice">                            
+                    <div class="center" data-type="md">{{ context }}</div>
+                </div>
+                <!-- *公告内容 -->
+            </div>
+        </div>
+    {% endif %}
+</div>
+<!-- 内容 -->
+
+</div>
+{% endblock %}
+
+
+{% block style %}
+<style>
+    .navbar{
+        border-bottom: 1px solid var(--border-color);
+        background: transparent!important;
+    }
+    .container{
+        background-color: transparent;
+    }
+    .context{
+        margin-top: 10px;
+        border-radius: 5px;
+        /* border: 1px solid var(--border-color); */
+    }
+    .main{
+        margin-top: 50px;
+    }
+    .devTools{
+        text-align: right;
+    }
+    .NoneTxt{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 60vh;
+        background-color: #00000020;
+    }
+    /* 文章标签样式 */
+    
+    .accordion .card{
+        margin: 5px 0px;
+    }
+    .accordion .title{
+        font-size: 20px;
+    }
+    .accordion .title:hover{
+        text-decoration: underline;
+    }
+    .accordion .collapse{
+        border-top: 1px solid var(--border-color);
+    }
+    .accordion .card .actions{
+        margin-top: 30px;
+    }
+    .accordion .card .actions .function .vote button{
+        color: rgba(5,109,232);
+        background-color: rgba(5,109,232,.1);
+    }
+    .accordion .card .actions .function .vote button[--is-activate]{
+        color: white;
+        background-color: #056de8;
+    }
+    .accordion .card .about{
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+    }
+    .accordion .card .about .author{
+        /* padding-right: 10px; */
+        /* margin-right: 10px; */
+    }
+    /* 文章标签样式 */
+
+    /* 公告标签样式 */
+    .notice{
+        padding: 0 5%;
+    }
+    .releaseTime{
+        padding: 0 5%;
+        display: flex;
+        justify-content: space-between;
+        color: var(--second-font-color);
+    }
+</style>
 {% endblock %}

@@ -11,7 +11,7 @@ mail = Mail()
 db = SQLAlchemy()
 
 loginManager = LoginManager()
-loginManager.login_view = 'auth.UserLogin'
+loginManager.login_view = 'auth.login'
         
 def create_app( envname:str = 'ProductionEnv' ):
     '''

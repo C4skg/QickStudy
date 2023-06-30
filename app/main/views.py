@@ -1,5 +1,5 @@
 from flask import request,current_app
-from flask import render_template
+from flask import render_template,url_for
 from flask_login import login_required
 from flask_login import current_user
 
@@ -41,4 +41,8 @@ def index():
 
 @main.route('/about')
 def about():
-    return render_template('about.html');
+    data = {
+        'title': '关于 QickStudy',
+        'context': open('WorkSpace/about.md',encoding='utf-8').read()
+    }
+    return render_template('about.html',**data);
