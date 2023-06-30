@@ -6,7 +6,7 @@ $(function(){
         checkDev();
         topNotice();
         //drop-menu
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipTriggerList = [].slice.call(doc.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
@@ -91,12 +91,12 @@ $(function(){
             hidened = true;
         let dev = $('.rightbottom');
         if(dev.length == 0) return;
-        if(top >= 600 && hidened){
+        if(top >= 400 && hidened){
             let values = dev.attr('class').split(' ');
             values.remove('hidden');
             dev.attr('class',values.join(' '));
             hidened = false;
-        }else if(top < 600){
+        }else if(top < 400){
             let values = dev.attr('class').split(' ');
             values.remove('hidden').push('hidden');
             dev.attr('class',values.join(' '));
@@ -121,10 +121,9 @@ $(function(){
             (a,b)=>{
                 let a1 = parseInt($(a).attr('data-level')) || -1,
                     b1 = parseInt($(b).attr('data-level')) || -1;
-                return (a1<b1)-(b1<a1)  //! 修复 chrome sort 问题
+                return (a1<b1)-(b1<a1)  //! chrome sort 问题
             }
         )
-        // console.log(ready);
         accordion.append(
            ready 
         )
