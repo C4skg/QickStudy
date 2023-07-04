@@ -4,19 +4,28 @@ from flask_login import UserMixin,AnonymousUserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 from uuid import uuid4
-
+from sqlalchemy.dialects.mysql import LONGTEXT
 from . import db , loginManager
 
 class Permission:
-    BASE    = 1;  #^ 仅查看权限 | fllow
-    ADVENCE = 2;  #* 可以创建文章
-    CONTROL = 4;  #& 审核文章，提升 BASE 用户权限，删除/隐藏文章,即进阶用户
+    LOWER   = 0;  #!对于违反某些规定的用于给予最低权限，无法发布文章，仅能看文章和关注用户
+    BASE    = 1;  #^ 可以查看、签到、关注用户、写文章
+    ADVENCE = 2;  #* 发布五篇审核过后的文章后，自动升级为进阶用户，可以通过发布文章等方式积攒积分
+    CONTROL = 4;  #& 审核文章，提升 BASE 用户权限，删除，修改文章状态,即进阶用户
     ADMIN   = 8;  #! 系统控制人
 
 class EventID:
     REGISTER = 1;
     LOGIN = 2;
     RESET = 3;
+
+class ArticleStatus:
+    NOTPASS = 0; #不通过
+    DRAFT = 1;
+    WAIT = 2;
+    NORMAL = 3;
+
+    
 
 
 class InfoError(ValueError):
@@ -40,24 +49,36 @@ class UserAttend(db.Model):
 
 class Follow(db.Model):
     __tablename__ = 'follows'
-    followerId = db.Column(db.Interge,db.ForeignKey('Qc_Users.id'),primary_key=True);  #follow 用户
-    followTarget = db.Column(db.Interge,db.ForeignKey('Qc_Users.id'),primary_key=True); #被 follow 用户
+    followerId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);  #follow 用户
+    followTarget = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True); #被 follow 用户
     timestamp = db.Column(db.DateTime,default=datetime.utcnow)
+
+class Article(db.Model):
+    __tablename__ = 'articles'
+    id = db.Column(db.Integer,primary_key = True);
+    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'));
+    title = db.Column(db.String(100),nullable=False);
+    context = db.Column(LONGTEXT,nullable=False);
+    timestamp = db.Column(db.DateTime,nullable=False,default=datetime.utcnow);
+    status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
+
 
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column('username',db.String(50),unique=True,index=True)
     pwd_hash = db.Column('password',db.String(128))
-    # phone = db.Column('phone',db.String(11),nullable=True,unique=True,index=True)
+    # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
     permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
     attend = db.relationship('UserAttend',backref='UserAttend',lazy='select') #! 用户签到
 
-    followTarget = db.relationshop('Follow',foreign_keys=[Follow.followTarget],lazy='select') #关注的用户
-    followers = db.relationshop('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
+    followTarget = db.relationship('Follow',foreign_keys=[Follow.followTarget],lazy='select') #关注的用户
+    followers = db.relationship('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
+
+    article = db.relationship('Article',foreign_keys=[Article.id],lazy='select')
 
 
     @property
