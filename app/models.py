@@ -8,12 +8,21 @@ from uuid import uuid4
 from . import db , loginManager
 
 class Permission:
-    BASE    = 1;  #^ 仅查看权限
+    BASE    = 1;  #^ 仅查看权限 | fllow
     ADVENCE = 2;  #* 可以创建文章
     CONTROL = 4;  #& 审核文章，提升 BASE 用户权限，删除/隐藏文章,即进阶用户
     ADMIN   = 8;  #! 系统控制人
 
+class EventID:
+    REGISTER = 1;
+    LOGIN = 2;
+    RESET = 3;
+
+
 class InfoError(ValueError):
+    '''
+    @param: ValueError:str  use your value to raise the error
+    '''
     pass
 
 
@@ -29,6 +38,11 @@ class UserAttend(db.Model):
     def __repr__(self):
         return '<UserAttend %s>' % self.userId
 
+class Follow(db.Model):
+    __tablename__ = 'follows'
+    followerId = db.Column(db.Interge,db.ForeignKey('Qc_Users.id'),primary_key=True);  #follow 用户
+    followTarget = db.Column(db.Interge,db.ForeignKey('Qc_Users.id'),primary_key=True); #被 follow 用户
+    timestamp = db.Column(db.DateTime,default=datetime.utcnow)
 
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'
@@ -40,8 +54,10 @@ class User(UserMixin,db.Model):
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
     permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
+    attend = db.relationship('UserAttend',backref='UserAttend',lazy='select') #! 用户签到
 
-    attend = db.relationship('UserAttend',backref='UserAttend',lazy='select')
+    followTarget = db.relationshop('Follow',foreign_keys=[Follow.followTarget],lazy='select') #关注的用户
+    followers = db.relationshop('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
 
 
     @property
@@ -59,7 +75,8 @@ class User(UserMixin,db.Model):
         header = {'alg': 'HS256'}
         data = {
             'id': self.id,
-            'uname': self.name,
+            'name': self.name,
+            'type': EventID.REGISTER,
             'timestamp': time
         }
         key = current_app.config['SECRET_KEY']
@@ -74,12 +91,19 @@ class User(UserMixin,db.Model):
         return '<Qc_User %s>' % self.id
 
     def confirmToken(self,token):
-        key = current_app.config['SECRET_KEY']
-
+        # if the token is right
         try:
-            data = jwt.decode(token,key);
+            data = jwt.decode(
+                token,
+                current_app.config['SECRET_KEY']
+            );
         except JoseError:
             raise InfoError("Your token is invalid");
+        
+        # if the token is valid
+        eventid = data.get('type') or -1;
+        if eventid != EventID.REGISTER:
+            raise InfoError("Your token is invalid")
         
         time = data.get('timestamp') or 3600
         
@@ -88,7 +112,7 @@ class User(UserMixin,db.Model):
             db.session.commit()
             raise InfoError("token 超时激活，请重新注册");
         
-        if data.get('id') != self.id or data.get('uname') != self.name:
+        if data.get('id') != self.id or data.get('name') != self.name:
             raise InfoError("You token is invalid");
 
         #! token verify success
@@ -96,6 +120,50 @@ class User(UserMixin,db.Model):
         db.session.add(self);
 
         return True
+    
+    def generateResetToken(self):
+        header = {'alg': 'HS256'}
+        data = {
+            'id': self.id,
+            'name': self.name,
+            'type': EventID.RESET,
+            'retime': datetime.now()
+        }
+        key = current_app.config['SECRET_KEY']
+        return jwt.encode(
+            header=header,
+            payload=data,
+            key=key
+        )
+
+    @staticmethod
+    def resetPassword(token,newPassword):
+        try:
+            data = jwt.decode(
+                token,
+                current_app.config['SECRET_KEY']
+            )
+        except JoseError:
+            raise InfoError("Your token is invalid");
+        
+        # if the token is valid
+        eventid = data.get('type') or -1;
+        if eventid != EventID.RESET:
+            raise InfoError("Your token is invalid")
+        
+        time = data.get('retime')
+        if time and (datetime.now() - time).seconds > 3600:
+            raise InfoError("token 超时激活，请重新注册");
+
+        user = User.query.get(data.get('id'))
+        if user.name != data.get('name'):
+            return False;
+    
+        user.password = newPassword
+        db.session.add(user);
+
+        return True;
+
     
     @property
     def getId(self):
