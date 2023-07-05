@@ -3,6 +3,6 @@ from flask import redirect,url_for,request
 
 from . import api
 
-@api.route('create')
+@api.route('/create')
 def create():
     return 'create';
