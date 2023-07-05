@@ -88,11 +88,11 @@
                     if(e['status'] == 1){
                         swal('注册成功',e['info'],'success');
                     }else{
-                        swal('注册失败',e['info'],'warning');
+                        swal('注册失败',e['info'],'error');
                     }
                 }, 
                 error:(e)=>{
-                    swal("注册失败","网络错误", "warning");
+                    swal("注册失败","网络错误", "error");
                 },
                 complete:(e)=>{
                     button.children('span').remove();

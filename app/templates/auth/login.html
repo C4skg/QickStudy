@@ -90,11 +90,11 @@ body{
                             window.location = router;
                         })
                     }else{
-                        swal("登录失败","用户名或密码错误", "warning");
+                        swal("登录失败","用户名或密码错误", "error");
                     }
                 },
                 error:(e)=>{
-                    swal("登录失败","网络错误", "warning");
+                    swal("登录失败","网络错误", "error");
                 },
                 complete:(e)=>{
                     button.children('span').remove();
