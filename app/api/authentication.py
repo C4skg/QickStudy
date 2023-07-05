@@ -6,6 +6,7 @@ from string import digits,ascii_letters
 from PIL import Image,ImageFont,ImageDraw
 from io import BytesIO
 from base64 import b64encode
+import os
 
 from . import api
 
@@ -50,18 +51,18 @@ class verifyImgCode:
             y1 = randint(0, height / 2)
             x2 = randint(0, width)
             y2 = randint(height / 2, height)
-            draw.line(((x1, y1), (x2, y2)), fill='black', width=1)
+            draw.line(((x1, y1), (x2, y2)), fill=self.rndColor(), width=1)
     
     def getImgCode(self,width:int=120,height:int=50):
         code = self.gText();
 
         img = Image.new(
-            'RGB',
+            'RGBA',
             (width,height),
-            'white'
+            (0,0,0,0)
         )
         font = ImageFont.truetype(
-            r'C:\Users\System-Pc\Desktop\arial.ttf',
+            os.path.join(os.getcwd() , 'font/VF-Thin.ttf'),
             40
         )
         draw = ImageDraw.Draw(img)
