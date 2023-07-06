@@ -66,7 +66,7 @@ class Article(db.Model):
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'
     id = db.Column(db.Integer,primary_key = True)
-    name = db.Column('username',db.String(50),unique=True,index=True)
+    username = db.Column('username',db.String(50),unique=True,index=True)
     pwd_hash = db.Column('password',db.String(128))
     # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
@@ -78,7 +78,7 @@ class User(UserMixin,db.Model):
     followTarget = db.relationship('Follow',foreign_keys=[Follow.followTarget],lazy='select') #关注的用户
     followers = db.relationship('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
 
-    article = db.relationship('Article',foreign_keys=[Article.id],lazy='select')
+    article = db.relationship('Article',backref='Article',lazy='select')
 
 
     @property
@@ -96,7 +96,7 @@ class User(UserMixin,db.Model):
         header = {'alg': 'HS256'}
         data = {
             'id': self.id,
-            'name': self.name,
+            'name': self.username,
             'type': EventID.REGISTER,
             'timestamp': time
         }
@@ -133,7 +133,7 @@ class User(UserMixin,db.Model):
             db.session.commit()
             raise InfoError("token 超时激活，请重新注册");
         
-        if data.get('id') != self.id or data.get('name') != self.name:
+        if data.get('id') != self.id or data.get('name') != self.username:
             raise InfoError("You token is invalid");
 
         #! token verify success
@@ -146,7 +146,7 @@ class User(UserMixin,db.Model):
         header = {'alg': 'HS256'}
         data = {
             'id': self.id,
-            'name': self.name,
+            'name': self.username,
             'type': EventID.RESET,
             'retime': datetime.now()
         }
@@ -177,7 +177,7 @@ class User(UserMixin,db.Model):
             raise InfoError("token 超时激活，请重新注册");
 
         user = User.query.get(data.get('id'))
-        if user.name != data.get('name'):
+        if user.username != data.get('name'):
             return False;
     
         user.password = newPassword

@@ -20,16 +20,15 @@ def before_request():
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
-    email = request.form.get('email',False,type=str);
+    username = request.form.get('username',False,type=str);
     pwd  = request.form.get('pwd',False,type=str);
 
-    if email and pwd:
+    if username and pwd:
         e = {
             'status': '-1',
             'router': '.'
         }
-
-        user = User.query.filter_by(email=email.lower()).first();
+        user = User.query.filter((User.username == username) | (User.email == username)).first()
         if user and user.verifyPassword(pwd):
             login_user(user)
             e['status'] = '1';
@@ -57,7 +56,7 @@ def register():
                     'info': '该邮箱已注册'
                 }
             user = User(
-                name='用户_'+''.join(choices(list(ascii_letters+digits),k=6)),
+                username='用户_'+''.join(choices(list(ascii_letters+digits),k=6)),
                 pwd = pwd,
                 email = email.lower()
             )
@@ -80,6 +79,11 @@ def register():
             
 
     return render_template('auth/register.html');
+
+@auth.route('/reset',methods=['GET','POST'])
+def reset():
+    username = request.form.get('username',False,type=str);
+    # if email:
 
 @auth.route('/logout')
 @login_required
@@ -133,7 +137,7 @@ def userInfo():
     if id:
         return id;
     else:
-        return current_user.name;
+        return current_user.username;
 
 
 @auth.route('/attend')

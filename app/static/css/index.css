@@ -97,9 +97,8 @@ blockquote{
 
 .center{
     width: 100%;
-    max-height: calc(100vh - 100px);
     margin: 0 auto;
-    overflow: auto;
+    overflow-y: auto;
     margin-top: 20px;
 }
 
