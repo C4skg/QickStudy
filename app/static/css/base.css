@@ -29,13 +29,14 @@
     --second-font-color: #ccc;
     --important-font-color: #4183C4;
     --hover-background: #000;
-    --border-color: #57585a;
+    --border-color: #ccc;
     --scroll-bar-color: #7d8794; 
     --code--back-color: rgba(27, 31, 35, .05);
     --background-color: #fff;
     --block-left-border: #30363d80;
     --block-background-color: #fafafa;
     --table-tr-2-background: #f6f8fa;
+    --btn-hover-background: #ccc;
 }
 :root[data-bs-theme="dark"]{
     /* dark */
@@ -52,6 +53,7 @@
     --block-left-border: #8391a080;
     --block-background-color: #00000030;
     --table-tr-2-background: #161b22;
+    --btn-hover-background: #0b0d0f;
 }
 
 body{

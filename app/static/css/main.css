@@ -1,0 +1,147 @@
+/** This css file for index.html  */
+.navbar{
+    border-bottom: 1px solid var(--border-color);
+    background: transparent!important;
+}
+.container{
+    background-color: transparent;
+}
+.context{
+    margin-top: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid var(--border-color); */
+}
+.main{
+    margin-top: 50px;
+}
+/* 文章标签样式 */
+.accordion{
+    width: 70%;
+}
+.accordion .card{
+    margin: 5px 0px;
+}
+.accordion .title{
+    font-size: 20px;
+}
+.accordion .title:hover{
+    text-decoration: underline;
+}
+.accordion .collapse{
+    border-top: 1px solid var(--border-color);
+}
+.accordion .card .actions{
+    margin-top: 30px;
+}
+.accordion .card .actions .function .vote button{
+    color: rgba(5,109,232);
+    background-color: rgba(5,109,232,.1);
+}
+.accordion .card .actions .function .vote button[--is-activate]{
+    color: white;
+    background-color: #056de8;
+}
+.accordion .card .about{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+/* 文章标签样式 */
+
+/* 公告标签样式 */
+.notice{
+    padding: 0 5%;
+}
+.releaseTime{
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    color: var(--second-font-color);
+}
+/* rightContainer */
+.rightContainer{
+    width: 30%;
+    margin: 5px 0 5px 5px;
+}
+/* rightContainer */
+/* user */
+.container-User{
+    width: 100%;
+    padding: 5px 2px;
+}
+.container-User .userInfo{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.userInfo .user-logo{
+    width: 80px;
+}
+.userInfo .username{
+    font-size: 20px;
+}
+.userInfo .user-logo img{
+    width: 100%;
+    height: 100%;
+}
+
+.container-User .level{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0 0 0;
+}
+.container-User .level .level-process{
+    width: 60%;
+    height: 5px;
+    margin: 0 10px;
+}
+.container-User .follower{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    /* padding: 20px 0; */
+    margin: 20px 0;
+}
+.container-User .follower .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container-User .follower .content .num{
+    font-weight: 1000;
+}
+
+.container-User .nav{
+    width: 80%;
+    margin: auto;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    white-space: nowrap;
+}
+.container-User .nav .btn{
+    color: var(--font-color);
+}
+.container-User .nav .btn:hover{
+    background-color: var(--btn-hover-background);
+}
+/* user */
+@media screen and (max-width: 1400px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+    .accordion{
+        width: 100%;
+    }
+    .rightContainer{
+        display: none !important;
+    }
+}

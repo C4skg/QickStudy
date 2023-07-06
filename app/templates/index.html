@@ -16,6 +16,7 @@
 <script src="{{ url_for('themes.static',path='js/picture.js') }}"></script>
 <script src="{{ url_for('themes.static',path='js/md2html.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('themes.static',path='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -36,7 +37,7 @@
                     <a class="nav-link" href="{{ url_for('main.index') }}">首页</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.about') }}">关于</a>
+                    <a class="nav-link" href="{{ url_for('main.about') }}" target="_blank">关于</a>
                 </li>
             </ul>
             <div class="btn modeButton change d-none d-sm-block">
@@ -61,24 +62,6 @@
 <!-- 导航栏 -->
 
 <div class="container main">
-    
-    {% if permission >= 2 %}
-    <!-- 工具栏  靠右固定 -->
-    <div class="devTools">
-        <div class="btn-group">
-            <button type="button" class="btn bg-success text-light btn-sm" data-bs-toggle="tooltip" title="添加新内容">发布新内容</button>
-            <button type="button" class="btn dropdown-toggle dropdown-toggle-split bg-success text-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">文章</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">说说</a></li>
-                <!-- <li><hr class="dropdown-divider"></li> -->
-                <!-- <li><a class="dropdown-item" href="#">公告</a></li> -->
-            </ul>
-        </div>
-    </div>
-    <!-- 工具栏 -->
-    {% endif %}
     <!-- 内容 -->
     <div class="context" >
         {% if context|length == 0 %}
@@ -161,6 +144,43 @@
         {% endif %}
     </div>
     <!-- 内容 -->
+    <!--* 用户信息 -->
+    <div class="rightContainer">
+        <div class="container-User card">
+            <div class="userInfo">
+                <div class="user-logo">
+                    <img src="https://static.c4skg.top/c4skg/logo.jpg" class="rounded-circle" alt="">
+                </div>
+                <div class="username">C4skg</div>
+            </div>
+            <div class="level">
+                <div class="level-now">Lv.1</div>
+                <div class="level-process progress" title="300经验" data-bs-toggle="tooltip">
+                    <div class="progress-bar" style="width:30%"></div>
+                </div>
+                <div class="level-next">Lv.2</div>
+            </div>
+            <div class="follower">
+                <div class="follower-num content">
+                    <span class="num">10</span><span class="type">粉丝</span>
+                </div>
+                <div class="followed-num content">
+                    <span class="num">10</span><span class="type">关注</span>
+                </div>
+                <div class="article-num content">
+                    <span class="num">10</span><span class="type">文章</span>
+                </div>
+            </div>
+            <div class="nav">
+                <a href="{{ url_for('auth.attend') }}" target="_blank"><div class="btn">每日签到</div></a>
+                <a href="{{ url_for('auth.userInfo') }}" target="_blank"><div class="btn">个人中心</div></a>
+                <a href="{{ url_for('auth.logout') }}"><div class="btn">退出登录</div></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!--* 用户信息 -->
 </div>
 
 <!-- 右下角折叠 -->
@@ -187,80 +207,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block style %}
-<style>
-    .navbar{
-        border-bottom: 1px solid var(--border-color);
-        background: transparent!important;
-    }
-    .container{
-        background-color: transparent;
-    }
-    .context{
-        margin-top: 10px;
-        border-radius: 5px;
-        /* border: 1px solid var(--border-color); */
-    }
-    .main{
-        margin-top: 50px;
-    }
-    .devTools{
-        text-align: right;
-    }
-    .NoneTxt{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 60vh;
-        background-color: #00000020;
-    }
-    /* 文章标签样式 */
-    
-    .accordion .card{
-        margin: 5px 0px;
-    }
-    .accordion .title{
-        font-size: 20px;
-    }
-    .accordion .title:hover{
-        text-decoration: underline;
-    }
-    .accordion .collapse{
-        border-top: 1px solid var(--border-color);
-    }
-    .accordion .card .actions{
-        margin-top: 30px;
-    }
-    .accordion .card .actions .function .vote button{
-        color: rgba(5,109,232);
-        background-color: rgba(5,109,232,.1);
-    }
-    .accordion .card .actions .function .vote button[--is-activate]{
-        color: white;
-        background-color: #056de8;
-    }
-    .accordion .card .about{
-        display: flex;
-        align-items: center;
-        font-size: 13px;
-    }
-    .accordion .card .about .author{
-        /* padding-right: 10px; */
-        /* margin-right: 10px; */
-    }
-    /* 文章标签样式 */
-
-    /* 公告标签样式 */
-    .notice{
-        padding: 0 5%;
-    }
-    .releaseTime{
-        padding: 0 5%;
-        display: flex;
-        justify-content: space-between;
-        color: var(--second-font-color);
-    }
-</style>
 {% endblock %}
