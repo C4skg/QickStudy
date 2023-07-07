@@ -11,13 +11,14 @@ from .api.functions import generateImgByName
 from . import db , loginManager
 
 class Permission:
-    LOWER   = 0;  #!对于违反某些规定的用于给予最低权限，无法发布文章，仅能看文章和关注用户
-    BASE    = 1;  #^ 可以查看、签到、关注用户、写文章
+    BASE    = 0;  #!对于违反某些规定的用于给予最低权限，无法发布文章，仅能看文章和关注用户
+    USER    = 1;  #^ 可以查看、签到、关注用户、写文章
     ADVENCE = 2;  #* 发布五篇审核过后的文章后，自动升级为进阶用户，可以通过发布文章等方式积攒积分
     CONTROL = 4;  #& 审核文章，提升 BASE 用户权限，删除，修改文章状态,即进阶用户
     ADMIN   = 8;  #! 系统控制人
 
 class EventID:
+    NONE = -1;
     REGISTER = 1;
     LOGIN = 2;
     RESET = 3;
@@ -131,7 +132,7 @@ class User(UserMixin,db.Model):
             raise InfoError("Your token is invalid");
         
         # if the token is valid
-        eventid = data.get('type') or -1;
+        eventid = data.get('type') or EventID.NONE;
         if eventid != EventID.REGISTER:
             raise InfoError("Your token is invalid")
         
@@ -177,7 +178,7 @@ class User(UserMixin,db.Model):
             raise InfoError("Your token is invalid");
         
         # if the token is valid
-        eventid = data.get('type') or -1;
+        eventid = data.get('type') or EventID.NONE;
         if eventid != EventID.RESET:
             raise InfoError("Your token is invalid")
         
@@ -197,10 +198,12 @@ class User(UserMixin,db.Model):
     
     @property
     def getId(self):
+        '''
+        for login_user() require
+        '''
         return self.id;
 
 class AnonymousUser(AnonymousUserMixin):
-
     def can(self,permissions):
         return False
     
