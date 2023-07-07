@@ -49,12 +49,13 @@
                     <img src="{{ url_for('themes.static',path='img/search.png') }}" alt="">
                 </button>
             </form>
-            <div class="user">
-                <div class="userLogo">
-                    <img src="" alt="">
+            <a href="{{ url_for('auth.userInfo') }}" target="_blank">
+                <div class="userInfo d-flex btn btn-sm">
+                    <div class="user-logo">
+                        <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
+                    </div>
                 </div>
-                <div class="extends"></div>
-            </div>
+            </a>
         </div>
     </div>
 </nav>
@@ -76,11 +77,6 @@
                     <div class="d-flex justify-content-between">
                         {% if e.type == 'article' %}
                         <div class="text-overflow button title"  data-bs-toggle="collapse" href="#{{name}}">{{name}}</div>
-                        <div class="article d-flex">
-                            <div class="infos d-flex">
-                                <div class="badge bg-secondary d-flex align-items-center mx-1">{{e.time}}</div>
-                            </div>
-                        </div>
                         {% endif %}
                     </div>
                     {% if e.type == 'notice' %}
@@ -98,6 +94,8 @@
                         <!-- !author -->
                         <div class="about">
                             <span class="author">{{e.author}}</span>
+                            <span class="slash">&nbsp;·&nbsp;</span>
+                            <span class="time">{{e.time}}</span>
                         </div>
                         <!-- !功能 - 文章-->
                         <div class="function">
@@ -148,10 +146,12 @@
     <div class="rightContainer">
         <div class="container-User card">
             <div class="userInfo">
-                <div class="user-logo">
-                    <img src="https://static.c4skg.top/c4skg/logo.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="username">C4skg</div>
+                <a href="{{ url_for('auth.userInfo') }}" target="_blank">
+                    <div class="user-logo">
+                        <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
+                    </div>
+                </a>
+                <div class="username">{{ user.username }}</div>
             </div>
             <div class="level">
                 <div class="level-now">Lv.1</div>

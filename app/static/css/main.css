@@ -3,6 +3,21 @@
     border-bottom: 1px solid var(--border-color);
     background: transparent!important;
 }
+
+/* nav userInfo */
+.navbar .userInfo{
+    display: none !important;
+}
+.navbar .userInfo .user-logo{
+    width: 40px;
+    padding: 5px 0;
+}
+.navbar .userInfo .user-logo img{
+    width: 100%;
+    height: 100%;
+}
+/* nav userInfo */
+
 .container{
     background-color: transparent;
 }
@@ -18,7 +33,7 @@
 }
 /* 文章标签样式 */
 .accordion{
-    width: 70%;
+    width: 75%;
 }
 .accordion .card{
     margin: 5px 0px;
@@ -47,6 +62,7 @@
     display: flex;
     align-items: center;
     font-size: 13px;
+    color: var(--second-font-color);
 }
 /* 文章标签样式 */
 
@@ -62,7 +78,7 @@
 }
 /* rightContainer */
 .rightContainer{
-    width: 30%;
+    width: 25%;
     margin: 5px 0 5px 5px;
 }
 /* rightContainer */
@@ -78,13 +94,13 @@
     align-items: center;
     margin-top: 10px;
 }
-.userInfo .user-logo{
+.container-User .userInfo .user-logo{
     width: 80px;
 }
-.userInfo .username{
+.container-User .userInfo .username{
     font-size: 20px;
 }
-.userInfo .user-logo img{
+.container-User .userInfo .user-logo img{
     width: 100%;
     height: 100%;
 }
@@ -121,7 +137,7 @@
 }
 
 .container-User .nav{
-    width: 80%;
+    width: 90%;
     margin: auto;
     border-top: 1px solid var(--border-color);
     display: flex;
@@ -138,10 +154,14 @@
 }
 /* user */
 @media screen and (max-width: 1400px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+    .navbar .userInfo{
+        display: inline-block !important;
+    }
     .accordion{
         width: 100%;
     }
     .rightContainer{
         display: none !important;
     }
+    
 }

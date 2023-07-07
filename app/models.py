@@ -5,6 +5,9 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 from uuid import uuid4
 from sqlalchemy.dialects.mysql import LONGTEXT
+
+from .api.functions import generateImgByName
+
 from . import db , loginManager
 
 class Permission:
@@ -70,6 +73,9 @@ class User(UserMixin,db.Model):
     pwd_hash = db.Column('password',db.String(128))
     # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
+    #* LOGO
+    logo = db.Column('logo',LONGTEXT)
+
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
     permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
@@ -88,6 +94,9 @@ class User(UserMixin,db.Model):
     @pwd.setter
     def pwd(self, password):
         self.pwd_hash = generate_password_hash(password)
+        self.logo = generateImgByName(self.username)
+
+
 
     def verifyPassword(self,pwd):
         return check_password_hash(self.pwd_hash,pwd)
@@ -206,10 +215,10 @@ def load_user(user_id):
 
 
 def initDB():
-    admin = User.query.filter_by(name='admin').first()
+    admin = User.query.filter_by(username='admin').first()
     if not admin:
         cache = str(uuid4())[:6]
-        user = User(name='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
+        user = User(username='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
         db.session.add(user)
         db.session.commit()
         print( 

@@ -9,7 +9,7 @@ from . import main
 @login_required
 def index():
     datas = {
-        'permission' : current_user.permission,
+        'user': current_user,
         'context' : {
             'Inner文章内容内容内容内容':{
                 'type': 'article',

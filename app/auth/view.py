@@ -18,8 +18,12 @@ def before_request():
     if current_user.is_authenticated:
         pass;
 
+
 @auth.route('/login',methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'));
+
     username = request.form.get('username',False,type=str);
     pwd  = request.form.get('pwd',False,type=str);
 
@@ -30,7 +34,7 @@ def login():
         }
         user = User.query.filter((User.username == username) | (User.email == username)).first()
         if user and user.verifyPassword(pwd):
-            login_user(user)
+            login_user(user,remember=True)
             e['status'] = '1';
             if user.confirmed == False:
                 token = request.args.get('token','')
