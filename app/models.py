@@ -75,7 +75,7 @@ class User(UserMixin,db.Model):
     # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
     #* LOGO
-    logo = db.Column('logo',LONGTEXT)
+    logo = db.Column('logo',LONGTEXT,default=generateImgByName(username))
 
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
@@ -95,7 +95,6 @@ class User(UserMixin,db.Model):
     @pwd.setter
     def pwd(self, password):
         self.pwd_hash = generate_password_hash(password)
-        self.logo = generateImgByName(self.username)
 
 
 
