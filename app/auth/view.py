@@ -6,7 +6,7 @@ from string import ascii_letters,digits
 from flask_login import current_user
 from flask_login import login_required,login_user,logout_user
 
-from ..models import User,UserAttend,InfoError
+from ..models import User,UserAttend,InfoError,Permission
 from ..email import send_email
 from .verify import isVaildRegister,registerUserExisit
 from .. import db
@@ -34,7 +34,11 @@ def login():
         }
         user = User.query.filter((User.username == username) | (User.email == username)).first()
         if user and user.verifyPassword(pwd):
-            login_user(user,remember=True)
+            if user.permission >= Permission.CONTROL:
+                login_user(user)
+            else:
+                login_user(user,remember=True)
+
             e['status'] = '1';
             if user.confirmed == False:
                 token = request.args.get('token','')
@@ -43,6 +47,7 @@ def login():
                 e['router'] = request.args.get('next',url_for('main.index'),type=str);
 
         return e;
+
     return render_template('auth/login.html')
 
 

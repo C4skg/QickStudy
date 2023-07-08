@@ -4,12 +4,17 @@ from flask_login import login_required
 from flask_login import current_user
 
 from . import main
+from ..models import UserExperience
 
 @main.route('/',methods=['GET','POST'])
 @login_required
 def index():
     datas = {
         'user': current_user,
+        'level': {
+            'now': UserExperience.getLevel(current_user.userInfo[0].experience),
+            'value': current_user.userInfo[0].experience
+        },
         'context' : {
             'Inner文章内容内容内容内容':{
                 'type': 'article',
@@ -34,7 +39,10 @@ def index():
             }
         }
     }
+    datas['level']['nextV'] = UserExperience.getNextValue(datas['level']['now'])
+    datas['level']['length'] = (datas['level']['value'] / (1 if datas['level']['nextV'] == 0 else datas['level']['nextV'])) * 100
     
+
 
     return render_template('index.html',**datas);
 

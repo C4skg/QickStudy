@@ -154,21 +154,21 @@
                 <div class="username">{{ user.username }}</div>
             </div>
             <div class="level">
-                <div class="level-now">Lv.1</div>
-                <div class="level-process progress" title="300经验" data-bs-toggle="tooltip">
-                    <div class="progress-bar" style="width:30%"></div>
+                <div class="level-now">Lv.{{ level.now }}</div>
+                <div class="level-process progress" title="{{level.value}}/{{level.nextV}}" data-bs-toggle="tooltip">
+                    <div class="progress-bar" style="width:{{level.length}}%"></div>
                 </div>
-                <div class="level-next">Lv.2</div>
+                <div class="level-next">Lv.{{ level.now+1 }}</div>
             </div>
             <div class="follower">
                 <div class="follower-num content">
-                    <span class="num">10</span><span class="type">粉丝</span>
+                    <span class="num">{{ user.followers | length }}</span><span class="type">粉丝</span>
                 </div>
                 <div class="followed-num content">
-                    <span class="num">10</span><span class="type">关注</span>
+                    <span class="num">{{ user.followTarget | length }}</span><span class="type">关注</span>
                 </div>
                 <div class="article-num content">
-                    <span class="num">10</span><span class="type">文章</span>
+                    <span class="num">{{ user.article | length }}</span><span class="type">文章</span>
                 </div>
             </div>
             <div class="nav">

@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 from uuid import uuid4
 from sqlalchemy.dialects.mysql import LONGTEXT
+from sqlalchemy import event
 
 from .api.functions import generateImgByName
 
@@ -29,6 +30,36 @@ class ArticleStatus:
     WAIT = 2;
     NORMAL = 3;
 
+class UserExperience:
+    LEVEL = {
+        '1': 0,
+        '2': 100,
+        '3': 300,
+        '4': 1000,
+        '5': 3000,
+        '6': 10000,
+        '7': 30000,
+        '8': 100000
+    }
+
+    @staticmethod
+    def getLevel(exp:int) -> int:
+        '''
+        返回当前等级
+        '''
+        for i,v in enumerate(UserExperience.LEVEL.values()):  
+            if exp < v:
+                return i;
+        return i;
+      
+    @staticmethod
+    def getNextValue(LV:int) -> int:
+        '''
+        返回下个等级需要的经验
+        '''
+        value = UserExperience.LEVEL.get(str(LV+1)) or 0
+        
+        return value;
     
 
 
@@ -50,6 +81,12 @@ class UserAttend(db.Model):
 
     def __repr__(self):
         return '<UserAttend %s>' % self.userId
+
+class UserInfo(db.Model):
+    __tablename__ = 'Qc_UserInfo'
+    id = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);
+    experience = db.Column(db.Integer,default=0);
+    score = db.Column(db.Integer,default=0); #* 积分
 
 class Follow(db.Model):
     __tablename__ = 'follows'
@@ -75,7 +112,7 @@ class User(UserMixin,db.Model):
     # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
     #* LOGO
-    logo = db.Column('logo',LONGTEXT,default=generateImgByName(username))
+    logo = db.Column('logo',LONGTEXT)
 
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
@@ -86,6 +123,8 @@ class User(UserMixin,db.Model):
     followers = db.relationship('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
 
     article = db.relationship('Article',backref='Article',lazy='select')
+
+    userInfo = db.relationship('UserInfo',backref='UserInfo',lazy='select')
 
 
     @property
@@ -202,6 +241,17 @@ class User(UserMixin,db.Model):
         '''
         return self.id;
 
+def beforeInsertEvent(mapper, connection, target):
+    '''
+        generate the logo by username while creating user;
+    '''
+    target.logo = generateImgByName(target.username.upper())
+    userInfo = UserInfo()
+    target.userInfo.append(userInfo);
+
+event.listen(User,'before_insert',beforeInsertEvent);
+
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self,permissions):
         return False
@@ -226,4 +276,4 @@ def initDB():
         print( 
             'username:','admin',
             'password:',cache
-         )
+        )

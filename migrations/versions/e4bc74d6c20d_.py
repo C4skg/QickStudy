@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f172f18ede66
+Revision ID: e4bc74d6c20d
 Revises: 
-Create Date: 2023-07-07 21:57:39.129141
+Create Date: 2023-07-08 16:46:22.485326
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = 'f172f18ede66'
+revision = 'e4bc74d6c20d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,6 +37,13 @@ def upgrade():
     sa.Column('attendDate', sa.DateTime(), nullable=True),
     sa.Column('userId', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['userId'], ['Qc_Users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('Qc_UserInfo',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('experience', sa.Integer(), nullable=True),
+    sa.Column('score', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['Qc_Users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('articles',
@@ -66,6 +73,7 @@ def downgrade():
     op.drop_table('follows')
     op.drop_index(op.f('ix_articles_status'), table_name='articles')
     op.drop_table('articles')
+    op.drop_table('Qc_UserInfo')
     op.drop_table('Qc_UserAttend')
     op.drop_index(op.f('ix_Qc_Users_username'), table_name='Qc_Users')
     op.drop_index(op.f('ix_Qc_Users_permission'), table_name='Qc_Users')
