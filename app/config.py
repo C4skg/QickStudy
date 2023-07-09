@@ -16,6 +16,10 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
+    #REDIS
+    REDIS_URI = "8ceefcf67710.c.methodot.com"
+    REDIS_PORT = 30955
+
     #HTML INFO
     TITLE = 'QickStudy'
 

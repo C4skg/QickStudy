@@ -115,7 +115,7 @@ class User(UserMixin,db.Model):
     logo = db.Column('logo',LONGTEXT)
 
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
-    resetTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
+    resetTime = db.Column('resetTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
     permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
     attend = db.relationship('UserAttend',backref='UserAttend',lazy='select') #! 用户签到
@@ -226,7 +226,7 @@ class User(UserMixin,db.Model):
         if not user or user.username != data.get('name'):
             raise InfoError("token 参数异常");
 
-        if user.resetTime != user.sinceTime or (datetime.now() - user.resetTime).days < 1:
+        if user.resetTime != user.sinceTime and (datetime.now() - user.resetTime).days < 1:
             raise InfoError("距上次重置时间小于一天");
         
         user.pwd = newPassword
