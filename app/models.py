@@ -115,6 +115,7 @@ class User(UserMixin,db.Model):
     logo = db.Column('logo',LONGTEXT)
 
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
+    resetTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     confirmed = db.Column('confirmed',db.Boolean,default=False);
     permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
     attend = db.relationship('UserAttend',backref='UserAttend',lazy='select') #! 用户签到
@@ -155,9 +156,6 @@ class User(UserMixin,db.Model):
             payload=data,
             key=key
         )
-    
-    def __repr__(self):
-        return '<Qc_User %s>' % self.id
 
     def confirmToken(self,token):
         # if the token is right
@@ -196,7 +194,7 @@ class User(UserMixin,db.Model):
             'id': self.id,
             'name': self.username,
             'type': EventID.RESET,
-            'retime': datetime.now()
+            'retime': datetime.timestamp(datetime.now())
         }
         key = current_app.config['SECRET_KEY']
         return jwt.encode(
@@ -220,19 +218,25 @@ class User(UserMixin,db.Model):
         if eventid != EventID.RESET:
             raise InfoError("Your token is invalid")
         
-        time = data.get('retime')
-        if time and (datetime.now() - time).seconds > 3600:
-            raise InfoError("token 超时激活，请重新注册");
+        time = data.get('retime') or 0
+        if time and (datetime.now() - datetime.fromtimestamp(time)).seconds > 3600:
+            raise InfoError("token 超时");
 
-        user = User.query.get(data.get('id'))
-        if user.username != data.get('name'):
-            return False;
-    
-        user.password = newPassword
-        db.session.add(user);
+        user = User.query.get(data.get('id'));
+        if not user or user.username != data.get('name'):
+            raise InfoError("token 参数异常");
+
+        if user.resetTime != user.sinceTime or (datetime.now() - user.resetTime).days < 1:
+            raise InfoError("距上次重置时间小于一天");
+        
+        user.pwd = newPassword
+        user.resetTime = datetime.now()
+        db.session.merge(user);
 
         return True;
 
+    def __repr__(self):
+        return '<Qc_User %s>' % self.id
     
     @property
     def getId(self):
@@ -244,6 +248,7 @@ class User(UserMixin,db.Model):
 def beforeInsertEvent(mapper, connection, target):
     '''
         generate the logo by username while creating user;
+        create userInfo;
     '''
     target.logo = generateImgByName(target.username.upper())
     userInfo = UserInfo()

@@ -1,67 +1,53 @@
 {% extends "themes/base.html" %}
 {% block extends %}
     <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/main.css') }}">
 {% endblock %}
 <!-- ^body -->
 {% block body%}
 
 <div class="container-sm p-5" id="login-container" data-dark-change="color;back">
-    <h1>
+    <h2>
         Hi!
-    </h1>
+    </h2>
     <P>欢迎使用 <kbd> QickStudy </kbd></P>
     <div class="btn modeButton change">
         <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
     </div>
-    <form id="login-form" class="was-validated">
-        <div class="mb-3 mt-3">
-            <label for="uname" class="form-label">用户名：</label>
+    <form id="login-form" class="was-validated formarea">
+        <div class="mb-3 mt-3 item">
+            <label for="uname" class="form-label">账号</label>
             <input type="text" class="form-control" id="uname" placeholder="请输入用户名或邮箱" name="username" required>
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请填写此字段。</div>
         </div>
-        <div class="mb-3">
-            <label for="pwd" class="form-label">密码：</label>
+        <div class="mb-3 item">
+            <label for="pwd" class="form-label">密码</label>
             <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required>
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请填写此字段。</div>
         </div>
         <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+        <input type="hidden" value="{{ type }}" name="type">
         <button id="login_button" type="submit" class="container btn btn-primary mt-auto">登录
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
-        <div class="toRegister" style="text-align: center;">
-            <a href="{{ url_for('auth.register') }}">注册</a>
-        </div>
     </form>
+    <div class="extends d-flex justify-content-between">
+        <!-- <a href="{{ url_for('auth.register') }}">注册</a> -->
+        <a href="{{ url_for('auth.register') }}">
+            <div class="btn text-secondary">
+                注册
+            </div>
+        </a>
+        <a href="{{ url_for('auth.reset') }}">
+            <div class="btn text-secondary">
+                忘记密码
+            </div>
+        </a>
+    </div>
 </div>
 
-{% endblock %}
-
-<!-- ^style -->
-{% block style %}
-<style>
-body{
-    position: relative;
-}
-#login-container{
-    max-width: 500px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    background: transparent!important;
-    box-shadow: 0px 0px 5px #888;
-}
-.modeButton{
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-.hidden{
-    display: none!important;
-}
-</style>
 {% endblock %}
 
 <!-- ^script -->

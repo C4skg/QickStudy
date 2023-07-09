@@ -1,6 +1,5 @@
 {% extends "themes/base.html" %}
 {% block extends %}
-    <script src="{{ url_for('themes.static',path='js/sweetalert.min.js') }}"></script>
     <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/main.css') }}">
 {% endblock %}
@@ -9,37 +8,51 @@
 
 <div class="container-sm p-5" id="login-container" data-dark-change="color;back">
     <h2>
-        Hi!
+        密码重置
     </h2>
-    <P>欢迎注册 <kbd> QickStudy </kbd></P>
+    <P>如果忘记密码，可通过邮箱号进行重置</P>
     <div class="btn modeButton change">
         <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
     </div>
     <form id="login-form" class="was-validated formarea">
+        {% if step == 1 %}
         <div class="mb-2 item">
             <label for="email" class="form-label">邮箱</label>
             <input type="text" class="form-control" id="email" placeholder="请输入邮箱" name="email" required pattern="^\w+@\w+\.[a-z]{1,}$">
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请输入正确格式的邮箱</div>
         </div>
+        <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+        <input type="hidden" value="{{ type }}" name="type">
+        <button id="login_button" type="submit" class="container btn btn-primary mt-auto">发送重置邮件
+            <!-- <span class="spinner-border spinner-border-sm"></span> -->
+        </button>
+        {% else %}
         <div class="mb-2 item">
             <label for="pwd" class="form-label">密码</label>
-            <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
+            <input type="password" class="form-control" id="pwd" placeholder="输入新的密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
             <div class="valid-feedback">有效的。</div>
-            <div class="invalid-feedback">密码中应至少包括字母和数字且长度大于6位。</div>
+            <div class="invalid-feedback">密码中应至少包括字母和数字且长度大于6位</div>
         </div>
         <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
         <input type="hidden" value="{{ type }}" name="type">
-        <div class="form-button">
-            <button id="login_button" type="submit" class="btn btn-primary">
-                注册
-            </button>
-            <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">
-                登录
-            </a>
-            
-        </div>
+        <button id="login_button" type="submit" class="container btn btn-primary mt-auto">重置
+            <!-- <span class="spinner-border spinner-border-sm"></span> -->
+        </button>
+        {% endif %}
     </form>
+    <div class="extends d-flex justify-content-between">
+        <a href="{{ url_for('auth.login') }}">
+            <div class="btn text-secondary">
+                登录
+            </div>
+        </a>
+        <a href="{{ url_for('auth.register') }}">
+            <div class="btn text-secondary">
+                注册
+            </div>
+        </a>
+    </div>
 </div>
 
 {% endblock %}
@@ -56,7 +69,7 @@
     button.click(function(){
         let signal = document.getElementsByTagName("form")[0].checkValidity();
         if(!signal) return false;
-
+        
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
         setTimeout(()=>{
@@ -64,14 +77,21 @@
                 type:'post',
                 data: form.serialize(),
                 success:(e)=>{
-                    if(e['status'] == 1){
-                        swal('注册成功',e['info'],'success');
+                    if(e['status'] == '1'){
+                        if(e['step'] == 1){
+                            swal("成功",e['info'], "success")
+                        }else{
+                            swal("恭喜",e['info'], "success").then(()=>{
+                                let router = e['router'] ?? '/';
+                                window.location = router;
+                            })
+                        }
                     }else{
-                        swal('注册失败',e['info'],'error');
+                        swal("失败",e['info'], "error");
                     }
-                }, 
+                },
                 error:(e)=>{
-                    swal("注册失败","网络错误", "error");
+                    swal("失败","网络错误", "error");
                 },
                 complete:(e)=>{
                     button.children('span').remove();
