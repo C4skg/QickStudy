@@ -10,6 +10,7 @@ class Config:
     MAIL_PASSWORD='fhxgqmfgnryliabf'  #!可在邮箱设置中获取
     MAIL_USE_SSL=True
     MAIL_USE_TLS=False
+    MAIL_DEBUG = False
 
     #SQL
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@127.0.0.1:3306/QickStudy'

@@ -3,16 +3,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from flask_mail import Mail
 from flask_login import LoginManager
-
-from .config import config
+import redis
+from .config import Config,config
 
 csrf = CSRFProtect()
 mail = Mail()
 db = SQLAlchemy()
-
 loginManager = LoginManager()
 loginManager.login_view = 'auth.login'
-        
+
+redisClient = redis.Redis(host=Config.REDIS_URI,port=Config.REDIS_PORT)
+
+
 def create_app( envname:str = 'ProductionEnv' ):
     '''
     Default mode is productionenv
