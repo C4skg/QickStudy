@@ -1,13 +1,14 @@
 from flask import request,session
 from flask import render_template,url_for,redirect
 from random import choices
-from datetime import datetime
+from datetime import datetime,timedelta
 from string import ascii_letters,digits
 
 from flask_login import current_user
 from flask_login import login_required,login_user,logout_user
 
 from ..models import User,UserAttend,InfoError,Permission,EventID
+from ..models import redisClient
 from ..email import send_email
 from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
 from .. import db
@@ -73,6 +74,11 @@ def register():
                         'status': -1,
                         'info': '该邮箱已注册'
                     }
+                if redisClient.exists(email) and datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode())) < timedelta(minutes=2):
+                    return {
+                        'status': -1,
+                        'info': '邮件已发送，请稍后再试'
+                    }
                 user = User(
                     username='用户_'+''.join(choices(list(ascii_letters+digits),k=6)),
                     pwd = pwd,
@@ -92,6 +98,8 @@ def register():
                     'host': request.url_root,
                     'link': url_for('auth.login',token=token)
                 }
+                redisClient.hset(email,'time',datetime.now().timestamp())
+                redisClient.expire(email,20)
                 send_email(user.email,'请确认你的账户','auth/mail/confirm.html',**mailInfo)
 
                 return {
@@ -138,6 +146,7 @@ def reset():
                             'link': url_for('auth.reset',token=token,step=2),
                             'token': token
                         }
+
                         send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
                         info['status'] = 1
                         info['info'] = '已发送重置密码邮件,清注意查收'
