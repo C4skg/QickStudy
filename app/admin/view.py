@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import session
+from flask import current_app
 
 from . import admin
 

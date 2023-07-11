@@ -202,6 +202,9 @@ class User(UserMixin,db.Model):
             payload=data,
             key=key
         )
+    
+    def isAdministrator(self):
+        return self.permission == Permission.ADMIN
 
     @staticmethod
     def resetPassword(token,newPassword):
@@ -253,7 +256,6 @@ def beforeInsertEvent(mapper, connection, target):
     target.logo = generateImgByName(target.username.upper())
     userInfo = UserInfo()
     target.userInfo.append(userInfo);
-
 event.listen(User,'before_insert',beforeInsertEvent);
 
 

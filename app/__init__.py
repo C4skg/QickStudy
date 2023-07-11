@@ -43,7 +43,7 @@ def create_app( envname:str = 'ProductionEnv' ):
     app.register_blueprint(api_BluePrint,url_prefix='/api')
     app.register_blueprint(auth_BluePrint,url_prefix='/user')
     app.register_blueprint(themes_BluePrint,url_prefix='/themes')
-    app.register_blueprint(admin_BluePrint,url_prefix='/admin')
+    app.register_blueprint(admin_BluePrint,url_prefix='/@dm1n')
     app.register_blueprint(main_BluePrint)
 
     return app;

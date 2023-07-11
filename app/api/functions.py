@@ -1,16 +1,14 @@
-from flask import session,g
-from flask import redirect,url_for,request
+from flask import redirect,url_for
+from flask import request
 
 import os
 from base64 import b64encode
 from io import BytesIO
 from PIL import Image,ImageFont
-from . import api
 from PIL import ImageDraw
 
-'''
-更具字符串首个字符生成图片
-'''
+from . import api
+
 def generateImgByName(name:str) -> str:
     '''
         default size : 100*100
