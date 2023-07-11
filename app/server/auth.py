@@ -37,6 +37,12 @@ def login():
                     e['router'] = url_for('server.confirm',token=token);
                 else:
                     e['router'] = request.args.get('next',url_for('main.index'),type=str);
+            else:
+                pass
+                ip = request.remote_addr
+                redisClient.hset(EventID.LOGIN,ip,True)
+                redisClient.expire(EventID.LOGIN,3600)
+
 
             return e;
 

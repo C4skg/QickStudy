@@ -6,7 +6,6 @@ from . import admin
 
 @admin.before_request
 def before_request():
-    print(current_user.is_authenticated)
     if current_user.is_authenticated:
         if current_user.isAdministrator():
             pass;
