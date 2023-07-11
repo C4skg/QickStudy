@@ -5,8 +5,9 @@ import os
 from base64 import b64encode
 from io import BytesIO
 from PIL import Image,ImageFont
-from . import api
 from PIL import ImageDraw
+
+from . import api
 
 '''
 更具字符串首个字符生成图片
