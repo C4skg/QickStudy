@@ -26,29 +26,37 @@
 1. 安装依赖
 
    ```bash
-    conda create -n QickEnv python=3.7
-    conda activate QickEnv
-    cd requirements
-    pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+   conda create -n QickEnv python=3.7
+   conda activate QickEnv
+   cd requirements
+   pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
 2. 启动命令
 
-   启动前需开启 `mysql` 数据库，并编辑 `config.py` 中的 `SQLALCHEMY_DATABASE_URI` 值
+   1.启动前需开启 `mysql` 数据库，并编辑 `config.py` 中的 `SQLALCHEMY_DATABASE_URI` 值
 
    ```python
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymsql://用户名:密码@ip:port/数据库名'
+   SQLALCHEMY_DATABASE_URI = 'mysql+pymsql://用户名:密码@ip:port/数据库名'
+   ```
+   2.项目依赖了 `redis` 作为中间件
+   
+   其中，`REDIS_PORT` 字段为 `int` 类型
+   ```python
+   #REDIS
+   REDIS_URI = "ip"
+   REDIS_PORT = port
    ```
 
    部署
 
    ```bash
-    python QickStudy.py db deploy
+   python QickStudy.py db deploy
    ```
 
    启动服务
 
    ```bash
-    python QickStudy.py runserver -h ip -p port --threaded
+   python QickStudy.py runserver -h ip -p port --threaded
    ```
 
 ### 0x04 所参考的开源项目
