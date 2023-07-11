@@ -54,9 +54,6 @@ def reset():
     return render_template('auth/reset.html',**data)
 
 
-
-
-
 @auth.route('/userInfo')
 @login_required
 def userInfo():

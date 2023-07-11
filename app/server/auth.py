@@ -2,9 +2,7 @@ from flask import request
 from flask import render_template,url_for,redirect
 from flask_login import current_user
 from flask_login import login_user,login_required,logout_user
-
 from datetime import datetime,timedelta
-
 
 from ..models import User,EventID,Permission,InfoError
 from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
