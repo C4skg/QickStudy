@@ -29,6 +29,7 @@
         </div>
         <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
         <input type="hidden" value="{{ type }}" name="type">
+        <input type="hidden" value="{{ token }}" name="token">
         <button id="login_button" type="submit" class="container btn btn-primary mt-auto">登录
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
@@ -67,6 +68,7 @@
         button.attr('disabled','1');
         setTimeout(()=>{
             $.ajax({
+                url: "{{ url_for('server.login') }}",
                 type:'post',
                 data: form.serialize(),
                 success:(e)=>{

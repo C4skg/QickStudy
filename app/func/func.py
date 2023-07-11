@@ -1,28 +1,49 @@
-from flask import request,session
-from flask import redirect,url_for,render_template_string
+import os
+from base64 import b64encode
+from io import BytesIO
+from PIL import Image,ImageFont,ImageDraw
 from random import randint,sample
 from string import digits,ascii_letters
 
-from PIL import Image,ImageFont,ImageDraw
-from io import BytesIO
-from base64 import b64encode
-import os
+'''
+更具字符串首个字符生成图片
+'''
+def generateImgByName(name:str) -> str:
+    '''
+        default size : 100*100
+        @return: base64 encode data
+        
+        @tips: <img src='data:image/png;base64,data'/>
+    '''
+    name = name.upper()
+    width = 100
+    height = 100
+    img = Image.new('RGB',(width,height),(11,94,215))
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype(
+        os.path.join(os.getcwd() , 'font/DK.ttf'),
+        80
+    )
+    fw,fh = font.getsize(name[0]);
 
-from . import api
+    draw.text(
+        ((width - fw)/2,(height - fh)/2),
+        name[0],
+        font=font,
+        fill=(255,255,255)
+    )
+    buffer = BytesIO()
+    img.save(buffer,'png')
+    
+    return b64encode(buffer.getvalue()).decode()
 
-@api.route('/verifyCode')
-def verifyCode():
-    width = request.args.get('w',120,int)
-    height = request.args.get('h',50,int)
-    data,code = verifyImgCode().getImgCode();
-    return render_template_string(
-        '''
-        <img src='data:image/png;base64,{{data}}' />
-        ''',
-        data = data
-    );
-
-
+'''
+生产随机字符串
+'''
+def getRandomStr(nums:int) -> str:
+    return ''.join(
+            sample(digits + ascii_letters , k=nums)
+        )
 
 class verifyImgCode:
     '''

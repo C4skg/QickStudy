@@ -1,14 +1,16 @@
 from flask import abort,redirect,url_for
-from flask import session
 from flask_login import current_user
-from ..models import User
+from flask_login import login_required
 
 from . import admin
 
 @admin.before_request
 def before_request():
-    user = session.get('user');
-    # if not user :
-    #     return redirect(url_for('auth.UserLogin'));
-    # if user != 'C4skg':
-    #     abort(403);
+    print(current_user.is_authenticated)
+    if current_user.is_authenticated:
+        if current_user.isAdministrator():
+            pass;
+        else:
+            abort(404)
+    else:
+        return redirect(url_for('auth.login'))

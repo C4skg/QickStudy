@@ -3,11 +3,10 @@ from flask import current_app
 from flask_login import UserMixin,AnonymousUserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
-from uuid import uuid4
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy import event
 
-from .api.functions import generateImgByName
+from .func import generateImgByName,getRandomStr
 
 from . import db , loginManager
 
@@ -136,10 +135,15 @@ class User(UserMixin,db.Model):
     def pwd(self, password):
         self.pwd_hash = generate_password_hash(password)
 
-
-
     def verifyPassword(self,pwd):
         return check_password_hash(self.pwd_hash,pwd)
+
+
+    '''
+    verify is Administrator
+    '''
+    def isAdministrator(self):
+        return self.permission == Permission.ADMIN
 
     def generateConfirmToken(self,time:int=3600):
         header = {'alg': 'HS256'}
@@ -274,7 +278,7 @@ def load_user(user_id):
 def initDB():
     admin = User.query.filter_by(username='admin').first()
     if not admin:
-        cache = str(uuid4())[:6]
+        cache = getRandomStr(6)
         user = User(username='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
         db.session.add(user)
         db.session.commit()

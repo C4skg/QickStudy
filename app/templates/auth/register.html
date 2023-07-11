@@ -61,6 +61,7 @@
         button.attr('disabled','1');
         setTimeout(()=>{
             $.ajax({
+                url: "{{ url_for('server.register') }}",
                 type:'post',
                 data: form.serialize(),
                 success:(e)=>{
