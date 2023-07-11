@@ -7,7 +7,8 @@ from . import admin
 
 @admin.before_request
 def before_request():
-    if current_user.isAdministrator():
-        pass;
-    else:
-        abort(404)
+    user = session.get('user');
+    # if not user :
+    #     return redirect(url_for('auth.UserLogin'));
+    # if user != 'C4skg':
+    #     abort(403);

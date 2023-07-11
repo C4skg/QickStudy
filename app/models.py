@@ -6,13 +6,10 @@ from datetime import datetime
 from uuid import uuid4
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy import event
-import redis
 
 from .api.functions import generateImgByName
 
 from . import db , loginManager
-
-redisClient = redis.Redis(host=current_app.config['REDIS_URI'],port=current_app.config['REDIS_PORT'])
 
 class Permission:
     BASE    = 0;  #!对于违反某些规定的用于给予最低权限，无法发布文章，仅能看文章和关注用户
@@ -205,9 +202,6 @@ class User(UserMixin,db.Model):
             payload=data,
             key=key
         )
-    
-    def isAdministrator(self):
-        return self.permission == Permission.ADMIN
 
     @staticmethod
     def resetPassword(token,newPassword):
@@ -259,6 +253,7 @@ def beforeInsertEvent(mapper, connection, target):
     target.logo = generateImgByName(target.username.upper())
     userInfo = UserInfo()
     target.userInfo.append(userInfo);
+
 event.listen(User,'before_insert',beforeInsertEvent);
 
 
