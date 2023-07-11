@@ -8,9 +8,9 @@ from flask_login import current_user
 from flask_login import login_required,login_user,logout_user
 
 from ..models import User,UserAttend,InfoError,Permission,EventID
+from ..models import redisClient
 from ..email import send_email
 from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
-from .. import redisClient
 from .. import db
 from . import auth
 
@@ -74,6 +74,11 @@ def register():
                         'status': -1,
                         'info': '该邮箱已注册'
                     }
+                if redisClient.exists(email) and datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode())) < timedelta(minutes=2):
+                    return {
+                        'status': -1,
+                        'info': '邮件已发送，请稍后再试'
+                    }
                 user = User(
                     username='用户_'+''.join(choices(list(ascii_letters+digits),k=6)),
                     pwd = pwd,
@@ -93,6 +98,8 @@ def register():
                     'host': request.url_root,
                     'link': url_for('auth.login',token=token)
                 }
+                redisClient.hset(email,'time',datetime.now().timestamp())
+                redisClient.expire(email,20)
                 send_email(user.email,'请确认你的账户','auth/mail/confirm.html',**mailInfo)
 
                 return {
@@ -126,34 +133,25 @@ def reset():
             if email and isVaildEmail:
                 user = User.query.filter_by(email=email).first()
                 if user:
-                    if (
-                        redisClient.exists(email) and
-                        int(redisClient.hget(email,'type').decode()) == EventID.RESET and 
-                        datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode())) < timedelta(minutes=2)
-                    ):
-                        info['info'] = '已发送重置邮件，请2分钟后再试'
+                    if user.resetTime == user.sinceTime or (datetime.now() - user.resetTime).days >= 1:
+                        token = user.generateResetToken()
+                        #! 发送邮件
+                        mailInfo = {
+                            'title': '重置密码',
+                            'context': '请确实是本人操作，并根据下面提示进行重置密码',
+                            'tips': '点击下方按钮进行密码重置',
+                            'button': '点击此处重置密码',
+                            'user': user,
+                            'host': request.url_root,
+                            'link': url_for('auth.reset',token=token,step=2),
+                            'token': token
+                        }
+
+                        send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
+                        info['status'] = 1
+                        info['info'] = '已发送重置密码邮件,清注意查收'
                     else:
-                        if user.resetTime == user.sinceTime or (datetime.now() - user.resetTime).days >= 1:
-                            token = user.generateResetToken()
-                            #! 发送邮件
-                            mailInfo = {
-                                'title': '重置密码',
-                                'context': '请确实是本人操作，并根据下面提示进行重置密码',
-                                'tips': '点击下方按钮进行密码重置',
-                                'button': '点击此处重置密码',
-                                'user': user,
-                                'host': request.url_root,
-                                'link': url_for('auth.reset',token=token,step=2),
-                                'token': token
-                            }
-                            redisClient.hset(email,'time',datetime.now().timestamp())
-                            redisClient.hset(email,'type',EventID.RESET)
-                            redisClient.expire(email,20)
-                            send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
-                            info['status'] = 1
-                            info['info'] = '已发送重置密码邮件,清注意查收'
-                        else:
-                            info['info'] = '距上次重置时间小于一天'
+                        info['info'] = '距上次重置时间小于一天'
 
             return info;
         else:
