@@ -126,8 +126,8 @@ def reset():
                             return resetResponse['3000'];
                         else:
                             return resetResponse['3006'];
-            else:
-                return resetResponse['3004'];
+            #* 若无法匹配邮箱
+            return resetResponse['3004'];
         #* 步骤判断
         elif step == 2:
             pwd = request.form.get('pwd','',type=str);
@@ -141,7 +141,7 @@ def reset():
                     return resetResponse['3003']
             else:
                 return resetResponse['3005'];
-    
+
     return resetResponse['3008'];
 
 @server.route('/confirm/<token>')
