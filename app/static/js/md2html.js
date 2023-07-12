@@ -31,11 +31,11 @@ var getAllChildren = function(ele,child){
 
 var emitHighlight = function(ele){ //ele: jQuery object
     let children = getAllChildren(ele,"pre code")
-    children.forEach(element => {
+    children.forEach(element => {     
         hljs.highlightElement(element);
         hljs.lineNumbersBlock(element);
-        hljs.initCopyButtonOnLoad();
-        // hljs.addPlugin(new CopyButtonPlugin());
+        hljs.addCopyButton(element);
+        
     })
 
 }
