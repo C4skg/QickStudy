@@ -80,6 +80,9 @@
 .rightContainer{
     width: 25%;
     margin: 5px 0 5px 5px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
 }
 /* rightContainer */
 /* user */
@@ -153,6 +156,25 @@
     background-color: var(--btn-hover-background);
 }
 /* user */
+/* article */
+.container-article{
+    padding: 5px 2px;
+}
+.container-article .nav{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.container-article .nav .btn{
+    color: var(--font-color);
+}
+.container-article .nav .btn:hover{
+    background-color: var(--btn-hover-background);
+}
+/* article */
+
 @media screen and (max-width: 1400px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
     .navbar .userInfo{
         display: inline-block !important;

@@ -7,7 +7,7 @@ from app import create_app
 from app import db
 
 
-app = create_app();
+app = create_app('TestingEnv');
 migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)
