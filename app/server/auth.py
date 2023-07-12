@@ -94,6 +94,7 @@ def reset():
     step = request.form.get('step',1,type=int);
     if type and type == EventID.RESET:
         if step == 1:
+        #* 步骤判断
             email = request.form.get('email','',type=str);
             if email and isVaildEmail(email):
                 user = User.query.filter_by(email=email).first()
@@ -123,7 +124,11 @@ def reset():
                             redisClient.expire(email,20)
                             send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
                             return resetResponse['3000'];
-            return resetResponse['3006'];
+                        else:
+                            return resetResponse['3006'];
+            else:
+                return resetResponse['3004'];
+        #* 步骤判断
         elif step == 2:
             pwd = request.form.get('pwd','',type=str);
             token = request.form.get('token','',type=str);
@@ -136,6 +141,7 @@ def reset():
                     return resetResponse['3003']
             else:
                 return resetResponse['3005'];
+    
     return resetResponse['3008'];
 
 @server.route('/confirm/<token>')
