@@ -7,11 +7,10 @@ from app import create_app
 from app import db
 
 
-app = create_app('TestingEnv');
+app = create_app();
 migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)
-
 
 @app.shell_context_processor
 def make_shell_context():
