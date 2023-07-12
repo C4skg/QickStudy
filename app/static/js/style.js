@@ -63,7 +63,7 @@ $(function(){
             }
         }
         //!imgChange
-        var img = $('img');
+        var img = $('.center img');
         for(let i of img){
             if ($(i).attr('data-mode-change') != 'true'){
                 continue;
