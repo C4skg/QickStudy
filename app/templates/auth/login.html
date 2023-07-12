@@ -66,30 +66,28 @@
         
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
-        setTimeout(()=>{
-            $.ajax({
-                url: "{{ url_for('server.login') }}",
-                type:'post',
-                data: form.serialize(),
-                success:(e)=>{
-                    if(e['status'] == 'success'){
-                        swal("登录成功","点击跳转", "success").then(()=>{
-                            let router = e['route'] ?? '/';
-                            window.location = router;
-                        })
-                    }else{
-                        swal("登录失败",e['message'], "error");
-                    }
-                },
-                error:(e)=>{
-                    swal("登录失败","网络错误", "error");
-                },
-                complete:(e)=>{
-                    button.children('span').remove();
-                    button.removeAttr('disabled');
+        $.ajax({
+            url: "{{ url_for('server.login') }}",
+            type:'post',
+            data: form.serialize(),
+            success:(e)=>{
+                if(e['status'] == 'success'){
+                    swal("登录成功","点击跳转", "success").then(()=>{
+                        let router = e['route'] ?? '/';
+                        window.location = router;
+                    })
+                }else{
+                    swal("登录失败",e['message'], "error");
                 }
-            })
-        },~~(Math.random()*5)*100);
+            },
+            error:(e)=>{
+                swal("登录失败","网络错误", "error");
+            },
+            complete:(e)=>{
+                button.children('span').remove();
+                button.removeAttr('disabled');
+            }
+        })
     })
 </script>
 {% endblock %}

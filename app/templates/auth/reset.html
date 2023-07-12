@@ -72,30 +72,28 @@
         
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
-        setTimeout(()=>{
-            $.ajax({
-                url: "{{ url_for('server.reset') }}",
-                type:'post',
-                data: form.serialize(),
-                success:(e)=>{
-                    if(e['status'] == 'success'){
-                        swal("Success",e['info'], "success").then(()=>{
-                            let router = e['route'] ?? '.';
-                            window.location = router;
-                        })
-                    }else{
-                        swal("Faild",e['message'], "error");
-                    }
-                },
-                error:(e)=>{
-                    swal("Faild","网络错误", "error");
-                },
-                complete:(e)=>{
-                    button.children('span').remove();
-                    button.removeAttr('disabled');
+        $.ajax({
+            url: "{{ url_for('server.reset') }}",
+            type:'post',
+            data: form.serialize(),
+            success:(e)=>{
+                if(e['status'] == 'success'){
+                    swal("Success",e['info'], "success").then(()=>{
+                        let router = e['route'] ?? '.';
+                        window.location = router;
+                    })
+                }else{
+                    swal("Faild",e['message'], "error");
                 }
-            })
-        },~~(Math.random()*5)*100);
+            },
+            error:(e)=>{
+                swal("Faild","网络错误", "error");
+            },
+            complete:(e)=>{
+                button.children('span').remove();
+                button.removeAttr('disabled');
+            }
+        })
     })
 </script>
 {% endblock %}
