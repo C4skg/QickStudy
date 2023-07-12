@@ -78,21 +78,17 @@
                 type:'post',
                 data: form.serialize(),
                 success:(e)=>{
-                    if(e['status'] == '1'){
-                        if(e['step'] == 1){
-                            swal("成功",e['info'], "success")
-                        }else{
-                            swal("恭喜",e['info'], "success").then(()=>{
-                                let router = e['router'] ?? '/';
-                                window.location = router;
-                            })
-                        }
+                    if(e['status'] == 'success'){
+                        swal("Success",e['info'], "success").then(()=>{
+                            let router = e['route'] ?? '.';
+                            window.location = router;
+                        })
                     }else{
-                        swal("失败",e['info'], "error");
+                        swal("Faild",e['message'], "error");
                     }
                 },
                 error:(e)=>{
-                    swal("失败","网络错误", "error");
+                    swal("Faild","网络错误", "error");
                 },
                 complete:(e)=>{
                     button.children('span').remove();

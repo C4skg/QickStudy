@@ -23,9 +23,15 @@
 {% endblock %}
 {% block script%}
 <script>
-    swal("{{ title }}","{{context}}", "{{ type }}").then(()=>{
-        window.location = "{{ location }}"
-    })
+    {% if status == 'success' %}
+        swal("Success","{{ message }}", "{{ status }}").then(()=>{
+            window.location = "{{ route }}"
+        })
+    {% else %}
+        swal("Faild","{{ message }}", "{{ status }}").then(()=>{
+            window.location = "{{ route }}"
+        })
+    {% endif %}
 </script>
 {% endblock%}
 </html>

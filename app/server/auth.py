@@ -9,42 +9,47 @@ from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
 from ..func import getRandomStr
 from ..email import send_email
 from .. import db,redisClient
+from ..responseData import (
+    loginResponse,
+    logoutResponse,
+    registerResponse,
+    resetResponse,
+    activateResponse
+)
 from . import server
 
 @server.route('/login',methods=['POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'));
+        return loginResponse['1003'];
+
     type = request.form.get('type',EventID.NONE,type=int);
     if type and type == EventID.LOGIN:
-        username = request.form.get('username',False,type=str);
-        pwd  = request.form.get('pwd',False,type=str);
+        username = request.form.get('username','',type=str);
+        pwd  = request.form.get('pwd','',type=str);
         if username and pwd:
-            e = {
-                'status': '-1',
-                'router': '.'
-            }
             user = User.query.filter((User.username == username) | (User.email == username)).first()
             if user and user.verifyPassword(pwd):
                 if user.permission >= Permission.CONTROL:
                     login_user(user)
                 else:
                     login_user(user,remember=True)
-
-                e['status'] = '1';
+                e = loginResponse['1000']
                 if user.confirmed == False:
                     token = request.form.get('token','',type=str)
-                    e['router'] = url_for('server.confirm',token=token);
+                    e['route'] = url_for('server.confirm',token=token,type=EventID.ACTIVATE);
                 else:
-                    e['router'] = request.args.get('next',url_for('main.index'),type=str);
+                    e['route'] = request.args.get('next',url_for('main.index'),type=str);
+                return e;
             else:
                 pass
                 ip = request.remote_addr
-                redisClient.hset(EventID.LOGIN,ip,True)
+                redisClient.hset(EventID.LOGIN,ip,1)
                 redisClient.expire(EventID.LOGIN,3600)
+                return loginResponse['1001'];
 
+    return loginResponse['1004'];
 
-            return e;
 
 @server.route('/register',methods=['POST'])
 def register():
@@ -56,10 +61,8 @@ def register():
             flag = isVaildRegister(email,pwd);
             if flag:
                 if registerUserExisit(email):
-                    return {
-                        'status': -1,
-                        'info': '该邮箱已注册'
-                    }
+                    return registerResponse['2001'];
+                    
                 user = User(
                     username='用户_'+ getRandomStr(4),
                     pwd = pwd,
@@ -80,16 +83,10 @@ def register():
                     'link': url_for('auth.login',token=token)
                 }
                 send_email(user.email,'请确认你的账户','auth/mail/confirm.html',**mailInfo)
+                return registerResponse['2000'];
 
-                return {
-                    'status': 1,
-                    'info': '注册成功，请注意查收邮件'
-                }
-            else:
-                return {
-                    'status': -1,
-                    'info': '格式不正确'
-                }
+    return registerResponse['2004'];
+                
             
 @server.route('/reset',methods=['POST'])
 def reset():
@@ -97,21 +94,16 @@ def reset():
     step = request.form.get('step',1,type=int);
     if type and type == EventID.RESET:
         if step == 1:
-            info = {
-                'status': -1,
-                'step': 1,
-                'info': '无此用户'
-            }
             email = request.form.get('email','',type=str);
-            if email and isVaildEmail:
+            if email and isVaildEmail(email):
                 user = User.query.filter_by(email=email).first()
                 if user:
                     if (
                         redisClient.exists(email) and
                         int(redisClient.hget(email,'type').decode()) == EventID.RESET and 
-                        datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode())) < timedelta(minutes=2)
+                        (datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode()))) < timedelta(minutes=2)
                     ):
-                        info['info'] = '已发送重置邮件，请2分钟后再试'
+                        return resetResponse['3001'];
                     else:
                         if user.resetTime == user.sinceTime or (datetime.now() - user.resetTime).days >= 1:
                             token = user.generateResetToken()
@@ -130,66 +122,47 @@ def reset():
                             redisClient.hset(email,'type',EventID.RESET)
                             redisClient.expire(email,20)
                             send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
-                            info['status'] = 1
-                            info['info'] = '已发送重置密码邮件,清注意查收'
-                        else:
-                            info['info'] = '距上次重置时间小于一天'
-            return info;
-        else:
-            info = {
-                'status': -1,
-                'step': 2,
-                'info': '密码格式错误'
-            }
+                            return resetResponse['3000'];
+            return resetResponse['3006'];
+        elif step == 2:
             pwd = request.form.get('pwd','',type=str);
             token = request.form.get('token','',type=str);
             if pwd and isVaildPwd(pwd):
                 try:
                     flag = User.resetPassword(token,pwd);
                     db.session.commit();
-                    info['status'] = 1
-                    info['info'] = '密码重置成功'
+                    return resetResponse['3002']
                 except InfoError as e:
-                    info['info'] = str(e);
-            
-            return info;
+                    return resetResponse['3003']
+            else:
+                return resetResponse['3005'];
+    return resetResponse['3008'];
 
 @server.route('/confirm/<token>')
 @login_required
 def confirm(token):
-    if current_user.confirmed:
-        return redirect(
-            url_for('main.index')
-        )
-    data = {
-        'title': '',
-        'context': '',
-        'type': 'success',
-        'location': ''
-    }
-    try:
-        flag = current_user.confirmToken(token)
-        db.session.commit();
-        data['title'] = "恭喜！你已经成功激活你的账户！"
-        data['location'] = url_for('main.index')
-        
-    except InfoError as e:
-        data['title'] = '激活失败'
-        data['context'] = str(e)
-        data['type'] = 'error'
-
+    type = request.args.get('type',EventID.NONE,type=int);
+    data = activateResponse['4003'];
+    if type == EventID.ACTIVATE:
+        if current_user.confirmed:
+            data = activateResponse['4002'];
+        try:
+            flag = current_user.confirmToken(token)
+            db.session.commit();
+            data = activateResponse['4000'];
+        except InfoError as e:
+            data = activateResponse['4001'];
+    
     return render_template('info.html',**data)
 
 @server.route('/logout')
 @login_required
 def logout():
-    logout_user();
-    data = {
-        'title': '你已退出登录',
-        'context': '',
-        'type': 'info',
-        'location': url_for('auth.login')
-    }
+    try:
+        logout_user();
+        data = logoutResponse['5000']
+    except:
+        data = logoutResponse['5001']
     return render_template(
         'info.html',
         **data

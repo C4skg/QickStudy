@@ -18,16 +18,17 @@ class Permission:
     ADMIN   = 8;  #! 系统控制人
 
 class EventID:
-    NONE = -1;
+    NONE     = -1;
     REGISTER = 1;
-    LOGIN = 2;
-    RESET = 3;
+    LOGIN    = 2;
+    RESET    = 3;
+    ACTIVATE = 4;
 
 class ArticleStatus:
     NOTPASS = 0; #不通过
-    DRAFT = 1;
-    WAIT = 2;
-    NORMAL = 3;
+    DRAFT   = 1;
+    WAIT    = 2;
+    NORMAL  = 3;
 
 class UserExperience:
     LEVEL = {
