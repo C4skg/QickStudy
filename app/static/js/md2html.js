@@ -34,9 +34,10 @@ var emitHighlight = function(ele){ //ele: jQuery object
     children.forEach(element => {
         hljs.highlightElement(element);
         hljs.lineNumbersBlock(element);
+        hljs.initCopyButtonOnLoad();
+        // hljs.addPlugin(new CopyButtonPlugin());
     })
-    hljs.initCopyButtonOnLoad();
-    // hljs.addPlugin(new CopyButtonPlugin());
+
 }
 
 $(function(){
