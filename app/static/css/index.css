@@ -73,9 +73,64 @@ blockquote{
     padding: 6px 2px;
     box-sizing: border-box;
     border: 2px dashed transparent;
+    position: relative;
+    /* max-width: 100%; */
+    /* overflow-y: hidden; */
 }
 .language-math:hover{
+    color: transparent !important;
+    user-select: none;
+}
+.language-math::after{
+    content: attr(data-syntax);
+    position: absolute;
+    color: var(--font-color);
+    display: none;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    user-select:auto;
+    border: 2px dashed transparent;
+    padding: 5px 5px;
+    max-width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+}
+.language-math:hover::after{
+    display: block;
     border: 2px dashed var(--border-color);
+}
+
+.language-math::before{
+    content: attr(data-copy);
+    position: absolute;
+    color: black;
+    display: none;
+    left: calc(70% + 10px);
+    padding: 2px 6px;
+    border-radius: 5px;
+    background-color: var(--border-color);
+    top: 50%;
+    transform: translateY(-50%);
+}
+.language-math:hover::before{
+    display: block;
+}
+.language-math .katex::after{
+    content: '';
+    position: absolute;
+    left: 70%;
+    top: 50%;
+    border: 5px;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-color: transparent var(--border-color) transparent transparent;
+    display: none;
+}
+.language-math:hover .katex::after{
+    display: block;
 }
 
 .hljs-ln-numbers{

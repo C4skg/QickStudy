@@ -42,7 +42,7 @@
     /* dark */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
-    --font-color: #fff;
+    --font-color: #adb5bd;
     --second-font-color: #666;
     --important-font-color: #4183C4;
     --hover-background: rgb(141, 154, 161);
