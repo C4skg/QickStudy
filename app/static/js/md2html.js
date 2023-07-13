@@ -4,15 +4,18 @@
 
 var mathJaxTrans = function(parent){
     var mathObj = $(parent);
+    var _trans = function(element){
+        let render = element.innerHTML.decode();
+        katex.render(render,element)
+        element.setAttribute('data-syntax',render)
+    }
     for(let element of mathObj){
         if ($(element).attr('class') == 'language-math'){
-            let render = element.innerHTML.decode();
-            katex.render(render,element)
+            _trans(element)
         }
     }
     for(let element of mathObj.find('.language-math')){
-        let render = element.innerHTML.decode();
-        katex.render(render,element)
+        _trans(element)
     }
     return mathObj;
 }
