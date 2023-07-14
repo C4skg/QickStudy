@@ -12,6 +12,10 @@ class Config:
     MAIL_USE_TLS=False
     MAIL_DEBUG = False
 
+    #Compress
+    COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'text/plain', 'application/json', 'application/javascript','image/png','image/jpeg','text/svg']
+    COMPRESS_LEVEL = 9
+
     #SQL
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@127.0.0.1:3306/QickStudy'
     SQLALCHEMY_TRACK_MODIFICATIONS = False

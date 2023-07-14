@@ -11,19 +11,5 @@ themes = Blueprint('themes',__name__)
 def static(path):
     file = safe_join(current_app.root_path,'static',path)
     if os.path.isfile(file):
-        try:
-            with open(file,'rb') as f:
-                data = f.read()
-            compress = gzip.compress(data)
-            ftype = os.path.splitext(file)[-1].replace('.','')
-            response = Response(
-                compress,
-                content_type=f"text/{ftype}",
-                headers={
-                    "Content-encoding":"gzip"
-                }
-            )
-            return response;
-        except:
-            pass;
+        return send_file(file)
     abort(404);
