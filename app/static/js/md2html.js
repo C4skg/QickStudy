@@ -32,15 +32,10 @@ $(function(){
             code = ele.innerHTML.decode()
         ele.innerHTML = '';
         $(ele).append('<div style="text-align:center;padding: 50px 0;"><span class="spinner-border spinner-border-sm"></span></div>');
-        // let render = markdown_it.render(code);
-        // let t = mathJaxTrans(render);
-        // emitHighlight(t);
-        // ele.innerHTML = "";
-        // $(ele).append(t)
         Vditor.md2html(
             code,
             {
-                cdn: '/static/Vditor3.9.0'
+                cdn: '/static/Vditor'
             }
         ).then(function(e){
             let t = mathJaxTrans(e);
