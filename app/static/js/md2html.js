@@ -25,34 +25,29 @@ var emitHighlight = function(ele){ //ele: document object
 
 $(function(){
     // *md2html
-    var center = document.getElementsByClassName("center"),
-        markdown_it = window.markdownit();
-        const mdKatex = window.markdownitKatex({
-            // 可以设置 KaTeX 渲染器的选项
-          });
-        
-          md.use(mdKatex);
+    var center = document.getElementsByClassName("center");
+        // markdown_it = window.markdownit();
     for(let i=0;i<center.length;i++){
         let ele = center[i],
             code = ele.innerHTML.decode()
         ele.innerHTML = '';
         $(ele).append('<div style="text-align:center;padding: 50px 0;"><span class="spinner-border spinner-border-sm"></span></div>');
-        let render = markdown_it.render(code);
-        let t = mathJaxTrans(render);
-        emitHighlight(t);
-        ele.innerHTML = "";
-        $(ele).append(t)
-        // Vditor.md2html(
-        //     code,
-        //     {
-        //         cdn: '/static/Vditor3.9.0'
-        //     }
-        // ).then(function(e){
-        //     let t = mathJaxTrans(e);
-        //     emitHighlight(t);
-        //     ele.innerHTML = "";
-        //     $(ele).append(t)
-        // });
+        // let render = markdown_it.render(code);
+        // let t = mathJaxTrans(render);
+        // emitHighlight(t);
+        // ele.innerHTML = "";
+        // $(ele).append(t)
+        Vditor.md2html(
+            code,
+            {
+                cdn: '/static/Vditor3.9.0'
+            }
+        ).then(function(e){
+            let t = mathJaxTrans(e);
+            emitHighlight(t);
+            ele.innerHTML = "";
+            $(ele).append(t)
+        });
     }
     // *数学公式可复制
     $(".center").on("click", ".language-math", function(e) {

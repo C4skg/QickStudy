@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from flask_mail import Mail
 from flask_login import LoginManager
+from flask_com
 import redis
 from .config import Config,config
 
@@ -21,7 +22,7 @@ def create_app( envname:str = 'ProductionEnv' ):
     The debug is false
     '''
     app = Flask(__name__)
-    
+    # app.wsgi_app = 
     #^ set config
     app.config.from_object(
         config.get(envname) or 'ProductionEnv'

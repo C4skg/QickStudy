@@ -5,9 +5,6 @@ from PIL import Image,ImageFont,ImageDraw
 from random import randint,sample
 from string import digits,ascii_letters
 
-import markdown
-import markdown_math
-
 '''
 更具字符串首个字符生成图片
 '''
@@ -113,5 +110,3 @@ class verifyImgCode:
         bytesEncode = b64encode(dataBytes).decode()
 
         return bytesEncode,code;
-
-
