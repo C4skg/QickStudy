@@ -1,3 +1,4 @@
+window.mode = null;
 $(function(){
     'use strict';
     // while runtime
@@ -27,6 +28,7 @@ $(function(){
         }else{
             localStorage.setItem('dark',mode == 'dark');  
         }
+        window.mode = mode;
         if(mode == 'dark'){
             $('html').attr('data-bs-theme','dark')
         }else{

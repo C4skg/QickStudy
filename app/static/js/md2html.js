@@ -26,7 +26,6 @@ var emitHighlight = function(ele){ //ele: document object
 $(function(){
     // *md2html
     var center = document.getElementsByClassName("center");
-        // markdown_it = window.markdownit();
     for(let i=0;i<center.length;i++){
         let ele = center[i],
             code = ele.innerHTML.decode()
@@ -41,7 +40,10 @@ $(function(){
             let t = mathJaxTrans(e);
             emitHighlight(t);
             ele.innerHTML = "";
-            $(ele).append(t)
+            $(ele).append(t.innerHTML)
+            for(let i=1;i<=6;i++){
+                console.log(t.querySelectorAll(`h${i}`))
+            }
         });
     }
     // *数学公式可复制
@@ -75,4 +77,6 @@ $(function(){
             }
         }
     });
+    
+    // *markdown 主题提取
 })

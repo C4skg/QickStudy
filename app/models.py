@@ -116,7 +116,6 @@ class User(UserMixin,db.Model):
 
     sinceTime = db.Column('sinceTime',db.DateTime(),default=datetime.now)
     resetTime = db.Column('resetTime',db.DateTime(),default=datetime.now)
-    confirmed = db.Column('confirmed',db.Boolean,default=False);
     permission = db.Column('permission',db.Integer,index=True,default=Permission.BASE)
     attend = db.relationship('UserAttend',backref='UserAttend',lazy='select') #! 用户签到
 

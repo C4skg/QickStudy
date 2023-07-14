@@ -46,6 +46,10 @@ def index():
 
     return render_template('index.html',**datas);
 
+@main.route('/create')
+def create():
+    return 'create';
+
 
 @main.route('/about')
 def about():
