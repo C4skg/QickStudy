@@ -39,7 +39,7 @@
                 el.id = 'hljs-copy-el';
                 document.body.appendChild(el);
             }
-            el.textContent = event.currentTarget.innerText;
+            el.textContent = event.currentTarget.innerText.split('\n').filter((v)=>{ return v != ''}).join('\n');
             el.select();
 
             try {

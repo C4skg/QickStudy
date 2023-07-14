@@ -77,6 +77,7 @@ blockquote{
     /* max-width: 100%; */
     /* overflow-y: hidden; */
 }
+
 .language-math:hover{
     color: transparent !important;
     user-select: none;

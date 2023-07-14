@@ -1,40 +1,21 @@
 'use strict';
 //^ loaded after document
 
-
 var mathJaxTrans = function(parent){
-    var mathObj = $(parent);
-    var _trans = function(element){
+    var div = document.createElement('div');
+    div.innerHTML = parent
+    var mathObj = div.querySelectorAll('.language-math');
+    for(let element of mathObj){
         let render = element.innerHTML.decode();
         katex.render(render,element)
         element.setAttribute('data-syntax',render)
         element.setAttribute('data-copy','Copy')
     }
-    for(let element of mathObj){
-        if ($(element).attr('class') == 'language-math'){
-            _trans(element)
-        }
-    }
-    for(let element of mathObj.find('.language-math')){
-        _trans(element)
-    }
-    return mathObj;
+    return div;
 }
 
-var getAllChildren = function(ele,child){
-    var children = [];
-    ele = $(ele);
-    for(let c of ele.find(child)){
-        children.push(c);
-    }
-    for(let c of ele.children(child)){
-        children.push(c);
-    }
-    return children;
-}
-
-var emitHighlight = function(ele){ //ele: jQuery object
-    let children = getAllChildren(ele,"pre code")
+var emitHighlight = function(ele){ //ele: document object
+    let children = ele.querySelectorAll('pre code');
     children.forEach(element => {     
         hljs.highlightElement(element);
         hljs.lineNumbersBlock(element);
@@ -44,8 +25,7 @@ var emitHighlight = function(ele){ //ele: jQuery object
 
 $(function(){
     // *md2html
-    var center = document.getElementsByClassName("center"),
-        mathList = [];
+    var center = document.getElementsByClassName("center")
     for(let i=0;i<center.length;i++){
         let ele = center[i],
             code = ele.innerHTML.decode()
@@ -61,7 +41,6 @@ $(function(){
             emitHighlight(t);
             ele.innerHTML = "";
             $(ele).append(t)
-            mathList.push(t);
         });
     }
     // *数学公式可复制
