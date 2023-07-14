@@ -24,7 +24,7 @@ def create_app( envname:str = 'ProductionEnv' ):
     
     #^ set config
     app.config.from_object(
-        config[envname]
+        config.get(envname) or 'ProductionEnv'
     )
 
     #^ init app
