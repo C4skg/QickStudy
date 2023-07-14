@@ -22,3 +22,6 @@ String.prototype.decode = function(){
     s = s.replace(/&quot;/g, "\"");
     return s;
 }
+String.prototype.removeBlankLines = function () {
+    return this.replace(/(\n[\s\t]*\r*\n)/g, '\n').replace(/^[\n\r\n\t]*|[\n\r\n\t]*$/g, '')
+}

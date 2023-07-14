@@ -39,7 +39,7 @@
                 el.id = 'hljs-copy-el';
                 document.body.appendChild(el);
             }
-            el.textContent = event.currentTarget.innerText.split('\n').filter((v)=>{ return v != ''}).join('\n');
+            el.textContent = event.currentTarget.innerText.removeBlankLines();
             el.select();
 
             try {
