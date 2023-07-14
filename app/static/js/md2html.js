@@ -27,6 +27,11 @@ $(function(){
     // *md2html
     var center = document.getElementsByClassName("center"),
         markdown_it = window.markdownit();
+        const mdKatex = window.markdownitKatex({
+            // 可以设置 KaTeX 渲染器的选项
+          });
+        
+          md.use(mdKatex);
     for(let i=0;i<center.length;i++){
         let ele = center[i],
             code = ele.innerHTML.decode()
