@@ -16,7 +16,6 @@ var mathJaxTrans = function(parent){
 
 var emitHighlight = function(ele){ //ele: document object
     let children = ele.querySelectorAll('pre code');
-    console.log(children)
     children.forEach(element => {     
         hljs.highlightElement(element);
         hljs.lineNumbersBlock(element);
@@ -41,10 +40,7 @@ $(function(){
             let t = mathJaxTrans(e);
             emitHighlight(t);
             ele.innerHTML = "";
-            $(ele).append(t.innerHTML)
-            for(let i=1;i<=6;i++){
-                // console.log(t.querySelectorAll(`h${i}`))
-            }
+            $(ele).append(t)
         });
     }
     // *数学公式可复制
@@ -79,5 +75,13 @@ $(function(){
         }
     });
     
-    // *markdown 主题提取
+    // *markdown img preview
+    $(".center").delegate("img","click",function(e){
+        console.log(e.currentTarget)
+        Vditor.previewImage(
+            e.currentTarget,
+            'zh_CN',
+            window.mode || 'classic'
+        )
+    })
 })
