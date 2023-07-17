@@ -5,7 +5,8 @@ from datetime import datetime,timedelta
 from flask_login import current_user
 from flask_login import login_required,logout_user
 
-from ..models import EventID
+from ..models import EventID,Permission
+from ..models import User
 
 from .. import db
 from . import auth
@@ -54,14 +55,19 @@ def reset():
     return render_template('auth/reset.html',**data)
 
 
-@auth.route('/userInfo')
+@auth.route('/userInfo/<id>')
 @login_required
-def userInfo():
-    id = request.args.get('id',False);
-    if id:
-        return id;
-    else:
-        return current_user.username;
+def userInfo(id):
+    data = {
+        'user': current_user,
+        "permission": Permission
+    }
+    user = User.query.filter((User.id == id)).first()
+    if user:
+        data['user'] = user;
+        
+    
+    return render_template('auth/userinfo.html',**data);
 
 
 @auth.route('/attend')

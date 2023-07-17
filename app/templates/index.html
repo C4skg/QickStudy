@@ -34,13 +34,15 @@
                     <img src="{{ url_for('themes.static',path='img/search.png') }}" alt="">
                 </button>
             </form>
-            <a href="{{ url_for('auth.userInfo') }}" target="_blank">
+            {% block navExtends%}
+            <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
                 <div class="userInfo d-flex btn btn-sm">
                     <div class="user-logo">
                         <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
                     </div>
                 </div>
             </a>
+            {% endblock %}
         </div>
     </div>
 </nav>
@@ -131,7 +133,7 @@
     <div class="rightContainer">
         <div class="container-User card">
             <div class="userInfo">
-                <a href="{{ url_for('auth.userInfo') }}" target="_blank">
+                <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
                     <div class="user-logo">
                         <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
                     </div>
@@ -158,7 +160,7 @@
             </div>
             <div class="nav">
                 <a href="{{ url_for('auth.attend') }}" target="_blank"><div class="btn">每日签到</div></a>
-                <a href="{{ url_for('auth.userInfo') }}" target="_blank"><div class="btn">个人中心</div></a>
+                <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank"><div class="btn">个人中心</div></a>
                 <a href="{{ url_for('server.logout') }}"><div class="btn">退出登录</div></a>
             </div>
         </div>

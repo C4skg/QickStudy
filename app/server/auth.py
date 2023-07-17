@@ -66,7 +66,8 @@ def register():
                 user = User(
                     username='用户_'+ getRandomStr(4),
                     pwd = pwd,
-                    email = email.lower()
+                    email = email.lower(),
+                    permission = Permission.USER
                 )
                 db.session.add(user);
                 db.session.commit();

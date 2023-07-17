@@ -1,4 +1,5 @@
-{% extends "themes/base.html" %}
+{% extends "auth/base.html" %}
+
 {% block extends %}
     <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/main.css') }}">
@@ -25,7 +26,7 @@
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请输入正确格式的邮箱</div>
         </div>
-        <button id="login_button" type="submit" class="container btn btn-primary mt-auto">发送重置邮件
+        <button id="login_button" type="submit" class="btn btn-primary mt-auto">发送重置邮件
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
         {% else %}
@@ -36,7 +37,7 @@
             <div class="invalid-feedback">密码中应至少包括字母和数字且长度大于6位</div>
         </div>
         <input type="hidden" value="{{ token }}" name="token">
-        <button id="login_button" type="submit" class="container btn btn-primary mt-auto">重置
+        <button id="login_button" type="submit" class="btn btn-primary mt-auto">重置
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
         {% endif %}

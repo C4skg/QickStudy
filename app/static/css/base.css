@@ -26,7 +26,6 @@
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 100% 100%;
     --font-color: rgb(0, 0, 0);
-    --second-font-color: #ccc;
     --important-font-color: #4183C4;
     --hover-background: #000;
     --border-color: #ccc;
@@ -42,8 +41,7 @@
     /* dark */
     --body-background: linear-gradient(to bottom, #93a5cf , #000 ,#fff1eb , #ace0f9 );
     --body-background-pos: 0% 0%;
-    --font-color: #adb5bd;
-    --second-font-color: #666;
+    --font-color: #fff;
     --important-font-color: #4183C4;
     --hover-background: rgb(141, 154, 161);
     --border-color: #b8b8b8;

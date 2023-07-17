@@ -1,0 +1,41 @@
+.main{
+    /* border: 1px solid #000; */
+}
+.main .split{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin: 0 5px;
+    font-weight: normal;
+    background-color: var(--border-color);
+    display: inline-block;
+}
+.main .uInfo .in{
+    width: 100%;
+    padding: 0 5px;
+    display: flex;
+}
+.main .uInfo .in .photo{
+    overflow: hidden;
+}
+.main .uInfo .in .infos{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2px 5px;
+    margin-left: 20px;
+}
+.main .uInfo .in .infos .username{
+    display: flex;
+    align-items: center;
+    font-weight: 1000;
+    color: var(--font-color) !important;
+}
+.main .uInfo .in .infos .username .id{
+    font-weight: normal;
+    color: var(--font-color);
+}
+.main .uInfo .in .infos .permission{
+    user-select: none;
+    cursor: pointer;
+}

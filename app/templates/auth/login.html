@@ -1,4 +1,4 @@
-{% extends "themes/base.html" %}
+{% extends "auth/base.html" %}
 {% block extends %}
     <script src="{{ url_for('themes.static',path='js/function.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/main.css') }}">
@@ -30,7 +30,7 @@
         <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
         <input type="hidden" value="{{ type }}" name="type">
         <input type="hidden" value="{{ token }}" name="token">
-        <button id="login_button" type="submit" class="container btn btn-primary mt-auto">登录
+        <button id="login_button" type="submit" class="btn btn-primary mt-auto">登录
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
     </form>

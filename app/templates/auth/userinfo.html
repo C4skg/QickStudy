@@ -1,0 +1,43 @@
+{% extends "themes/base.html" %}
+{% block extends %}
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/userinfo.css') }}">
+{% endblock %}
+
+{% block title %}
+ - {{ user.username }}
+{% endblock %}
+
+{% block body%}
+<div class="container main">
+    <div class="uInfo">
+        <div class="in">
+            <div class="photo">
+                <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt="">
+            </div>
+            <div class="infos">
+                <div class="username">
+                    {{ user.username }}
+                    <span class="split"></span>
+                    <span class="id">{{ user.id }}</span>
+                </div>
+                <div class="permission">
+                    <span class="" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
+                    {{ permission.DESC[user.permission]['name'] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block style %}
+<style>
+</style>
+{% endblock %}
+{% block script %}
+<script>
+
+</script>
+{% endblock %}

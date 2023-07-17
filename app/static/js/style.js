@@ -14,6 +14,7 @@ $(function(){
     })(document,window);
 
     $(".modeButton").click(function(){
+        console.log('1')
         var mode = isDark() ? '' : 'dark';
         changeMode(mode);
     })
