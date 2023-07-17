@@ -48,7 +48,7 @@ def index():
 
 @main.route('/create')
 def create():
-    return 'create';
+    return render_template('create.html');
 
 
 @main.route('/about')

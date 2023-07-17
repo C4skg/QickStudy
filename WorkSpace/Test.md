@@ -16,8 +16,8 @@
   ?>
   ```
 
-  > 因为运行该 php 文件后，已经将该脚本读入并作为 opcode 进行运行
-    > opcode 缓存
+  > 因为运行该 php 文件后，已经将该脚本读入并作为 `opcode` 进行运行
+    > `opcode` 缓存
 
 
 
@@ -48,7 +48,7 @@ $$
 }
 $$
 
-常见函数定义域如下
+常见函数 `定义域` 如下
 
 + $y=\frac{a}{b}\Rightarrow(x\neq0)$
 + $y=\sqrt[2n]{x}\Rightarrow(x\geq0)$

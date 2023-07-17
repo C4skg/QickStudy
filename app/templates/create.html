@@ -1,4 +1,4 @@
-{% extends "themes/theme.html" %}
+{% extends "themes/base.html" %}
 {% block extends %}
     <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
@@ -37,8 +37,12 @@
                     lineNumber: true
                 },
                 math:{
+                    engine: "KaTeX",
                     inlineDigit: true
                 },
+                theme:{
+                    current: mode
+                }
 
             },
             upload:{

@@ -16,6 +16,7 @@ var mathJaxTrans = function(parent){
 
 var emitHighlight = function(ele){ //ele: document object
     let children = ele.querySelectorAll('pre code');
+    console.log(children)
     children.forEach(element => {     
         hljs.highlightElement(element);
         hljs.lineNumbersBlock(element);
@@ -42,7 +43,7 @@ $(function(){
             ele.innerHTML = "";
             $(ele).append(t.innerHTML)
             for(let i=1;i<=6;i++){
-                console.log(t.querySelectorAll(`h${i}`))
+                // console.log(t.querySelectorAll(`h${i}`))
             }
         });
     }
