@@ -4,6 +4,9 @@ from flask_wtf import CSRFProtect
 from flask_mail import Mail
 from flask_login import LoginManager
 from flask_compress import Compress
+from flask_uploads import UploadSet,IMAGES
+from flask_uploads import configure_uploads
+
 import redis
 from .config import Config,config
 
@@ -12,6 +15,9 @@ mail = Mail()
 db = SQLAlchemy()
 loginManager = LoginManager()
 loginManager.login_view = 'auth.login'
+photos = UploadSet('photos',IMAGES)
+
+#^ set redis')
 
 redisClient = redis.Redis(host=Config.REDIS_URI,port=Config.REDIS_PORT)
 
@@ -28,6 +34,9 @@ def create_app( envname:str = 'ProductionEnv' ):
     app.config.from_object(
         config.get(envname) or 'ProductionEnv'
     )
+
+    #^ set uploads
+    configure_uploads(app,photos);
 
     #^ set compress
     Compress(app)

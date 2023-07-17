@@ -25,6 +25,9 @@ class Config:
     REDIS_URI = "8ceefcf67710.c.methodot.com"
     REDIS_PORT = 30955
 
+    #UPLOAD
+    UPLOADED_PHOTOS_DEST = 'upload'
+
     #HTML INFO
     TITLE = 'QickStudy'
 

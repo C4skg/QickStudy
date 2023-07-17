@@ -109,6 +109,8 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column('username',db.String(50),unique=True,index=True)
     pwd_hash = db.Column('password',db.String(128))
+    #! logic del
+    delFlag = db.Column('delFlag',db.Boolean,default=False)
     # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
     #* LOGO
@@ -279,7 +281,7 @@ def initDB():
     admin = User.query.filter_by(username='admin').first()
     if not admin:
         cache = getRandomStr(6)
-        user = User(username='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
+        user = User(username='admin',pwd=cache,email='C4skg@qq.com',permission=Permission.ADMIN)
         db.session.add(user)
         db.session.commit()
         print( 
