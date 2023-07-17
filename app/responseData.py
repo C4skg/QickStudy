@@ -137,3 +137,15 @@ logoutResponse = {
         'route': '/'
     }
 }
+
+uploadResponse = {
+    '6000':{
+        'status': 'success',
+        'message': '上传成功',
+        'backURI': '',
+    },
+    '6001':{
+        'status': 'error',
+        'message': '上传失败'
+    }
+}
