@@ -68,7 +68,7 @@ blockquote{
     max-width: 100%;
     background-color: var(--block-background-color);
 }
-.language-math{
+.center .language-math{
     display: inline-block;
     padding: 6px 2px;
     box-sizing: border-box;
@@ -77,11 +77,11 @@ blockquote{
     width: 100% !important;
 }
 
-.language-math:hover{
+.center .language-math:hover{
     color: transparent !important;
     user-select: none;
 }
-.language-math::after{
+.center .language-math::after{
     content: attr(data-syntax);
     position: absolute;
     color: var(--font-color);
@@ -99,12 +99,12 @@ blockquote{
     overflow: hidden;
     cursor: pointer;
 }
-.language-math:hover::after{
+.center .language-math:hover::after{
     display: block;
     border: 2px dashed var(--border-color);
 }
 
-.language-math::before{
+.center .language-math::before{
     content: attr(data-copy);
     position: absolute;
     color: black;
@@ -116,14 +116,14 @@ blockquote{
     top: 50%;
     transform: translateY(-50%);
 }
-.language-math:hover::before{
+.center .language-math:hover::before{
     display: block;
 }
-.language-math .katex{
+.center .language-math .katex{
     display: block;
     width: 100% !important;
 }
-.language-math .katex::after{
+.center .language-math .katex::after{
     content: '';
     position: absolute;
     left: 80%;
@@ -134,11 +134,11 @@ blockquote{
     border-color: transparent var(--border-color) transparent transparent;
     display: none;
 }
-.language-math:hover .katex::after{
+.center .language-math:hover .katex::after{
     display: block;
 }
 
-.hljs-ln-numbers{
+.center .hljs-ln-numbers{
     text-align: center;
     color: #ccc;
     border-right: 1px solid #ccc;
