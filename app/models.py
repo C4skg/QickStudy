@@ -48,10 +48,10 @@ class EventID:
     ACTIVATE = 4;
 
 class ArticleStatus:
-    NOTPASS = 0; #不通过
-    DRAFT   = 1;
-    WAIT    = 2;
-    NORMAL  = 3;
+    NOTPASS = 0; #不通过,被退回
+    DRAFT   = 1; #草稿状态
+    WAIT    = 2; #审核中
+    NORMAL  = 3; #正常发布
 
 class UserExperience:
     LEVEL = {
