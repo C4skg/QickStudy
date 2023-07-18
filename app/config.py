@@ -26,7 +26,8 @@ class Config:
     REDIS_PORT = 30955
 
     #UPLOAD
-    UPLOADED_PHOTOS_DEST = 'upload'
+    UPLOADED_PHOTOS_DEST = 'upload';
+    MAX_CONTENT_LENGTH = 3 * 1024 * 1024; # 3mb limited
 
     #HTML INFO
     TITLE = 'QickStudy'

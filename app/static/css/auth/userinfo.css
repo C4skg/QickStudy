@@ -2,8 +2,24 @@
     /* border: 1px solid #000; */
 }
 .main img{
-    width: inherit !important;
-    height: inherit !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+.main .photo[data-status="normal"] .position-center{
+    display: none;
+}
+.main .photo[data-status="waiting"] .position-center{
+    position: absolute;
+    color: white;
+    background-color: #00000080;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 }
 .main .split{
     width: 5px;
@@ -20,13 +36,15 @@
     display: flex;
 }
 .main .uInfo .in .photo{
-    overflow: hidden !important;
+    overflow: hidden;
     cursor: pointer;
     position: relative;
     max-width: 100px;
     max-height: 100px;
+    min-width: 100px;
+    min-height: 100px;
 }
-.main .uInfo .in .photo::before{
+.main .uInfo .in .photo[data-status="normal"]::before{
     content: '更换头像';
     position: absolute;
     left: 0;
@@ -41,7 +59,7 @@
     font-weight: 1000;
     display: none;
 }
-.main .uInfo .in .photo:hover::before{
+.main .uInfo .in .photo[data-status="normal"]:hover::before{
     display: flex;
 }
 .main .uInfo .in .infos{

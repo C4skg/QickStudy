@@ -16,10 +16,16 @@
 <div class="container main">
     <div class="uInfo">
         <div class="in">
-            <div class="photo">
-                <input class="hidden" id="uImgPhoto" type="file" accept="image/*" name="file" value="">
+            <div class="photo" data-status="normal">
+                <div class="position-center">
+                    <span class="spinner-border spinner-border-sm"></span>上传中
+                </div>                    
+                <form id="upload">
+                    <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+                    <input class="hidden image" type="file" accept="image/*" name="file" value="">
+                </form>
                 <picture>
-                    <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt="">
+                    <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt=" ">
                 </picture>
                 
             </div>

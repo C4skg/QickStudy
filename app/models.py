@@ -231,6 +231,15 @@ class User(UserMixin,db.Model):
             payload=data,
             key=key
         )
+    
+    def changelogo(self,data:str):
+        '''
+            data is base64 String
+        '''
+        self.logo = data
+        db.session.merge(self);
+        
+        return True;
 
     @staticmethod
     def resetPassword(token,newPassword):

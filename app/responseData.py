@@ -148,7 +148,11 @@ uploadResponse = {
         'status': 'error',
         'message': '上传失败'
     },
-    '6002':{
+    '6002': {
+        'status': 'error',
+        'message': '上传文件过大'
+    },
+    '6003':{
         'status': 'error',
         'message': '权限不足' 
     }

@@ -1,25 +1,40 @@
 $(function(){
     'use strict';
     //upload click
-    const input = document.getElementById('uImgPhoto');
+    const input = $('.photo .image')[0];
     $('.uInfo .photo').click(function(){
-        input.click();
+        let status = $(this).attr('data-status')
+        if(status == 'normal'){
+            input.click();
+        }
     })
-    input.addEventListener('change', function(){
-        let form = document.createElement('form')
-        form.appendChild(this);
+    input.addEventListener('change', function(){ 
+        $('.uInfo .photo').attr('data-status','waiting')
+        var formData = new FormData($('#upload')[0]);
         $.ajax({
             url: window.uploadURI,
             type: "post",
-            data: $(form).serialize(),
+            processData: false,
+            contentType: false,
+            data: formData,
             success:(e)=>{
-                console.log(e);
+                if(e['status']=='success'){
+                    swal("成功！","用户头像已更新", "success").then(()=>{
+                        window.location.reload();
+                    })
+                }else{
+                    swal("失败",e['message'], "error").then(()=>{
+                        input.value=''
+                    })
+                }
             },
             error:(e)=>{
-                console.log(e);
+                swal("失败",e['message'], "error").then(()=>{
+                    input.value=''
+                })
             },
             complete:(e)=>{
-                console.log(e);
+                $('.uInfo .photo').attr('data-status','normal')
             }
         })
     })

@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image,ImageFont,ImageDraw
 from random import randint,sample
 from string import digits,ascii_letters
+import datetime
 
 '''
 更具字符串首个字符生成图片
@@ -43,7 +44,10 @@ def generateImgByName(name:str) -> str:
 def getRandomStr(nums:int) -> str:
     return ''.join(
             sample(digits + ascii_letters , k=nums)
-        )
+    )
+
+def getDate() -> str:
+    return datetime.date.today().strftime('%Y-%m-%d');
 
 class verifyImgCode:
     '''
