@@ -1,18 +1,27 @@
 {% extends "themes/base.html" %}
 {% block extends %}
+<script src="{{ url_for('themes.static',path='js/auth/userinfo.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/userinfo.css') }}">
 {% endblock %}
 
 {% block title %}
  - {{ user.username }}
 {% endblock %}
-
+{% block hscript %}
+<script>
+    window.uploadURI = "{{ url_for('server.photoUpload') }}"
+</script>
+{% endblock %}
 {% block body%}
 <div class="container main">
     <div class="uInfo">
         <div class="in">
             <div class="photo">
-                <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt="">
+                <input class="hidden" id="uImgPhoto" type="file" accept="image/*" name="file" value="">
+                <picture>
+                    <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt="">
+                </picture>
+                
             </div>
             <div class="infos">
                 <div class="username">
@@ -21,9 +30,15 @@
                     <span class="id">{{ user.id }}</span>
                 </div>
                 <div class="permission">
-                    <span class="" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
-                    {{ permission.DESC[user.permission]['name'] }}
+                    {% if user.permission > permission.BASE %}
+                    <span class="badge bg-success" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
+                        {{ permission.DESC[user.permission]['name'] }}
                     </span>
+                    {% else %}
+                    <span class="badge bg-danger" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
+                        {{ permission.DESC[user.permission]['name'] }}
+                    </span>
+                    {% endif %}
                 </div>
             </div>
         </div>

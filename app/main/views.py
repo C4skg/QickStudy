@@ -1,10 +1,10 @@
 from flask import request,current_app
-from flask import render_template,url_for
+from flask import render_template,url_for,abort
 from flask_login import login_required
 from flask_login import current_user
 
 from . import main
-from ..models import UserExperience
+from ..models import UserExperience,Permission
 
 @main.route('/',methods=['GET','POST'])
 @login_required
@@ -47,7 +47,11 @@ def index():
     return render_template('index.html',**datas);
 
 @main.route('/create')
+@login_required
 def create():
+    if current_user.permission <= Permission.BASE:
+        abort(403);   
+
     return render_template('create.html');
 
 

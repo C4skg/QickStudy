@@ -1,6 +1,10 @@
 .main{
     /* border: 1px solid #000; */
 }
+.main img{
+    width: inherit !important;
+    height: inherit !important;
+}
 .main .split{
     width: 5px;
     height: 5px;
@@ -16,7 +20,29 @@
     display: flex;
 }
 .main .uInfo .in .photo{
-    overflow: hidden;
+    overflow: hidden !important;
+    cursor: pointer;
+    position: relative;
+    max-width: 100px;
+    max-height: 100px;
+}
+.main .uInfo .in .photo::before{
+    content: '更换头像';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00000080;
+    color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 1000;
+    display: none;
+}
+.main .uInfo .in .photo:hover::before{
+    display: flex;
 }
 .main .uInfo .in .infos{
     display: flex;
@@ -36,6 +62,7 @@
     color: var(--font-color);
 }
 .main .uInfo .in .infos .permission{
+    color: var(--font-color);
     user-select: none;
     cursor: pointer;
 }

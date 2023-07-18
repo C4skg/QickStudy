@@ -1,4 +1,4 @@
-{% extends "themes/base.html" %}
+{% extends "themes/md.html" %}
 
 
 {% block title%}
@@ -13,7 +13,7 @@
         <h1 style="font-size: 7.5em;margin: 15px 0px;font-weight: bold;">{{error.code}}</h1>
         <h2 style="font-weight: bold;">{{error.title}}</h2>
         <p style="font-size: 15px;white-space: nowrap;">{{error.tips}}</p>
-        <a href="/"><button class="btn">返回首页</button></a>
+        <a href="/"><button class="btn btn-primary">返回首页</button></a>
       </div>
     </div>
   </div>
@@ -50,15 +50,7 @@
     font-size: 1em;
     letter-spacing: 2px;
     margin: 5px 0px;
-    border: 1.5px solid var(--font-color);
     color: var(--font-color);
-  }
-  
-  
-  .btn:hover {
-    border: 1.5px solid var(--font-color);
-    color: var(--hover-color);
-    background-color: var(--hover-background);
   }
   
   @media screen and (max-width: 768px) {
