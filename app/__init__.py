@@ -32,7 +32,7 @@ def create_app( envname:str = 'ProductionEnv' ):
 
     #^ set config
     app.config.from_object(
-        config.get(envname) or 'ProductionEnv'
+        config.get(envname) or config.get('ProductionEnv')
     )
 
     #^ set uploads
