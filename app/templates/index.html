@@ -6,46 +6,15 @@
 
 {% block body %}
 <!-- 导航栏 -->
-<nav class="navbar navbar-expand-sm">
-    <div class="container-fluid">
-        <div class="logo">
-            <a class="navbar-brand" href=".">
-                <img src="{{ url_for('themes.static',path='img/logo.svg') }}" alt="">
-            </a>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.index') }}">首页</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.about') }}" target="_blank">关于</a>
-                </li>
-            </ul>
-            <div class="btn modeButton change d-none d-sm-block">
-                <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
-            </div>
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Search">
-                <button class="btn btn-primary" type="button">
-                    <img src="{{ url_for('themes.static',path='img/search.png') }}" alt="">
-                </button>
-            </form>
-            {% block navExtends%}
-            <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
-                <div class="userInfo d-flex btn btn-sm">
-                    <div class="user-logo">
-                        <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
-                    </div>
-                </div>
-            </a>
-            {% endblock %}
+{% block navExtends%}
+<a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
+    <div class="userInfo d-flex btn btn-sm">
+        <div class="user-logo">
+            <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
         </div>
     </div>
-</nav>
+</a>
+{% endblock %}
 
 <!-- 导航栏 -->
 
