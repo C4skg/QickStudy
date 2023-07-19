@@ -11,6 +11,7 @@
 {% endblock %}
 {% block hscript %}
 <script>
+    window.t = '';
     {% if isself %}
     window.self = true;
     window.uploadURI = "{{ url_for('server.photoUpload') }}"
@@ -33,13 +34,13 @@
                     <input class="hidden image" type="file" accept="image/*" name="file" value="">
                 </form>
                 <picture>
-                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
+                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
                 </picture>    
             </div>
             {% else %}
             <div class="photo">
                 <picture>
-                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
+                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
                 </picture>    
             </div>
             {% endif %}

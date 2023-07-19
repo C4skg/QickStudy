@@ -36,6 +36,7 @@ $(function(){
                 swal("失败",e['message'], "error").then(()=>{
                     input.value=''
                 })
+                $('.uInfo .photo').attr('data-status','normal')
             },
             complete:(e)=>{
                 $('.uInfo .photo').attr('data-status','normal')

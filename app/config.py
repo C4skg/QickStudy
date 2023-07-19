@@ -13,6 +13,7 @@ class Config:
     MAIL_DEBUG = False
 
     #Compress
+    COMPRESS_ALGORITHM = 'gzip'
     COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'text/plain', 'application/json', 'application/javascript','image/png','image/jpeg','text/svg']
     COMPRESS_LEVEL = 9
 

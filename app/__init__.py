@@ -18,9 +18,7 @@ loginManager.login_view = 'auth.login'
 photos = UploadSet('photos',IMAGES)
 
 #^ set redis')
-
 redisClient = redis.Redis(host=Config.REDIS_URI,port=Config.REDIS_PORT)
-
 
 def create_app( envname:str = 'ProductionEnv' ):
     '''
@@ -28,7 +26,6 @@ def create_app( envname:str = 'ProductionEnv' ):
     The debug is false
     '''
     app = Flask(__name__)
-    # app.wsgi_app =
 
     #^ set config
     app.config.from_object(
@@ -38,6 +35,7 @@ def create_app( envname:str = 'ProductionEnv' ):
     #^ set uploads
     configure_uploads(app,photos);
 
+    
     #^ set compress
     Compress(app)
 
