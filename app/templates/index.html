@@ -1,11 +1,8 @@
 {% extends "themes/md.html" %}
 
 {% block extends %}
-<link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
 {% endblock %}
 
-{% block body %}
-<!-- 导航栏 -->
 {% block navExtends%}
 <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
     <div class="userInfo d-flex btn btn-sm">
@@ -16,8 +13,7 @@
 </a>
 {% endblock %}
 
-<!-- 导航栏 -->
-
+{% block body %}
 <div class="container main">
     <!-- 内容 -->
     <div class="context" >

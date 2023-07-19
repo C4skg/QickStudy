@@ -1,5 +1,9 @@
 $(function(){
     'use strict';
+    /**
+     * this file is for userinfo.html page 
+     * and if the user is yourself, it worked
+     */
     //upload click
     const input = $('.photo .image')[0];
     $('.uInfo .photo').click(function(){

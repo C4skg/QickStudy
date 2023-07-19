@@ -56,17 +56,20 @@ def reset():
 
 
 @auth.route('/userInfo/<id>')
+@auth.route('/userInfo/')
 @login_required
-def userInfo(id):
+def userInfo(id=None):
     data = {
         'user': current_user,
-        "permission": Permission
+        "permission": Permission,
+        "isself": True
     }
-    user = User.query.filter((User.id == id)).first()
-    if user:
-        data['user'] = user;
+    if id != None:
+        user = User.query.filter((User.id == id)).first()
+        if user:
+            data['user'] = user;
+            data['isself'] = user.id == current_user.id;
         
-    
     return render_template('auth/userinfo.html',**data);
 
 

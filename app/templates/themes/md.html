@@ -30,6 +30,7 @@
     <!-- ^self -->
     <script src="{{ url_for('themes.static',path='js/md2html.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
     <!-- ^icon -->
     <link rel="icon" href="{{ url_for('themes.static',path='img/logo.svg') }}">
 
@@ -63,6 +64,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.about') }}" target="_blank">关于</a>
                 </li>
+                {% block navListExtends%}
+                {% endblock %}
             </ul>
             <div class="btn modeButton change d-none d-sm-block">
                 <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">

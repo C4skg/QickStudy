@@ -1,6 +1,8 @@
-{% extends "themes/base.html" %}
+{% extends "themes/md.html" %}
 {% block extends %}
+{% if isself %}
 <script src="{{ url_for('themes.static',path='js/auth/userinfo.js') }}"></script>
+{% endif %}
 <link rel="stylesheet" href="{{ url_for('themes.static',path='css/auth/userinfo.css') }}">
 {% endblock %}
 
@@ -9,13 +11,19 @@
 {% endblock %}
 {% block hscript %}
 <script>
+    {% if isself %}
+    window.self = true;
     window.uploadURI = "{{ url_for('server.photoUpload') }}"
+    {% else %}
+    window.self = false;
+    {% endif %}
 </script>
 {% endblock %}
 {% block body%}
 <div class="container main">
     <div class="uInfo">
         <div class="in">
+            {% if isself%}
             <div class="photo" data-status="normal">
                 <div class="position-center">
                     <span class="spinner-border spinner-border-sm"></span>上传中
@@ -26,15 +34,22 @@
                 </form>
                 <picture>
                     <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt=" ">
-                </picture>
-                
+                </picture>    
             </div>
+            {% else %}
+            <div class="photo">
+                <picture>
+                    <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt=" ">
+                </picture>    
+            </div>
+            {% endif %}
             <div class="infos">
                 <div class="username">
                     {{ user.username }}
                     <span class="split"></span>
                     <span class="id">{{ user.id }}</span>
                 </div>
+                {% if isself %}
                 <div class="permission">
                     {% if user.permission > permission.BASE %}
                     <span class="badge bg-success" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
@@ -46,6 +61,13 @@
                     </span>
                     {% endif %}
                 </div>
+                {% else %}
+                <div class="permission">
+                    <span class="badge bg-secondary" title="???" data-bs-toggle="tooltip">
+                        ???
+                    </span>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

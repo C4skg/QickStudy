@@ -4,6 +4,12 @@
 -关于
 {% endblock %}
 
+{% block navListExtends%}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('auth.userInfo') }}" target="_blank">个人中心</a>
+</li>
+{% endblock %}
+
 {% block body%}
 <div class="container main">
 <!-- 内容 -->
@@ -17,7 +23,7 @@
         <div class="card">
             <div class="p-2">
                 <!-- *公告 -->
-                <div class="d-flex justify-content-around">
+                <div class="d-flex justify-content-center">
                     <div class="text-overflow button link" style="font-size: 25px;color: var(--font-color);">
                         {{ title }}
                     </div>
@@ -52,6 +58,7 @@
         margin-top: 10px;
         border-radius: 5px;
         /* border: 1px solid var(--border-color); */
+        justify-content: center;
     }
     .main{
         margin-top: 50px;
@@ -96,21 +103,11 @@
         align-items: center;
         font-size: 13px;
     }
-    .accordion .card .about .author{
-        /* padding-right: 10px; */
-        /* margin-right: 10px; */
-    }
     /* 文章标签样式 */
 
     /* 公告标签样式 */
     .notice{
         padding: 0 5%;
-    }
-    .releaseTime{
-        padding: 0 5%;
-        display: flex;
-        justify-content: space-between;
-        color: var(--second-font-color);
     }
 </style>
 {% endblock %}
