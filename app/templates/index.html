@@ -7,7 +7,7 @@
 <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
     <div class="userInfo d-flex btn btn-sm">
         <div class="user-logo">
-            <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
+            <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
         </div>
     </div>
 </a>
@@ -100,7 +100,7 @@
             <div class="userInfo">
                 <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
                     <div class="user-logo">
-                        <img src="data:image/png;base64,{{ user.logo }}" class="rounded-circle" alt="">
+                        <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
                     </div>
                 </a>
                 <div class="username">{{ user.username }}</div>

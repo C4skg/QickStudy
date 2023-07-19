@@ -33,13 +33,13 @@
                     <input class="hidden image" type="file" accept="image/*" name="file" value="">
                 </form>
                 <picture>
-                    <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt=" ">
+                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
                 </picture>    
             </div>
             {% else %}
             <div class="photo">
                 <picture>
-                    <img src="data:image/png;base64,{{ user.logo }}" class="rounded" alt=" ">
+                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
                 </picture>    
             </div>
             {% endif %}

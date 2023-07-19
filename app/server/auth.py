@@ -1,8 +1,10 @@
+from flask import Response
 from flask import request
-from flask import render_template,url_for,redirect
+from flask import render_template,url_for,abort
 from flask_login import current_user
 from flask_login import login_user,login_required,logout_user
 from datetime import datetime,timedelta
+from base64 import b64decode
 
 from ..models import User,EventID,Permission,InfoError
 from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
@@ -162,6 +164,24 @@ def confirm(token):
             data = activateResponse['4001'];
     
     return render_template('info.html',**data)
+
+@server.route('/logo/<id>')
+def logo(id):
+    user = User.query.filter((User.id == id)).first()
+    if user:
+        try:
+            data = b64decode(user.logo)
+            return Response(
+                data,
+                mimetype='image/png'
+            )
+        except:
+            pass;
+
+    abort(403)
+    
+        
+
 
 @server.route('/logout')
 @login_required
