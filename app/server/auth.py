@@ -38,7 +38,6 @@ def login():
                 else:
                     login_user(user,remember=True)
                 e = loginResponse['1000']
-                e['route'] = request.args.get('next') or ''
                 # if user.confirmed == False:
                 #     token = request.form.get('token','',type=str)
                 #     e['route'] = url_for('server.confirm',token=token,type=EventID.ACTIVATE);

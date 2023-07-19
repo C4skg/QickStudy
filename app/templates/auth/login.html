@@ -73,7 +73,9 @@
             success:(e)=>{
                 if(e['status'] == 'success'){
                     swal("登录成功","点击跳转", "success").then(()=>{
-                        let router = e['route'] ?? '/';
+                        let router = e['route']
+                        ||
+                        new URL(window.location.href).searchParams.get('next');
                         window.location = router;
                     })
                 }else{

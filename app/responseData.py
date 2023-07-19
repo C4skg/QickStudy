@@ -2,7 +2,7 @@ loginResponse = {
     '1000': {
         'status': 'success',
         'message': '登录成功',
-        'route': '/'
+        'route': ''
     },
     '1001': {
         'status': 'error',
@@ -17,7 +17,7 @@ loginResponse = {
     '1003': {
         'status': 'error',
         'message': '你已登录',
-        'route': '/'
+        'route': ''
     },
     '1004': {
         'status': 'error',
