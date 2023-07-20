@@ -142,18 +142,21 @@ uploadResponse = {
     '6000':{
         'status': 'success',
         'message': '上传成功',
-        'backURI': '',
+        'file': '',
     },
     '6001':{
         'status': 'error',
-        'message': '上传失败'
+        'message': '上传失败',
+        'file': ''
     },
     '6002': {
         'status': 'error',
-        'message': '上传文件过大'
+        'message': '上传文件过大',
+        'file': ''
     },
     '6003':{
         'status': 'error',
-        'message': '权限不足' 
+        'message': '权限不足',
+        'file': ''
     }
 }

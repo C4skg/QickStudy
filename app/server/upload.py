@@ -52,11 +52,11 @@ def upload():
                 folder=childFolder
             )
             _clone = uploadResponse['6000']
-            _clone['backURI'] = url_for('themes.upload',path=path)
+            _clone['file'] = url_for('themes.upload',path=path)
             return _clone;
         except UploadNotAllowed:
-            pass;
+            return uploadResponse['6002']
     else:
-        pass;
+        pass
     
     return uploadResponse['6001']

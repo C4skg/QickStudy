@@ -28,7 +28,7 @@ class Config:
 
     #UPLOAD
     UPLOADED_PHOTOS_DEST = 'upload';
-    MAX_CONTENT_LENGTH = 3 * 1024 * 1024; # 3mb limited
+    # MAX_CONTENT_LENGTH = 5 * 1024 * 1024; # image size limited
 
     #HTML INFO
     TITLE = 'QickStudy'
