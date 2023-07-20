@@ -7,8 +7,9 @@ from datetime import datetime,timedelta
 from base64 import b64decode
 
 
-from ..models import User,EventID,Permission,InfoError
+from .authentication import resetVCode
 from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
+from ..models import User,EventID,Permission,InfoError
 from ..func import getRandomStr
 from ..email import send_email
 from .. import db,redisClient
@@ -19,15 +20,27 @@ from ..responseData import (
     resetResponse,
     activateResponse
 )
+
 from . import server
+
 
 @server.route('/login',methods=['POST'])
 def login():
     if current_user.is_authenticated:
         return loginResponse['1003'];
-
+    
     type = request.form.get('type',EventID.NONE,type=int);
     if type and type == EventID.LOGIN:
+        # verify code
+        code = request.form.get('code','',type=str);
+        vCode = redisClient.hget(request.remote_addr,'code')
+        if not vCode or vCode.decode().lower() != code.lower():
+            resetVCode(request.remote_addr);
+            return loginResponse['1002']
+        
+        # if verify code ok:
+        resetVCode(request.remote_addr);
+
         username = request.form.get('username','',type=str);
         pwd  = request.form.get('pwd','',type=str);
         if username and pwd:
@@ -43,14 +56,14 @@ def login():
                 #     e['route'] = url_for('server.confirm',token=token,type=EventID.ACTIVATE);
                 # else:
                 #     e['route'] = request.args.get('next',url_for('main.index'),type=str);
+                '''
+                    登录成功后删除 redis 的验证码
+                '''
+                redisClient.delete(request.remote_addr);
                 return e;
             else:
-                pass
-                ip = request.remote_addr
-                redisClient.hset(EventID.LOGIN,ip,1)
-                redisClient.expire(EventID.LOGIN,3600)
                 return loginResponse['1001'];
-
+    
     return loginResponse['1004'];
 
 
@@ -58,6 +71,15 @@ def login():
 def register():
     type = request.form.get('type',EventID.NONE,type=int);
     if type and type == EventID.REGISTER:
+        code = request.form.get('code','',type=str);
+        vCode = redisClient.hget(request.remote_addr,'code')
+        if not vCode or vCode.decode().lower() != code.lower():
+            resetVCode(request.remote_addr);
+            return registerResponse['2003']
+        
+        # if verify code ok:
+        resetVCode(request.remote_addr);
+        
         email = request.form.get('email',False,type=str);
         pwd = request.form.get('pwd',False,type=str);
         if email and pwd:
@@ -87,8 +109,12 @@ def register():
                     'link': url_for('auth.login',token=token)
                 }
                 send_email(user.email,'请确认你的账户','auth/mail/confirm.html',**mailInfo)
+                '''
+                发送邮件后删除验证码
+                '''
+                redisClient.delete(request.remote_addr);
                 return registerResponse['2000'];
-
+    
     return registerResponse['2004'];
                 
             
@@ -99,6 +125,15 @@ def reset():
     if type and type == EventID.RESET:
         if step == 1:
         #* 步骤判断
+            code = request.form.get('code','',type=str);
+            vCode = redisClient.hget(request.remote_addr,'code')
+            if not vCode or vCode.decode().lower() != code.lower():
+                resetVCode(request.remote_addr);
+                return resetResponse['3007']
+            
+            # if verify code ok:
+            resetVCode(request.remote_addr);
+
             email = request.form.get('email','',type=str);
             if email and isVaildEmail(email):
                 user = User.query.filter_by(email=email).first()
@@ -127,6 +162,10 @@ def reset():
                             redisClient.hset(email,'type',EventID.RESET)
                             redisClient.expire(email,20)
                             send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
+                            '''
+                            发送邮件后删除验证码
+                            '''
+                            redisClient.delete(request.remote_addr);
                             return resetResponse['3000'];
                         else:
                             return resetResponse['3006'];

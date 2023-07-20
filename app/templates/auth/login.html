@@ -27,6 +27,17 @@
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请填写此字段。</div>
         </div>
+        <div class="mb-3 item d-flex justify-content-between vCode">
+            <div class="iitem">
+                <label for="code" class="form-label">验证码</label>
+                <input type="text" class="form-control" id="code" placeholder="" name="code" required>
+                <div class="valid-feedback">有效的。</div>
+                <div class="invalid-feedback">请填写此字段。</div>
+            </div>
+            <div class="vCodeImg">
+                <img src="{{ url_for('server.getVCodeImg') }}" style="" alt="">
+            </div>     
+        </div>
         <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
         <input type="hidden" value="{{ type }}" name="type">
         <input type="hidden" value="{{ token }}" name="token">
@@ -59,7 +70,19 @@
     form.submit((e)=>{
         e.preventDefault();
     })
-
+    var reloadVerify = function(){
+        $.ajax({
+            url : "{{ url_for('server.reload') }}",
+            type: 'get',
+            success: (e) =>{
+                let img = $('.formarea .vCode .vCodeImg img')[0];
+                img.src = `${img.src}?time=${new Date().getTime()}`;
+            }
+        })
+    }
+    $('.formarea .vCode .vCodeImg img').click(function(){
+        reloadVerify();
+    })
     button.click(function(){
         let signal = document.getElementsByTagName("form")[0].checkValidity();
         if(!signal) return false;
@@ -80,6 +103,7 @@
                     })
                 }else{
                     swal("登录失败",e['message'], "error");
+                    reloadVerify();
                 }
             },
             error:(e)=>{
@@ -91,5 +115,6 @@
             }
         })
     })
+    
 </script>
 {% endblock %}

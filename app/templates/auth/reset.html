@@ -26,6 +26,17 @@
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请输入正确格式的邮箱</div>
         </div>
+        <div class="mb-3 item d-flex justify-content-between vCode">
+            <div class="iitem">
+                <label for="code" class="form-label">验证码</label>
+                <input type="text" class="form-control" id="code" placeholder="" name="code" required>
+                <div class="valid-feedback">有效的。</div>
+                <div class="invalid-feedback">请填写此字段。</div>
+            </div>
+            <div class="vCodeImg">
+                <img src="{{ url_for('server.getVCodeImg') }}" style="" alt="">
+            </div>     
+        </div>
         <button id="login_button" type="submit" class="btn btn-primary mt-auto">发送重置邮件
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
         </button>
@@ -66,7 +77,19 @@
     form.submit((e)=>{
         e.preventDefault();
     })
-
+    var reloadVerify = function(){
+        $.ajax({
+            url : "{{ url_for('server.reload') }}",
+            type: 'get',
+            success: (e) =>{
+                let img = $('.formarea .vCode .vCodeImg img')[0];
+                img.src = `${img.src}?time=${new Date().getTime()}`;
+            }
+        })
+    }
+    $('.formarea .vCode .vCodeImg img').click(function(){
+        reloadVerify();
+    })
     button.click(function(){
         let signal = document.getElementsByTagName("form")[0].checkValidity();
         if(!signal) return false;
@@ -85,6 +108,7 @@
                     })
                 }else{
                     swal("Faild",e['message'], "error");
+                    reloadVerify();
                 }
             },
             error:(e)=>{

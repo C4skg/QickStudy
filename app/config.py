@@ -23,8 +23,8 @@ class Config:
     SQLALCHEMY_ECHO = False
 
     #REDIS
-    REDIS_URI = "8ceefcf67710.c.methodot.com"
-    REDIS_PORT = 30955
+    REDIS_URI = "8dd0a0ef983c.c.methodot.com"
+    REDIS_PORT = 30917
 
     #UPLOAD
     UPLOADED_PHOTOS_DEST = 'upload';

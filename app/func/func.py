@@ -59,7 +59,7 @@ class verifyImgCode:
         '''
         return (randint(32, 127), randint(32, 127), randint(32, 127))
     
-    def gText(self):
+    def gText(self) -> str:
         '''
             generate verify text
             4s
@@ -78,7 +78,7 @@ class verifyImgCode:
             y2 = randint(height / 2, height)
             draw.line(((x1, y1), (x2, y2)), fill=self.rndColor(), width=1)
     
-    def getImgCode(self,width:int=120,height:int=50):
+    def getImgCode(self,width:int=100,height:int=40):
         code = self.gText();
 
         img = Image.new(
@@ -111,6 +111,6 @@ class verifyImgCode:
         img.save(data,format='PNG')
         dataBytes = data.getvalue()
 
-        bytesEncode = b64encode(dataBytes).decode()
+        bytesEncode = b64encode(dataBytes)
 
         return bytesEncode,code;

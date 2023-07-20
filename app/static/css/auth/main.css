@@ -41,6 +41,12 @@ body{
     justify-content: space-between;
     margin-top: 15px;
 }
+.formarea .vCode .iitem .form-control{
+    padding-left: 5rem;
+}
+.formarea .vCode .vCodeImg img{
+    cursor: pointer;
+}
 .formarea .form-button .btn{
     width: 40%;
 }
