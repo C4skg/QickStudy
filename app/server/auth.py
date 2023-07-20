@@ -6,7 +6,6 @@ from flask_login import login_user,login_required,logout_user
 from datetime import datetime,timedelta
 from base64 import b64decode
 
-
 from .authentication import resetVCode
 from .verify import isVaildRegister,registerUserExisit,isVaildEmail,isVaildPwd
 from ..models import User,EventID,Permission,InfoError
