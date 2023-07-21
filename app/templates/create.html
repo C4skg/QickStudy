@@ -63,33 +63,30 @@ body{
                     'csrf_token': "{{ csrf_token() }}"
                 },
                 fieldName: 'file', 
-                async handler(files) {
-                    let res;
-                    for (const file of files) {
-                        const name = file.name;
-                        const formData = new FormData();
-                        formData.append('file', file);
-                        formData.append('csrf_token',"{{ csrf_token() }}")
-                        res = await $.ajax({
-                            url: this.url,
-                            data: formData,
-                            success: (e)=>{
-                                console.log(e);
-                            }
-                        });
-                        // crtVditor.current?.insertValue(`![${name}](${res.uplaodRes})`); // 文本编辑器中插入图片
-                    }
-                    if (res.uplaodRes) {
-                        console.log('ok')
-                        return '上传成功';
-                    }
-                    return '上传失败';
-                },
                 format:function(files,res){
-                    console.log(files,JSON.parse(res))
+                    res = JSON.parse(res);
+                    console.log(files,res)
+                    var result = {
+                        code: 0,
+                        data: {
+                            errFiles: [],
+                            succMap: {
+                            } 
+                        },
+                    };
+                    for(let sf of res.files){
+                        if(sf.status == 'success'){
+                            result.data.succMap[sf.filename] = sf.path
+                        }else{
+                            result.data.errFiles.push(
+                                sf.filename
+                            )
+                        }
+                    }
+                    return JSON.stringify(result);
                 },
                 error: function(e){
-                    console.log('error',{e});
+                    window.extends.tips.create("上传失败",window.extends.tips.type.danger)
                 }
             },
             after(){
@@ -141,7 +138,6 @@ body{
             }
         })
         
-
     })
 </script>
 {% endblock%}

@@ -5,6 +5,7 @@ from flask_login import current_user
 from flask_uploads import UploadNotAllowed
 from werkzeug.exceptions import RequestEntityTooLarge
 
+from copy import deepcopy
 from base64 import b64encode
 
 from ..func import getDate
@@ -45,17 +46,33 @@ def upload():
         return uploadResponse['6003'];
 
     if 'file' in request.files:
-        try:
-            childFolder = getDate();
-            path = photos.save(
-                request.files['file'],
-                folder=childFolder
-            )
-            _clone = uploadResponse['6000']
-            _clone['file'] = url_for('themes.upload',path=path)
-            return _clone;
-        except UploadNotAllowed:
-            return uploadResponse['6002']
+        childFolder = getDate();
+        _clone = deepcopy(uploadResponse['6000'])
+
+        for file in request.files.getlist('file'):
+            try:
+                path = photos.save(
+                    file,
+                    folder=childFolder
+                )
+                _clone['files'].append(
+                    {
+                        'filename': file.filename,
+                        'status': 'success',
+                        'path': url_for('themes.upload',path=path)
+                    }
+                )
+            except UploadNotAllowed:
+                _clone['files'].append(
+                    {
+                        'filename': file.filename,
+                        'status': 'failed',
+                        'path': ''
+                    }
+                )
+
+        return _clone;
+
     else:
         pass
     
