@@ -4,13 +4,37 @@
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
     <script src="{{ url_for('themes.static',path='Vditor/index.min.js') }}"></script>
 {% endblock %}
+{% block title %}
+ - 在线 markdown 编辑器
+{% endblock %}
 {% block navListExtends%}
 <li class="nav-item">
     <a class="nav-link" href="{{ url_for('auth.userInfo') }}" target="_blank">个人中心</a>
 </li>
 {% endblock %}
 {% block body %}
-    <div id="vditor"></div>
+    <div class="container-fluid main">
+        <div id="vditor"></div>
+    <div class="bottomNav card">
+        <div class="container d-flex">
+            <div class="symbol d-flex">
+                <div class="markdown small text-muted noselect" title="markdown 语法可用" data-bs-toggle="tooltip">
+                    markdown 语法已启用
+                </div>
+            </div>
+            <div class="dropup">
+                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    文章状态
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">发布文章</a></li>
+                    <li><a class="dropdown-item" href="#">保存草稿</a></li>
+                    <li><a class="dropdown-item" href="#">隐藏文章</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}
 
 {% block style %}
@@ -18,9 +42,32 @@
 body{
     height: 100vh;
 }
-#vditor{
-    height: 70%;
+.main {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: 100%;
 }
+.bottomNav{
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    border-radius: 0;
+}
+.bottomNav .container{
+    /* border: 1px solid #000; */
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+.bottomNav .container .symbol{
+    width: 80%;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
 </style>
 {% endblock %}
 {% block script%}
@@ -32,7 +79,7 @@ body{
                 enable: true
             },
             // width: ,
-            // height: document.body.offsetHeight - 100,
+            height: document.body.offsetHeight - 120,
             tab: '  ',
             cdn: '/static/Vditor',
             mode: 'sv',
@@ -111,8 +158,12 @@ body{
                         hint: (key)=>{
                             return [
                                 {
-                                    value: '@Author: {{ user.username }}',
-                                    html: '<img src="https://static.c4skg.top/c4skg/logo.jpg"/> C4skg'
+                                    value: '> Author: `{{ user.username }}`',
+                                    html: "插入作者:<img src='{{ url_for('server.logo') }}'/> {{ user.username }}"
+                                },
+                                {
+                                    value: '`@{{ user.username }}`',
+                                    html: "提到:<img src='{{ url_for('server.logo') }}'/> {{ user.username }}"
                                 }
                             ]
                         }

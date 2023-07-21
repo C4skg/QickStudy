@@ -204,19 +204,21 @@ def confirm(token):
     return render_template('info.html',**data)
 
 @server.route('/logo/<id>')
-def logo(id):
-    user = User.query.filter((User.id == id)).first()
-    if user:
-        try:
+@server.route('/logo/')
+@login_required
+def logo(id=None):
+
+    data = b64decode(current_user.logo);
+
+    if id != None:
+        user = User.query.filter((User.id == id)).first()
+        if user:
             data = b64decode(user.logo)
-            return Response(
+
+    return Response(
                 data,
                 mimetype='image/png'
             )
-        except:
-            pass;
-
-    abort(403)
     
         
 

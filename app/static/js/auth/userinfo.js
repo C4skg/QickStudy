@@ -24,7 +24,8 @@ $(function(){
             success:(e)=>{
                 if(e['status']=='success'){
                     swal("成功！","用户头像已更新", "success").then(()=>{
-                        window.location.reload();
+                        let img = $('.uInfo .photo picture img')[0];
+                        img.src = `${img.src.split('?')[0]}?time=${new Date().getTime()}`;
                     })
                 }else{
                     swal("失败",e['message'], "error").then(()=>{

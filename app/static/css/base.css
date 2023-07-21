@@ -110,3 +110,9 @@ a{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.noselect{
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}

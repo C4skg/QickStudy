@@ -13,10 +13,10 @@
 <script>
     window.t = '';
     {% if isself %}
-    window.self = true;
-    window.uploadURI = "{{ url_for('server.photoUpload') }}"
+        window.self = true;
+        window.uploadURI = "{{ url_for('server.photoUpload') }}"
     {% else %}
-    window.self = false;
+        window.self = false;
     {% endif %}
 </script>
 {% endblock %}

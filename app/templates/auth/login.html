@@ -76,7 +76,7 @@
             type: 'get',
             success: (e) =>{
                 let img = $('.formarea .vCode .vCodeImg img')[0];
-                img.src = `${img.src}?time=${new Date().getTime()}`;
+                img.src = `${img.src.split('?')[0]}?time=${new Date().getTime()}`;
             }
         })
     }
