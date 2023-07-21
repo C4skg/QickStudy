@@ -52,7 +52,11 @@ def create():
     if current_user.permission <= Permission.BASE:
         abort(403);   
 
-    return render_template('create.html');
+    data = {
+        'user': current_user
+    }
+
+    return render_template('create.html',**data);
 
 
 @main.route('/about')
