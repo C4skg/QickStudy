@@ -2,6 +2,8 @@ import os
 from base64 import b64encode
 from io import BytesIO
 from PIL import Image,ImageFont,ImageDraw
+import hashlib
+import time
 from random import randint,sample
 from string import digits,ascii_letters
 import datetime
@@ -48,6 +50,18 @@ def getRandomStr(nums:int) -> str:
 
 def getDate() -> str:
     return datetime.date.today().strftime('%Y-%m-%d');
+
+'''
+生成随机id
+'''
+def generateUID() -> str:
+    rand_bytes = os.urandom(16)
+    timestamp_bytes = str(int(time.time())).encode('utf-8')
+    salt = os.urandom(16)
+    hash_obj = hashlib.sha256(rand_bytes + timestamp_bytes + salt)
+    hash_str = hash_obj.hexdigest()
+    return hash_str[:6]
+    
 
 class verifyImgCode:
     '''

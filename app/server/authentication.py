@@ -1,26 +1,27 @@
-from flask import request
+from flask import request,session,current_app
 from flask import Response
 from flask import redirect,url_for,render_template_string
 
 from base64 import b64decode
 
-from ..func import verifyImgCode
+from ..func import verifyImgCode,generateUID
 from .. import redisClient
 from . import server
 
 
-def resetVCode(ip:str):
+def resetVCode(id:str):
     data,code = verifyImgCode().getImgCode();
-    redisClient.hset(ip,'img',data);
-    redisClient.hset(ip,'code',code)
-    redisClient.expire(ip,time=300)
+    redisClient.hset(id,'img',data);
+    redisClient.hset(id,'code',code)
+    redisClient.expire(id,time=300)
     return (data,code)
 
 @server.route('/verifyCode')
 def getVCodeImg():
-    b64data = redisClient.hget(request.remote_addr,'img');
+    id = session[current_app.config.get('SESSION_ID')];
+    b64data = redisClient.hget(id,'img');
     if not b64data:
-        b64data,code = resetVCode(request.remote_addr);
+        b64data,code = resetVCode(id);
 
 
     data = b64decode(
@@ -36,5 +37,6 @@ def getVCodeImg():
 
 @server.route('/resetCode')
 def reload():
-    resetVCode(request.remote_addr);
+    id = session[current_app.config.get('SESSION_ID')]
+    resetVCode(id);
     return 'ok';

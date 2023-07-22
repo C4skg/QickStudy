@@ -1,5 +1,5 @@
 from flask import Response
-from flask import request
+from flask import request,session,current_app
 from flask import render_template,url_for,abort
 from flask_login import current_user
 from flask_login import login_user,login_required,logout_user
@@ -32,13 +32,15 @@ def login():
     if type and type == EventID.LOGIN:
         # verify code
         code = request.form.get('code','',type=str);
-        vCode = redisClient.hget(request.remote_addr,'code')
+
+        id = session[current_app.config.get('SESSION_ID')];
+        vCode = redisClient.hget(id,'code')
         if not vCode or vCode.decode().lower() != code.lower():
-            resetVCode(request.remote_addr);
+            resetVCode(id);
             return loginResponse['1002']
         
         # if verify code ok:
-        resetVCode(request.remote_addr);
+        resetVCode(id);
 
         username = request.form.get('username','',type=str);
         pwd  = request.form.get('pwd','',type=str);
@@ -58,7 +60,7 @@ def login():
                 '''
                     登录成功后删除 redis 的验证码
                 '''
-                redisClient.delete(request.remote_addr);
+                redisClient.delete(id);
                 return e;
             else:
                 return loginResponse['1001'];
@@ -71,13 +73,15 @@ def register():
     type = request.form.get('type',EventID.NONE,type=int);
     if type and type == EventID.REGISTER:
         code = request.form.get('code','',type=str);
-        vCode = redisClient.hget(request.remote_addr,'code')
+
+        id = session[current_app.config.get('SESSION_ID')];
+        vCode = redisClient.hget(id,'code')
         if not vCode or vCode.decode().lower() != code.lower():
-            resetVCode(request.remote_addr);
+            resetVCode(id);
             return registerResponse['2003']
         
         # if verify code ok:
-        resetVCode(request.remote_addr);
+        resetVCode(id);
         
         email = request.form.get('email',False,type=str);
         pwd = request.form.get('pwd',False,type=str);
@@ -111,7 +115,7 @@ def register():
                 '''
                 发送邮件后删除验证码
                 '''
-                redisClient.delete(request.remote_addr);
+                redisClient.delete(id);
                 return registerResponse['2000'];
     
     return registerResponse['2004'];
@@ -125,13 +129,15 @@ def reset():
         if step == 1:
         #* 步骤判断
             code = request.form.get('code','',type=str);
-            vCode = redisClient.hget(request.remote_addr,'code')
+
+            id = session[current_app.config.get('SESSION_ID')];
+            vCode = redisClient.hget(id,'code')
             if not vCode or vCode.decode().lower() != code.lower():
-                resetVCode(request.remote_addr);
+                resetVCode(id);
                 return resetResponse['3007']
             
             # if verify code ok:
-            resetVCode(request.remote_addr);
+            resetVCode(id);
 
             email = request.form.get('email','',type=str);
             if email and isVaildEmail(email):
@@ -164,7 +170,7 @@ def reset():
                             '''
                             发送邮件后删除验证码
                             '''
-                            redisClient.delete(request.remote_addr);
+                            redisClient.delete(id);
                             return resetResponse['3000'];
                         else:
                             return resetResponse['3006'];

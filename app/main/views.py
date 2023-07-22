@@ -59,6 +59,11 @@ def create():
     return render_template('create.html',**data);
 
 
+@main.route('/article')
+@login_required
+def article():
+    return '';
+
 @main.route('/about')
 def about():
     data = {

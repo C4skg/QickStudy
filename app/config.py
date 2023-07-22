@@ -26,6 +26,9 @@ class Config:
     REDIS_URI = "8dd0a0ef983c.c.methodot.com"
     REDIS_PORT = 30917
 
+    #用户全局 ID - session
+    SESSION_ID = '_s_id'
+
     #UPLOAD
     UPLOADED_PHOTOS_DEST = 'upload';
     # MAX_CONTENT_LENGTH = 5 * 1024 * 1024; # image size limited
