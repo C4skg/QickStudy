@@ -176,7 +176,7 @@
 }
 /* article */
 
-@media screen and (max-width: 1400px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+@media screen and (max-width: 1400px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
     .navbar .userInfo{
         display: inline-block !important;
     }

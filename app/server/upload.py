@@ -59,7 +59,7 @@ def upload():
                     {
                         'filename': file.filename,
                         'status': 'success',
-                        'path': url_for('themes.upload',path=path)
+                        'path':  request.url_root + url_for('themes.upload',path=path)
                     }
                 )
             except UploadNotAllowed:
@@ -70,7 +70,6 @@ def upload():
                         'path': ''
                     }
                 )
-
         return _clone;
 
     else:
