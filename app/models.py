@@ -6,6 +6,7 @@ from datetime import datetime
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy import event
 
+
 from .func import generateImgByName,getRandomStr
 
 from . import db , loginManager
@@ -136,6 +137,7 @@ class User(UserMixin,db.Model):
     delFlag = db.Column('delFlag',db.Boolean,default=False)
     # phone = db.Column('phone',db.String(11),nullable=False,unique=True,index=True)
     email = db.Column('email',db.String(64),unique=True,index=True)
+    confirmed = db.Column('confirmed',db.Boolean,default=False,index=True)
     #* LOGO
     logo = db.Column('logo',LONGTEXT)
 
@@ -313,7 +315,7 @@ def initDB():
     admin = User.query.filter_by(username='admin').first()
     if not admin:
         cache = getRandomStr(6)
-        user = User(username='admin',pwd=cache,email='C4skg@qq.com',permission=Permission.ADMIN)
+        user = User(username='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
         db.session.add(user)
         db.session.commit()
         print( 

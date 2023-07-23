@@ -23,8 +23,9 @@ class Config:
     SQLALCHEMY_ECHO = False
 
     #REDIS
-    REDIS_URI = "8dd0a0ef983c.c.methodot.com"
-    REDIS_PORT = 30917
+    REDIS_URI = "127.0.0.1"
+    REDIS_PORT = 6379
+    REDIS_PASS = "QickStudy"
 
     #用户全局 ID - session
     SESSION_ID = '_s_id'

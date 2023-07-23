@@ -89,6 +89,10 @@
         
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
+        let token = new URL(window.location.href).searchParams.get('token');
+        form.append(
+            $(`<input type="hidden" name="token" value="${token}" />`)
+        );
         $.ajax({
             url: "{{ url_for('server.login') }}",
             type:'post',
@@ -98,7 +102,9 @@
                     swal("登录成功","点击跳转", "success").then(()=>{
                         let router = e['route']
                         ||
-                        new URL(window.location.href).searchParams.get('next');
+                        new URL(window.location.href).searchParams.get('next')
+                        ||
+                        '/';
                         window.location = router;
                     })
                 }else{

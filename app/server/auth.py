@@ -22,6 +22,22 @@ from ..responseData import (
 
 from . import server
 
+@server.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    type = request.args.get('type',EventID.NONE,type=int);
+    data = activateResponse['4003'];
+    if type == EventID.ACTIVATE:
+        if current_user.confirmed:
+            data = activateResponse['4002'];
+        try:
+            flag = current_user.confirmToken(token)
+            db.session.commit();
+            data = activateResponse['4000'];
+        except InfoError as e:
+            data = activateResponse['4001'];
+    
+    return render_template('info.html',**data)
 
 @server.route('/login',methods=['POST'])
 def login():
@@ -51,12 +67,20 @@ def login():
                     login_user(user)
                 else:
                     login_user(user,remember=True)
-                e = loginResponse['1000']
-                # if user.confirmed == False:
-                #     token = request.form.get('token','',type=str)
-                #     e['route'] = url_for('server.confirm',token=token,type=EventID.ACTIVATE);
-                # else:
-                #     e['route'] = request.args.get('next',url_for('main.index'),type=str);
+                e = loginResponse['1000'];
+                if user.confirmed == False:
+                    try:
+                        token = request.form.get('token') or '';
+                        print('token >>>',token)
+                        flag = current_user.confirmToken(token)
+                        print("flag >>> ",flag)
+                        db.session.commit();
+
+                    except InfoError as e:
+                        logout_user();
+                        return activateResponse['4001'];
+                else:
+                    e['route'] = request.args.get('next',url_for('main.index'),type=str);
                 '''
                     登录成功后删除 redis 的验证码
                 '''
@@ -192,22 +216,6 @@ def reset():
 
     return resetResponse['3008'];
 
-@server.route('/confirm/<token>')
-@login_required
-def confirm(token):
-    type = request.args.get('type',EventID.NONE,type=int);
-    data = activateResponse['4003'];
-    if type == EventID.ACTIVATE:
-        if current_user.confirmed:
-            data = activateResponse['4002'];
-        try:
-            flag = current_user.confirmToken(token)
-            db.session.commit();
-            data = activateResponse['4000'];
-        except InfoError as e:
-            data = activateResponse['4001'];
-    
-    return render_template('info.html',**data)
 
 @server.route('/logo/<id>')
 @server.route('/logo/')

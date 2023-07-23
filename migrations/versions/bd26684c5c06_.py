@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4c2dbfeffcd1
+Revision ID: bd26684c5c06
 Revises: 
-Create Date: 2023-07-17 13:38:11.164043
+Create Date: 2023-07-23 12:42:33.250449
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = '4c2dbfeffcd1'
+revision = 'bd26684c5c06'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,12 +24,14 @@ def upgrade():
     sa.Column('password', sa.String(length=128), nullable=True),
     sa.Column('delFlag', sa.Boolean(), nullable=True),
     sa.Column('email', sa.String(length=64), nullable=True),
+    sa.Column('confirmed', sa.Boolean(), nullable=True),
     sa.Column('logo', mysql.LONGTEXT(), nullable=True),
     sa.Column('sinceTime', sa.DateTime(), nullable=True),
     sa.Column('resetTime', sa.DateTime(), nullable=True),
     sa.Column('permission', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_Qc_Users_confirmed'), 'Qc_Users', ['confirmed'], unique=False)
     op.create_index(op.f('ix_Qc_Users_email'), 'Qc_Users', ['email'], unique=True)
     op.create_index(op.f('ix_Qc_Users_permission'), 'Qc_Users', ['permission'], unique=False)
     op.create_index(op.f('ix_Qc_Users_username'), 'Qc_Users', ['username'], unique=True)
@@ -79,5 +81,6 @@ def downgrade():
     op.drop_index(op.f('ix_Qc_Users_username'), table_name='Qc_Users')
     op.drop_index(op.f('ix_Qc_Users_permission'), table_name='Qc_Users')
     op.drop_index(op.f('ix_Qc_Users_email'), table_name='Qc_Users')
+    op.drop_index(op.f('ix_Qc_Users_confirmed'), table_name='Qc_Users')
     op.drop_table('Qc_Users')
     # ### end Alembic commands ###

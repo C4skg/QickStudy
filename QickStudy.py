@@ -8,11 +8,18 @@ from app.models import User,Permission,UserAttend,Article,Follow
 from app import create_app
 from app import db
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
+from datetime import datetime
+
 
 app = create_app('TestingEnv');
 migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)
+
+#^ background jobs
+scheduler = BackgroundScheduler()
 
 @app.shell_context_processor
 def make_shell_context():
@@ -32,6 +39,21 @@ def before_request():
         pass;
     else:
         session[id] = generateUID();
+
+def CleanUser():
+    with app.app_context():
+        data = User.query.filter_by(confirmed=False).all()
+        for e in data:
+            if (datetime.now() - e.sinceTime).seconds >= (3600):
+                db.session.delete(e);
+                db.session.commit();
+
+scheduler.add_job(
+    func=CleanUser,
+    trigger='interval',
+    seconds=60*30
+)
+scheduler.start()
 
 @manager.command
 def deploy():
