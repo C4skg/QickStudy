@@ -2,7 +2,7 @@ from flask_migrate import Migrate,MigrateCommand,upgrade
 from flask_script import Manager
 from flask import session
 
-from app.func import generateUID
+from app.func import generateUID6
 from app.models import initDB
 from app.models import User,Permission,UserAttend,Article,Follow
 from app import create_app
@@ -38,7 +38,7 @@ def before_request():
     if session.get(id):
         pass;
     else:
-        session[id] = generateUID();
+        session[id] = generateUID6();
 
 def CleanUser():
     with app.app_context():

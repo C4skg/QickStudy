@@ -171,13 +171,13 @@ body{
             upload:{
                 url: "{{ url_for('server.upload') }}",
                 accept: 'image/*',
+                max: 5 * 1024 * 1024,
                 extraData: {
                     'csrf_token': "{{ csrf_token() }}"
                 },
                 fieldName: 'file', 
                 format:function(files,res){
                     res = JSON.parse(res);
-                    console.log(files,res)
                     var result = {
                         code: 0,
                         data: {

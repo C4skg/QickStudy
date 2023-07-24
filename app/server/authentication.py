@@ -1,10 +1,9 @@
-from flask import request,session,current_app
+from flask import session,current_app
 from flask import Response
-from flask import redirect,url_for,render_template_string
 
 from base64 import b64decode
 
-from ..func import verifyImgCode,generateUID
+from ..func import verifyImgCode
 from .. import redisClient
 from . import server
 

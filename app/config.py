@@ -1,8 +1,7 @@
 from hashlib import md5
 from uuid import uuid4
-
+from .func import generateUID32
 class Config:
-    SECRET_KEY = md5(str(uuid4()).encode()).hexdigest()
     
     MAIL_SERVER='smtp.qq.com'
     MAIL_PORT='465'
@@ -32,18 +31,20 @@ class Config:
 
     #UPLOAD
     UPLOADED_PHOTOS_DEST = 'upload';
-    # MAX_CONTENT_LENGTH = 5 * 1024 * 1024; # image size limited
+    UPLOADED_FILE_SIZE = 5 * 1024 * 1024; # image size limited  5mb
 
     #HTML INFO
     TITLE = 'QickStudy'
 
 
 class TestingEnv(Config):
+    SECRET_KEY = "123456"
     DEBUG = True
 
 
 
 class ProductionEnv(Config):
+    SECRET_KEY = generateUID32()
     DEBUG = False
 
 config = {

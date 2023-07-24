@@ -1,4 +1,4 @@
-from flask import request
+from flask import request,current_app
 from flask import url_for
 from flask_login import login_required
 from flask_login import current_user
@@ -8,15 +8,23 @@ from werkzeug.exceptions import RequestEntityTooLarge
 from copy import deepcopy
 from base64 import b64encode
 
-from ..func import getDate
+from ..func import getDate,getRandomStr
 from ..models import Permission
 from ..responseData import uploadResponse
 from .. import photos,db
 from . import server        
 
+
+class UploadFileTooLarge(ValueError):
+    '''
+    throw the error if the file too larger;
+    '''
+    pass;
+
 @server.errorhandler(RequestEntityTooLarge)
 def tooLarge(error):
     return uploadResponse['6002'];
+
 
 @server.route('/uupload',methods=['POST'])
 @login_required
@@ -51,6 +59,11 @@ def upload():
 
         for file in request.files.getlist('file'):
             try:
+                size = len(file.read());
+                if size > (current_app.config.get('UPLOADED_FILE_SIZE') or (5 * 1024 * 1024)):
+                    raise(UploadFileTooLarge('The file is too large'));
+
+                file.seek(0);
                 path = photos.save(
                     file,
                     folder=childFolder
@@ -62,7 +75,7 @@ def upload():
                         'path':  request.url_root + url_for('themes.upload',path=path)
                     }
                 )
-            except UploadNotAllowed:
+            except:
                 _clone['files'].append(
                     {
                         'filename': file.filename,

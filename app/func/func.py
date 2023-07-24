@@ -2,6 +2,7 @@ import os
 from base64 import b64encode
 from io import BytesIO
 from PIL import Image,ImageFont,ImageDraw
+from uuid import uuid4
 import hashlib
 import time
 from random import randint,sample
@@ -45,16 +46,23 @@ def generateImgByName(name:str) -> str:
 '''
 def getRandomStr(nums:int) -> str:
     return ''.join(
-            sample(digits + ascii_letters , k=nums)
+        sample(digits + ascii_letters , k=nums)
     )
 
 def getDate() -> str:
     return datetime.date.today().strftime('%Y-%m-%d');
 
 '''
+随机 uuid 生成
+'''
+def generateUID32() -> str:
+    return str(uuid4());
+
+
+'''
 生成随机id
 '''
-def generateUID() -> str:
+def generateUID6() -> str:
     rand_bytes = os.urandom(16)
     timestamp_bytes = str(int(time.time())).encode('utf-8')
     salt = os.urandom(16)

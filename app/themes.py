@@ -21,10 +21,12 @@ def upload(path):
     )
     uploadPath = current_app.config.get('UPLOADED_PHOTOS_DEST')
     if not uploadPath:
-        file = safe_join(current_app.root_path,'static',path)
+        file = safe_join(current_app.root_path,'upload',path)
     else:
         file = safe_join(root_path,uploadPath,path)
+
     if os.path.isfile(file):
+        print(file)
         return send_file(file)
     
     abort(404)
