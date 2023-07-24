@@ -126,7 +126,8 @@ $(function(){
     document.getElementById('release').onclick = function(){
         const input = $(".SubmitForm")
         console.log(
-            input.serialize()
+            input.serialize(),
+            vditor.getHTML()
         )
     }
 
