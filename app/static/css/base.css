@@ -116,3 +116,24 @@ a{
     -moz-user-select: none;
     -webkit-user-select: none;
 }
+
+.no-wrap{
+    white-space: nowrap !important;
+}
+
+.spinner{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+}
+.spinner-green{
+    background-color: green;
+}
+.spinner-red{
+    background-color: red;
+}
+.spinner-yellow{
+    background-color: rgb(192, 192, 91);
+}

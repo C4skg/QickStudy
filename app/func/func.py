@@ -1,13 +1,14 @@
 import os
+import datetime
+import hashlib
+import time
+
 from base64 import b64encode
 from io import BytesIO
 from PIL import Image,ImageFont,ImageDraw
 from uuid import uuid4
-import hashlib
-import time
 from random import randint,sample
 from string import digits,ascii_letters
-import datetime
 
 '''
 更具字符串首个字符生成图片

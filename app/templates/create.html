@@ -1,260 +1,81 @@
-{% extends "themes/md.html" %}
+{% extends "themes/base.html" %}
 {% block extends %}
     <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/create.css') }}">
     <script src="{{ url_for('themes.static',path='Vditor/index.min.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/create.js') }}"></script>
 {% endblock %}
 {% block title %}
  - 在线 markdown 编辑器
 {% endblock %}
-{% block navListExtends%}
-<li class="nav-item">
-    <a class="nav-link" href="{{ url_for('auth.userInfo') }}" target="_blank">个人中心</a>
-</li>
+{% block hscript %}
+<script>
+    window.csrf_token = "{{ csrf_token() }}"
+    window.upload_url = "{{ url_for('server.upload') }}"
+    window.user = {
+        username: "{{ user.username }}",
+        logo: "{{ url_for('server.logo') }}"
+
+    }
+</script>
 {% endblock %}
 {% block body %}
-    <div class="container-fluid main">
-        <div id="vditor"></div>
-        <div class="bottomNav card">
-            <div class="container d-flex">
-                <div class="symbol d-flex">
-                    <form id="baseInfo" class="was-validated formarea">
-                        <div class="infos d-flex">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text">标题</span>
-                                <input type="text" class="form-control" name="title" required>
-                            </div>                           
-                        </div>
-                    </form>
-                    <div class="status d-flex">
-                        <div class="t d-flex">
-                            <span class="name small text-muted noselect">状态: </span>
-                            <span class="small text-muted noselect">
-                                未选择
-                            </span>
-                            <span class="icon spinner spinner-red"></span>
-                        </div>
+    <div class="container-fluid main card">
+        <div class="container">
+            <form class="SubmitForm">
+                <div class="head">
+                    <div class="title">发布文章</div>
+                    <div class="func">
                         <div class="markdown small text-muted noselect" title="markdown 语法可用" data-bs-toggle="tooltip">
                             markdown 语法已启用
                         </div>
+                        
+                            <div class="type d-flex">
+                                <input type="hidden" value="{{ csrf_token() }}" name="csrf_token" />
+                                <select class="form-select form-select-sm" name="type">
+                                    <option value="1">发布</option>
+                                    <option value="2">草稿</option>
+                                    <option value="3">私有</option>
+                                </select>
+                                <button type="button" class="btn btn-primary btn-sm no-wrap" id="release">发布</button>
+                            </div>
                     </div>
-                    
                 </div>
-                <div class="dropup">
-                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                        选择发布
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">发布文章</a></li>
-                        <li><a class="dropdown-item" href="#">保存草稿</a></li>
-                        <li><a class="dropdown-item" href="#">隐藏文章</a></li>
-                    </ul>
+                <div class="articleInfos card container">
+                    <div class="title">
+                        <input id="title"  type="text" placeholder="在这里输入文章标题" oninput="titleCount()">
+                        <label for="title">
+                            0/100
+                        </label>
+                    </div>
+                    <div class="extend">
+                        <div class="fm" data-status="normal">
+                            <div class="position-center">
+                                <span class="spinner-border spinner-border-sm"></span>上传中
+                            </div>                    
+                            <input class="hidden image" type="file" accept="image/*" name="file" value="">
+                            <picture>
+                                <!-- <img src="{{ url_for('server.logo',id=user.id) }}" alt=""> -->
+                                <img src="{{ url_for('themes.static',path='/img/default.png') }}" alt="">
+                            </picture>   
+                        </div>
+                        <div class="desc">
+                            <div class="txt">
+                                <div class="main">设置文章封面图片</div>
+                                <div class="second small text-muted noselect">图片要求: JPG、PNG</div>
+                            </div>
+                            <div class="btn btn-secondary">
+                                上传封面
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
+
+        <!-- ^Vditor -->
+        <div id="vditor"></div>
     </div>
 {% endblock %}
-
-{% block style %}
-<style>
-body{
-    height: 100vh;
-}
-.main {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    width: 100%;
-}
-.bottomNav{
-    width: 100%;
-    height: 60px;
-    position: fixed;
-    bottom: 0;
-    border-radius: 0;
-}
-.bottomNav .container{
-    /* border: 1px solid #000; */
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-}
-.bottomNav .container .symbol{
-    width: 80%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    column-gap: 40px;
-}
-.bottomNav .container .symbol .infos{
-    width: 400px;
-}
-.bottomNav .container .symbol .status{
-    display: flex;
-    align-items: center;
-    column-gap: 20px;
-}
-.bottomNav .container .symbol .status .t{
-    align-items: center;
-}
-@media screen and (max-width: 1000px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
-    .bottomNav .container .symbol .status *{
-        white-space: nowrap;
-    }
-    .bottomNav .container .symbol .status{
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-    }
-}
-@media screen and (max-width: 800px){
-    .bottomNav .container .symbol .infos{
-        width: auto;
-    }
-}
-@media screen and (max-width: 500px) {
-    .bottomNav .container .symbol .status .markdown{
-        display: none;
-    }
-}
-.spinner{
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 5px;
-}
-.spinner-green{
-    background-color: green;
-}
-.spinner-red{
-    background-color: red;
-}
-.spinner-yellow{
-    background-color: rgb(192, 192, 91);
-}
-</style>
-{% endblock %}
-{% block script%}
-<script>
-    $(function(){
-        var mode = window.mode || 'light';
-        var vditor = new Vditor("vditor", {
-            cache: {
-                enable: true
-            },
-            // width: ,
-            height: document.body.offsetHeight - 120,
-            tab: '  ',
-            cdn: '/static/Vditor',
-            mode: 'sv',
-            counter: {
-                enable: true
-            },
-            // *主题设置
-            theme: mode,
-            preview:{
-                hljs:{
-                    enable:true,
-                    style: mode=='dark'?'native':'emacs',  //emacs, dark:native
-                    lineNumber: true
-                },
-                math:{
-                    engine: "KaTeX",
-                    inlineDigit: true
-                },
-                theme:{
-                    current: mode
-                }
-
-            },
-            upload:{
-                url: "{{ url_for('server.upload') }}",
-                accept: 'image/*',
-                max: 5 * 1024 * 1024,
-                extraData: {
-                    'csrf_token': "{{ csrf_token() }}"
-                },
-                fieldName: 'file', 
-                format:function(files,res){
-                    res = JSON.parse(res);
-                    var result = {
-                        code: 0,
-                        data: {
-                            errFiles: [],
-                            succMap: {
-                            } 
-                        },
-                    };
-                    for(let sf of res.files){
-                        if(sf.status == 'success'){
-                            result.data.succMap[sf.filename] = sf.path
-                        }else{
-                            result.data.errFiles.push(
-                                sf.filename
-                            )
-                        }
-                    }
-                    return JSON.stringify(result);
-                },
-                error: function(e){
-                    window.extends.tips.create("上传失败",window.extends.tips.type.danger)
-                }
-            },
-            after(){
-                // console.log(vditor.getHTML())
-            },
-            toolbar: ['emoji' , 'headings' , 'bold' , 'italic' , 'strike' , '|' , 'line' , 'quote' , 'list' , 'ordered-list' , 'check' ,'outdent' ,'indent' , 'code' , 'inline-code' , 'insert-after' , 'insert-before' ,'undo' , 'redo' , 'upload' , 'link' , 'table' , 'fullscreen' , 'outline', 'devtools','|','both','edit-mode','export' , 'help',
-                {
-                    hotkey: '⌘S', //Ctrl + s
-                    name: 'save',
-                    tip: '保存',
-                    className: '',
-                    icon: '<svg t="1689558431701" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1464" width="200" height="200"><path d="M845.312 0.512H32.512v1022.976h958.976v-876.8L845.312 0.512z m-172.864 62.976v256H351.488v-256h320.96zM287.488 960.512V605.76l29.184-29.248h390.656l29.184 29.248v354.752H287.488z m640 0h-126.976V585.152L727.424 512H296.576L223.488 585.152v375.36H96.512V63.488h190.976v320.448h449.024V63.488h79.68l111.296 112.32v784.704z m-384-832h65.984v128H543.488v-128z" p-id="1465" fill="#666"></path></svg>',
-                    click () {
-                        window.extends.tips.create("保存成功",window.extends.tips.type.success)
-                    },
-                }
-            ],
-            hint:{
-                extend:[
-                    {
-                        key: "@",
-                        hint: (key)=>{
-                            return [
-                                {
-                                    value: '> 作者: `<{{ user.username }}>`',
-                                    html: "插入作者:<img src='{{ url_for('server.logo') }}'/> {{ user.username }}"
-                                },
-                                {
-                                    value: '`@{{ user.username }}`',
-                                    html: "提到:<img src='{{ url_for('server.logo') }}'/> {{ user.username }}"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        key: "!",
-                        hint: (key)=>{
-                            return [
-                                {
-                                    value: '![]()',
-                                    html: '插入图片'
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-        });
-        Object.defineProperty(window,"mode",{
-            set: function(value){
-                window.location.reload();
-                // vditor.setTheme(value || 'light');
-            }
-        })
-        
-    })
-</script>
-{% endblock%}
 </html>

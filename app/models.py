@@ -126,7 +126,7 @@ class Article(db.Model):
     context = db.Column(LONGTEXT,nullable=False);
     timestamp = db.Column(db.DateTime,nullable=False,default=datetime.utcnow);
     status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
-
+    cover = db.Column(db.Text,nullable=True) #文章封面
 
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'

@@ -21,20 +21,6 @@
     align-items: center;
     z-index: 1;
 }
-.main .split{
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    margin: 0 5px;
-    font-weight: normal;
-    background-color: var(--border-color);
-    display: inline-block;
-}
-.main .uInfo .in{
-    width: 100%;
-    padding: 0 5px;
-    display: flex;
-}
 .main .uInfo .in .photo{
     overflow: hidden;
     cursor: pointer;
@@ -60,6 +46,20 @@
     display: none;
 }
 .main .uInfo .in .photo[data-status="normal"]:hover::before{
+    display: flex;
+}
+.main .split{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin: 0 5px;
+    font-weight: normal;
+    background-color: var(--border-color);
+    display: inline-block;
+}
+.main .uInfo .in{
+    width: 100%;
+    padding: 0 5px;
     display: flex;
 }
 .main .uInfo .in .infos{

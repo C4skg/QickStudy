@@ -63,21 +63,20 @@ $(function(){
                 var successful = document.execCommand('copy');
                 if (successful) {
                     $(e.currentTarget).attr('data-copy','Success');
-                    setTimeout(function () {
-                        $(e.currentTarget).attr('data-copy','Copy');
-                    }, 2000);
                 }else{
-                    $(e.currentTarget).attr('data-copy','Success');
+                    $(e.currentTarget).attr('data-copy','Failed');
                 }
             } catch (err) {
-                target.dataset.title = TEXT_ERROR;
+                $(e.currentTarget).attr('data-copy','Error');
             }
+            setTimeout(function () {
+                $(e.currentTarget).attr('data-copy','Copy');
+            }, 2000);
         }
     });
     
     // *markdown img preview
     $(".center").delegate("img","click",function(e){
-        console.log(e.currentTarget)
         Vditor.previewImage(
             e.currentTarget,
             'zh_CN',
