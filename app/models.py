@@ -54,6 +54,25 @@ class ArticleStatus:
     WAIT    = 2; #审核 , 及发布前
     NORMAL  = 3; #正常发布
 
+    Desc = {
+        NOTPASS:{
+            "color": "red",
+            "name" : "未通过"
+        },
+        DRAFT:{
+            "color": "mute",
+            "name" : "草稿"
+        },
+        WAIT:{
+            "color": "yellow",
+            "name" : "审核中"
+        },
+        NORMAL:{
+            "color": "green",
+            "name" : "已发布"
+        }
+    }
+
 class UserExperience:
     LEVEL = {
         '1': 0,

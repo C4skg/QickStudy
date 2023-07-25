@@ -31,14 +31,24 @@
                         <div class="markdown small text-muted noselect" title="markdown 语法可用" data-bs-toggle="tooltip">
                             markdown 语法已启用
                         </div>
-                        
+                        <div class="status d-flex">
+                            <span class="name small text-muted noselect">状态: </span>
+                            <span class="small text-muted noselect">
+                                {{ ArticleStatus.Desc[article.status]['name'] }}
+                            </span>
+                            <span class="icon spinner spinner-{{ ArticleStatus.Desc[article.status]['color'] }}"></span>
+                        </div>
                             <div class="type d-flex">
                                 <input type="hidden" value="{{ csrf_token() }}" name="csrf_token" />
-                                <select class="form-select form-select-sm" name="type">
-                                    <option value="1">草稿</option>
-                                    <option value="2">发布</option>
-                                </select>
-                                <button type="button" class="btn btn-primary btn-sm no-wrap" id="release">保 存</button>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
+                                      保 存
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item" href="#" onclick="">保存草稿</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="">发布文章</a></li>
+                                    </ul>
+                                </div>
                             </div>
                     </div>
                 </div>

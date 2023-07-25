@@ -4,7 +4,7 @@ from flask_login import login_required
 from flask_login import current_user
 
 from . import main
-from ..models import UserExperience,Permission
+from ..models import UserExperience,Permission,ArticleStatus
 
 @main.route('/',methods=['GET','POST'])
 @login_required
@@ -37,7 +37,8 @@ def index():
                 'level': 2,
                 'context': open(f'WorkSpace/notice.md','r',encoding='utf-8').read()
             }
-        }
+        },
+        'ArticleStatus': ArticleStatus
     }
     datas['level']['nextV'] = UserExperience.getNextValue(datas['level']['now'])
     datas['level']['length'] = (datas['level']['value'] / (1 if datas['level']['nextV'] == 0 else datas['level']['nextV'])) * 100

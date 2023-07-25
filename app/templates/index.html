@@ -120,7 +120,7 @@
                     <span class="num">{{ user.followTarget | length }}</span><span class="type">关注</span>
                 </div>
                 <div class="article-num content">
-                    <span class="num">{{ user.article.all() | length }}</span><span class="type">文章</span>
+                    <span class="num">{{ user.article.filter_by(status=ArticleStatus.NORMAL).all() | length }}</span><span class="type">文章</span>
                 </div>
             </div>
             <div class="nav">

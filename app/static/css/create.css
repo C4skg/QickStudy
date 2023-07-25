@@ -29,6 +29,9 @@ body::-webkit-scrollbar{
     align-items: center;
     column-gap: 20px;
 }
+.main .head .func .status{
+    align-items: center;
+}
 .main .head .func .type{
     align-items: center;
     column-gap: 10px;

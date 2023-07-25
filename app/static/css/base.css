@@ -134,6 +134,9 @@ a{
     display: inline-block;
     margin: 0 5px;
 }
+.spinner-mute{
+    background-color: #ccc;
+}
 .spinner-green{
     background-color: green;
 }

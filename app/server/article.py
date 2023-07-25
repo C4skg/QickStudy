@@ -53,7 +53,8 @@ def create(id:int=None):
 
     data = {
         'user': current_user,
-        "article": article
+        "article": article,
+        "ArticleStatus": ArticleStatus
     }
 
     return render_template('create.html',**data);
