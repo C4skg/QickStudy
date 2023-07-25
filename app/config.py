@@ -28,7 +28,7 @@ class Config:
     #REDIS
     REDIS_URI = "127.0.0.1"
     REDIS_PORT = 6379
-    REDIS_PASS = "QickStudy"
+    REDIS_PASSWORD = "QickStudy"
 
     #用户全局 ID - session
     SESSION_ID = '_s_id'
