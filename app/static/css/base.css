@@ -101,7 +101,13 @@ a{
     justify-content: center;
     align-items: center;
 }
-
+.line{
+    display: block;
+    height: 1px;
+    width: auto;
+    background-color: var(--border-color);
+    margin: 2px 0;
+}
 .hidden{
     display: none;
 }

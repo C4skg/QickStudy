@@ -21,6 +21,7 @@
 </script>
 {% endblock %}
 {% block body %}
+    <div id="ready" hidden>{{article.context}}</div>
     <div class="container-fluid main card">
         <div class="container">
             <form class="SubmitForm">
@@ -34,30 +35,32 @@
                             <div class="type d-flex">
                                 <input type="hidden" value="{{ csrf_token() }}" name="csrf_token" />
                                 <select class="form-select form-select-sm" name="type">
-                                    <option value="1">发布</option>
-                                    <option value="2">草稿</option>
-                                    <option value="3">私有</option>
+                                    <option value="1">草稿</option>
+                                    <option value="2">发布</option>
                                 </select>
-                                <button type="button" class="btn btn-primary btn-sm no-wrap" id="release">发布</button>
+                                <button type="button" class="btn btn-primary btn-sm no-wrap" id="release">保 存</button>
                             </div>
                     </div>
                 </div>
                 <div class="articleInfos card container">
                     <div class="title">
-                        <input id="title"  type="text" placeholder="在这里输入文章标题" oninput="titleCount()">
+                        <input id="title"  type="text" placeholder="在这里输入文章标题" name="title" oninput="titleCount()" value="{{ article.title }}">
                         <label for="title">
-                            0/100
+                            {{article.title | length}}/100
                         </label>
                     </div>
                     <div class="extend">
-                        <div class="fm" data-status="normal">
+                        <div class="fm" data-status="normal" onclick="setCover()">
                             <div class="position-center">
                                 <span class="spinner-border spinner-border-sm"></span>上传中
                             </div>                    
-                            <input class="hidden image" type="file" accept="image/*" name="file" value="">
+                            <input id="cover" class="hidden" type="file" accept="image/*" name="file" value="">
                             <picture>
-                                <!-- <img src="{{ url_for('server.logo',id=user.id) }}" alt=""> -->
+                                {% if article.cover %}
+                                <img src="{{ article.cover }}" alt="">
+                                {% else %}
                                 <img src="{{ url_for('themes.static',path='/img/default.png') }}" alt="">
+                                {% endif %}
                             </picture>   
                         </div>
                         <div class="desc">
@@ -65,7 +68,7 @@
                                 <div class="main">设置文章封面图片</div>
                                 <div class="second small text-muted noselect">图片要求: JPG、PNG</div>
                             </div>
-                            <div class="btn btn-secondary">
+                            <div class="btn btn-secondary" onclick="setCover()">
                                 上传封面
                             </div>
                         </div>

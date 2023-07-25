@@ -62,7 +62,7 @@ def deploy():
 
     # inert admin user
     initDB();
-    
+
 
 if __name__ == '__main__':
     manager.run()

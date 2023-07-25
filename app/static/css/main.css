@@ -159,19 +159,17 @@
 /* user */
 /* article */
 .container-article{
-    padding: 5px 2px;
+    padding: 5px 10%;
 }
-.container-article .nav{
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.container-article a{
+    width: 100%;
+    margin: 1px auto;
 }
-.container-article .nav .btn{
+.container-article .btn{
+    width: 100%;
     color: var(--font-color);
 }
-.container-article .nav .btn:hover{
+.container-article .btn:hover{
     background-color: var(--btn-hover-background);
 }
 /* article */

@@ -120,7 +120,7 @@
                     <span class="num">{{ user.followTarget | length }}</span><span class="type">关注</span>
                 </div>
                 <div class="article-num content">
-                    <span class="num">{{ user.article | length }}</span><span class="type">文章</span>
+                    <span class="num">{{ user.article.all() | length }}</span><span class="type">文章</span>
                 </div>
             </div>
             <div class="nav">
@@ -130,10 +130,9 @@
             </div>
         </div>
         <div class="container-article card">
-            <div class="nav">
-                <a href="{{ url_for('main.create') }}" target="_blank"><div class="btn">发布内容</div></a>
-                <a href="#"><div class="btn">文章管理</div></a>
-            </div>
+            <a href="{{ url_for('server.create') }}" target="_blank"><div class="btn">🎉️ 灵感爆发</div></a>
+            <span class="line" ></span>
+            <a href="#" target="_blank"><div class="btn">🚀️ 创作中心</div></a>
         </div>
     </div>
 

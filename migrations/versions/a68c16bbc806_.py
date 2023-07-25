@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: bd26684c5c06
+Revision ID: a68c16bbc806
 Revises: 
-Create Date: 2023-07-23 12:42:33.250449
+Create Date: 2023-07-25 16:26:15.088014
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = 'bd26684c5c06'
+revision = 'a68c16bbc806'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,7 +29,9 @@ def upgrade():
     sa.Column('sinceTime', sa.DateTime(), nullable=True),
     sa.Column('resetTime', sa.DateTime(), nullable=True),
     sa.Column('permission', sa.Integer(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    mysql_charset='utf8mb4',
+    mysql_collate='utf8mb4_general_ci'
     )
     op.create_index(op.f('ix_Qc_Users_confirmed'), 'Qc_Users', ['confirmed'], unique=False)
     op.create_index(op.f('ix_Qc_Users_email'), 'Qc_Users', ['email'], unique=True)
@@ -54,10 +56,13 @@ def upgrade():
     sa.Column('userId', sa.Integer(), nullable=True),
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.Column('context', mysql.LONGTEXT(), nullable=False),
-    sa.Column('timestamp', sa.DateTime(), nullable=False),
+    sa.Column('lastTime', sa.DateTime(), nullable=False),
     sa.Column('status', sa.Integer(), nullable=False),
+    sa.Column('cover', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['userId'], ['Qc_Users.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    mysql_charset='utf8mb4',
+    mysql_collate='utf8mb4_general_ci'
     )
     op.create_index(op.f('ix_articles_status'), 'articles', ['status'], unique=False)
     op.create_table('follows',

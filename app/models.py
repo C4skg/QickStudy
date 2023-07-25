@@ -51,7 +51,7 @@ class EventID:
 class ArticleStatus:
     NOTPASS = 0; #不通过,被退回
     DRAFT   = 1; #草稿状态
-    WAIT    = 2; #审核中
+    WAIT    = 2; #审核 , 及发布前
     NORMAL  = 3; #正常发布
 
 class UserExperience:
@@ -120,16 +120,32 @@ class Follow(db.Model):
 
 class Article(db.Model):
     __tablename__ = 'articles'
+
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_general_ci'
+    }
+
     id = db.Column(db.Integer,primary_key = True);
     userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'));
     title = db.Column(db.String(100),nullable=False);
     context = db.Column(LONGTEXT,nullable=False);
-    timestamp = db.Column(db.DateTime,nullable=False,default=datetime.utcnow);
+    lastTime = db.Column(db.DateTime,nullable=False,default=datetime.utcnow);
     status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
-    cover = db.Column(db.Text,nullable=True) #文章封面
+    cover = db.Column(db.Text,nullable=True) #文章封面  路径
+
+    def __repr__(self):
+        return '<Article_%s>' % self.id;
 
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'
+
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_general_ci'
+    }
+
+
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column('username',db.String(50),unique=True,index=True)
     pwd_hash = db.Column('password',db.String(128))
@@ -149,7 +165,7 @@ class User(UserMixin,db.Model):
     followTarget = db.relationship('Follow',foreign_keys=[Follow.followTarget],lazy='select') #关注的用户
     followers = db.relationship('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
 
-    article = db.relationship('Article',backref='Article',lazy='select')
+    article = db.relationship('Article',backref='Article',lazy='dynamic',order_by='Article.id')
 
     userInfo = db.relationship('UserInfo',backref='UserInfo',lazy='select')
 
@@ -294,6 +310,10 @@ def beforeInsertEvent(mapper, connection, target):
     userInfo = UserInfo()
     target.userInfo.append(userInfo);
 
+    '''
+        do not need `db.session.commit()`;
+    '''
+
 event.listen(User,'before_insert',beforeInsertEvent);
 
 
@@ -321,4 +341,10 @@ def initDB():
         print( 
             'username:','admin',
             'password:',cache
+        )
+    else:
+        print(
+            '''
+                Your db has already init
+            '''
         )

@@ -5,11 +5,25 @@ function titleCount(){
     label.html(
         `${len}/100`
     )
-    label.css('color',len > 100 ? "red" : "var(--border-color)")
+    let color = (len > 100 || len == 0) ? "red" : "var(--border-color)";
+    input.css('border-bottom',`1px solid ${color}`)
+    label.css('color',color)
+    window.title = Boolean(
+        len < 100 && len != 0
+    )
 }
+//set Cover image
+var setCover = function(){
+    let status = $(".extend .fm").attr('data-status');
+    if(status == "normal"){
+        document.getElementById('cover').click();
+    }
+}
+window.title = false;
+window.cover = false;
 $(function(){
     var mode = window.mode || 'light';
-    var vditor = new Vditor("vditor", {
+    const vditor = new Vditor("vditor", {
         cache: {
             enable: true
         },
@@ -40,6 +54,9 @@ $(function(){
                 current: mode
             }
 
+        },
+        cache:{
+            enable: false
         },
         upload:{
             url: window.upload_url,
@@ -75,7 +92,19 @@ $(function(){
             }
         },
         after(){
-            // console.log(vditor.getHTML())
+            let ready = document.getElementById("ready");
+            if(ready){
+                const context = ready.innerHTML;
+                ready.remove();
+                if(context && context.length > 0){
+                    vditor.setValue(
+                        context.decode()
+                    )
+                }
+            }
+            
+            
+
         },
         toolbar: ['emoji' , 'headings' , 'bold' , 'italic' , 'strike' , '|' , 'line' , 'quote' , 'list' , 'ordered-list' , 'check' ,'outdent' ,'indent' , 'code' , 'inline-code' , 'insert-after' , 'insert-before' ,'undo' , 'redo' , 'upload' , 'link' , 'table' , 'fullscreen' , 'outline', 'devtools','|','both','edit-mode','export' , 'help',
             {
@@ -120,15 +149,62 @@ $(function(){
         set: function(value){
             window.location.reload();
         }
-    })
+    });
+
+    //init insert
+    (function(){
+        
+    })()
+    //init insert
     
+
+    var coverStyle = function(){
+        const fm = $(".extend")
+        if(!window.cover){
+            fm.css('border','1px solid red');
+        }else{
+            fm.css('border','1px solid var(--border-color)');
+        }
+    };
+
     //release
     document.getElementById('release').onclick = function(){
-        const input = $(".SubmitForm")
+
+        coverStyle();
+        titleCount();
+        if(!window.title || !window.cover){
+            return false;
+        }
+        
+        const cover = $(".extend .fm picture img"),
+              input = $(".SubmitForm")
         console.log(
             input.serialize(),
-            vditor.getHTML()
+            vditor.getValue(),
+            
         )
     }
+
+    //pic reader
+    const input = $("#cover")[0];
+    input.addEventListener('change',function(){
+        $(".extend .fm").attr('data-status','waiting');
+        const file = input.files[0],
+              reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onload = ()=>{
+            let img = $('.extend picture img')[0]
+            img.src = reader.result;
+            // in localstorage
+            localStorage.setItem(
+                'cover',
+                reader.result
+            )
+            window.cover = true
+            coverStyle();
+            $(".extend .fm").attr('data-status','normal');
+            $(".extend .fm").attr('data-signal','new');
+        }
+    });
 
 })

@@ -12,7 +12,7 @@ from ..func import getDate
 from ..models import Permission
 from ..responseData import uploadResponse
 from .. import photos,db
-from . import server        
+from . import server
 
 
 class UploadFileTooLarge(ValueError):
@@ -25,9 +25,8 @@ UPLOAD_MAX_SIZE = 5 * 1024 * 1024;
 
 @server.before_request
 def before_request():
-    if current_user.permission < Permission.USER:
-        return uploadResponse['6003'];
-
+    global UPLOAD_MAX_SIZE;
+    
     C_SIZE = current_app.config.get('UPLOADED_FILE_SIZE');
     if C_SIZE:
         UPLOAD_MAX_SIZE = C_SIZE;
@@ -41,6 +40,8 @@ def tooLarge(error):
 @server.route('/uupload',methods=['POST'])
 @login_required
 def photoUpload():
+    if current_user.permission < Permission.USER:
+        return uploadResponse['6003'];
 
     if 'file' in request.files:
         try:
@@ -64,6 +65,8 @@ def photoUpload():
 @server.route('/upload',methods=['POST'])
 @login_required
 def upload():
+    if current_user.permission < Permission.USER:
+        return uploadResponse['6003'];
 
     if 'file' in request.files:
         childFolder = getDate();

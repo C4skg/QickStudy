@@ -46,28 +46,20 @@ def index():
 
     return render_template('index.html',**datas);
 
-@main.route('/create')
-@login_required
-def create():
-    if current_user.permission <= Permission.BASE:
-        abort(403);   
-
-    data = {
-        'user': current_user
-    }
-
-    return render_template('create.html',**data);
-
-
-@main.route('/article')
-@login_required
-def article():
-    return '';
 
 @main.route('/about')
 def about():
     data = {
         'title': '关于 QickStudy',
         'context': open('WorkSpace/about.md',encoding='utf-8').read()
+    }
+    return render_template('about.html',**data);
+
+
+@main.route('/help')
+def help():
+    data = {
+        'title': '帮助中心',
+        'context': ''''''
     }
     return render_template('about.html',**data);
