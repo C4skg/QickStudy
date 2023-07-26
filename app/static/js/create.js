@@ -59,7 +59,7 @@ $(function(){
             enable: false
         },
         upload:{
-            url: window.upload_url,
+            url: window.upload.editor,
             accept: 'image/*',
             max: 5 * 1024 * 1024,
             extraData: {
@@ -167,44 +167,53 @@ $(function(){
         }
     };
 
-    //release
-    document.getElementById('release').onclick = function(){
+    //save
 
-        coverStyle();
-        titleCount();
-        if(!window.title || !window.cover){
-            return false;
-        }
-        
-        const cover = $(".extend .fm picture img"),
-              input = $(".SubmitForm")
-        console.log(
-            input.serialize(),
-            vditor.getValue(),
-            
-        )
-    }
 
-    //pic reader
+    //cover upload
     const input = $("#cover")[0];
     input.addEventListener('change',function(){
         $(".extend .fm").attr('data-status','waiting');
-        const file = input.files[0],
-              reader = new FileReader();
-        reader.readAsDataURL(file)
-        reader.onload = ()=>{
-            let img = $('.extend picture img')[0]
-            img.src = reader.result;
-            // in localstorage
-            localStorage.setItem(
-                'cover',
-                reader.result
-            )
-            window.cover = true
-            coverStyle();
-            $(".extend .fm").attr('data-status','normal');
-            $(".extend .fm").attr('data-signal','new');
-        }
+        var formData = new FormData();
+        formData.append('csrf_token',window.csrf_token)
+        formData.append('file',input.files[0])
+        formData.append('articleId',window.article.id)
+        $.ajax({
+            url: window.upload.cover,
+            type: "post",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: (e)=>{
+                if(typeof e === String){
+                    e = JSON.parse(e)
+                }
+                if(e['status']=='success'){
+                    $('.extend .fm').attr('data-status','success')
+                    $('.extend .fm').attr('data-desc','上传成功')
+                    setTimeout(()=>{
+                        let img = $('.extend picture img')[0]
+                        img.src = e['files'][0]['path'];
+                    },2000)
+                    
+                }else{
+                    $('.extend .fm').attr('data-status','error')
+                    $('.extend .fm').attr('data-desc','上传失败')
+                    input.value=''
+                }
+            },
+            error:(e)=>{
+                $('.extend .fm').attr('data-status','error')
+                $('.extend .fm').attr('data-desc','上传失败')
+                input.value=''
+            },
+            complete:(e)=>{
+                setTimeout(()=>{
+                    $('.extend .fm').attr('data-status','normal')
+                    $('.extend .fm').attr('data-desc','设置封面')
+                },2000)
+            }
+        })
     });
 
 })

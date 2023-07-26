@@ -82,7 +82,7 @@ body::-webkit-scrollbar{
     border-right: 1px solid var(--border-color);
     position: relative;
 }
-.main .articleInfos .extend .fm[data-status="normal"] .position-center{
+.main .articleInfos .extend .fm:not([data-status="waiting"]) .position-center{
     display: none;
 }
 .main .articleInfos .extend .fm[data-status="waiting"] .position-center{
@@ -98,8 +98,9 @@ body::-webkit-scrollbar{
     align-items: center;
     z-index: 1;
 }
-.main .articleInfos .extend .fm[data-status="normal"]::before{
-    content: '设置封面';
+
+.main .articleInfos .extend .fm::before{
+    content: attr(data-desc);
     position: absolute;
     left: 0;
     top: 0;
@@ -107,11 +108,13 @@ body::-webkit-scrollbar{
     bottom: 0;
     background-color: #00000080;
     color: #ccc;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     font-weight: 1000;
-    display: none;
+}
+.main .articleInfos .extend .fm:not([data-status="normal"]):not([data-status="waiting"]):before{
+    display: flex;
 }
 .main .articleInfos .extend .fm[data-status="normal"]:hover::before{
     display: flex;

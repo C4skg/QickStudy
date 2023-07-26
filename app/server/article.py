@@ -25,7 +25,6 @@ def create(id:int=None):
     
     #* if id is None,we will create a new article as draft
     if  id == None:
-        ArticleStatus.DRAFT
         draft = current_user.article.filter_by(status=ArticleStatus.DRAFT).all();
         if len(draft) >= 10:
             return redirect(

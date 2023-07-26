@@ -105,12 +105,18 @@ class UserExperience:
         return value;
     
 
-
+#Error define
 class InfoError(ValueError):
     '''
     @param: ValueError:str  use your value to raise the error
     '''
     pass
+
+class UploadFileTooLarge(ValueError):
+    '''
+    throw the error if the file too larger;
+    '''
+    pass;
 
 
 class UserAttend(db.Model):
@@ -135,7 +141,7 @@ class Follow(db.Model):
     __tablename__ = 'follows'
     followerId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);  #follow 用户
     followTarget = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True); #被 follow 用户
-    timestamp = db.Column(db.DateTime,default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime,default=datetime.now)
 
 class Article(db.Model):
     __tablename__ = 'articles'
@@ -149,9 +155,45 @@ class Article(db.Model):
     userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'));
     title = db.Column(db.String(100),nullable=False);
     context = db.Column(LONGTEXT,nullable=False);
-    lastTime = db.Column(db.DateTime,nullable=False,default=datetime.utcnow);
+    lastTime = db.Column(db.DateTime,nullable=False,default=datetime.now);
     status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
     cover = db.Column(db.Text,nullable=True) #文章封面  路径
+
+    def updateCover(self,path:str) -> bool:
+        self.cover = path;
+        self.lastTime = datetime.now();
+        db.session.add(self);
+
+        return True;
+
+    def updateTitle(self,title:str) -> bool:
+        length = len(title)
+        if length == 0 or length > 100:
+            return False;
+
+        self.title = title;
+        self.lastTime = datetime.now();
+        db.session.add(self);
+    
+        return True;
+
+    def updateContext(self,context:str) -> bool:
+        self.context = context;
+        self.lastTime = datetime.now();
+        db.session.add(self);
+    
+        return True;
+
+    def updateStatus(self,status:int) -> bool:
+        current_status = self.status;
+        
+        self.status = status;
+        
+        db.session.add(self);
+    
+        return True;
+
+    
 
     def __repr__(self):
         return '<Article_%s>' % self.id;

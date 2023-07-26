@@ -10,16 +10,13 @@ from base64 import b64encode
 
 from ..func import getDate
 from ..models import Permission
+from ..models import InfoError,UploadFileTooLarge
 from ..responseData import uploadResponse
 from .. import photos,db
 from . import server
 
 
-class UploadFileTooLarge(ValueError):
-    '''
-    throw the error if the file too larger;
-    '''
-    pass;
+
 
 UPLOAD_MAX_SIZE = 5 * 1024 * 1024;
 
@@ -37,7 +34,7 @@ def tooLarge(error):
     return uploadResponse['6002'];
 
 
-@server.route('/uupload',methods=['POST'])
+@server.route('/user/upload',methods=['POST'])
 @login_required
 def photoUpload():
     if current_user.permission < Permission.USER:
@@ -61,8 +58,8 @@ def photoUpload():
 
     return uploadResponse['6001']
 
-
-@server.route('/upload',methods=['POST'])
+#* editor
+@server.route('/editor/upload',methods=['POST'])
 @login_required
 def upload():
     if current_user.permission < Permission.USER:
@@ -87,7 +84,7 @@ def upload():
                     {
                         'filename': file.filename,
                         'status': 'success',
-                        'path':  request.url_root + url_for('themes.upload',path=path)
+                        'path': url_for('themes.upload',path=path)
                     }
                 )
             except:
@@ -105,7 +102,54 @@ def upload():
     
     return uploadResponse['6001']
 
+#* editor cover 
+@server.route('/editor/cover',methods=['POST'])
+@login_required
+def cover():
+    if current_user.permission < Permission.USER:
+        return uploadResponse['6003'];
 
+    if 'file' in request.files:
+        childFolder = getDate();
+        _clone = deepcopy(uploadResponse['6000'])
+        file = request.files.get('file')
+        try:
+            size = len(file.read())
+            if size > UPLOAD_MAX_SIZE:
+                raise(UploadFileTooLarge('The file is too large'));
+
+            file.seek(0);
+            A_id = request.form.get('articleId',-1,type=int)
+            article = current_user.article.filter_by(id=A_id).first();
+            if article:
+                path = photos.save(
+                    file,
+                    folder=childFolder
+                )
+                article.updateCover(path);
+                db.session.commit();
+                _clone['files'].append(
+                    {
+                        'filename': file.filename,
+                        'status': 'success',
+                        'path': url_for('themes.upload',path=path)
+                    }
+                )
+                return _clone;
+            else:
+                '''
+                    if not match article
+                '''
+                raise( InfoError("No article's id is %s" % str(A_id)) )
+        except UploadFileTooLarge as e:
+            print(e)
+            pass;
+        
+        except InfoError as e:
+            print(e)
+            pass;
+    
+    return uploadResponse['6001']
 
 @server.route('/insertArticle')
 @login_required
