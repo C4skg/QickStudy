@@ -41,6 +41,13 @@ $(function(){
             emitHighlight(t);
             ele.innerHTML = "";
             $(ele).append(t)
+            let outlineElement = $(".rightContainer .outlineRender")
+            if(outlineElement.length > 0){
+                Vditor.outlineRender(
+                    t,
+                    outlineElement[0]
+                )
+            }
         });
     }
     // *数学公式可复制

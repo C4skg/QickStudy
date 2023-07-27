@@ -74,7 +74,7 @@ class ArticleStatus:
         },
         PRIVATE:{
             "color": "primary",
-            "name": "仅我可见"
+            "name": "私有"
         }
     }
 

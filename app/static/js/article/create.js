@@ -23,7 +23,7 @@ window.title = false;
 window.cover = false;
 $(function(){
     var mode = window.mode || 'light';
-    const vditor = new Vditor("vditor", {
+    window.vditor = new Vditor("vditor", {
         cache: {
             enable: true
         },
@@ -100,7 +100,7 @@ $(function(){
                 const context = ready.innerHTML;
                 ready.remove();
                 if(context && context.length > 0){
-                    vditor.setValue(
+                    window.vditor.setValue(
                         context.decode()
                     )
                 }
@@ -170,8 +170,6 @@ $(function(){
         }
     };
 
-    //save
-
 
     //cover upload
     const input = $("#cover")[0];
@@ -220,7 +218,58 @@ $(function(){
     });
 })
 //when leave
-window.addEventListener('beforeunload',function(e){
+var beforeunload = function(e){
     e.preventDefault();
     e.returnValue = ''
-})
+}
+window.addEventListener('beforeunload',beforeunload)
+
+//save
+var save = function(type){
+    titleCount();
+    if(!window.title){
+        return false;
+    }
+    const title = $(".title input").val()
+    var context = "";
+    try{
+        context = window.vditor.getValue();
+    }catch{
+        context = "";
+    }
+    if(context.length == 0){
+        window.extends.tips.create("请输入文章内容！",window.extends.tips.type.danger)
+        return false;
+    }
+    var form = new FormData();
+    form.append('title',title)
+    form.append('context',context)
+    form.append('csrf_token',window.csrf_token)
+    form.append('tId',type)
+    form.append('id',window.article.id)
+    $.ajax({
+        url : window.upload.save,
+        processData: false,
+        contentType: false,
+        type: 'post',
+        data: form,
+        success: (e)=>{
+            if(e['status']=='success'){
+                swal("成功！","文章已保存", "success").then(()=>{
+                    window.removeEventListener('beforeunload',beforeunload)
+                    window.location.reload();
+                })
+            }else{
+                swal("失败",e['message'], "error").then(()=>{
+                    
+                })
+            }
+        },
+        error: (e)=>{
+            swal('失败','网络错误','error');
+        },
+        complete: (e)=>{
+
+        }
+    })
+}

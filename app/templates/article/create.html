@@ -2,9 +2,9 @@
 {% block extends %}
     <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/create.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/article/create.css') }}">
     <script src="{{ url_for('themes.static',path='Vditor/index.min.js') }}"></script>
-    <script src="{{ url_for('themes.static',path='js/create.js') }}"></script>
+    <script src="{{ url_for('themes.static',path='js/article/create.js') }}"></script>
 {% endblock %}
 {% block title %}
  - 在线 markdown 编辑器
@@ -14,7 +14,8 @@
     window.csrf_token = "{{ csrf_token() }}"
     window.upload = {
         editor: "{{ url_for('server.upload') }}",
-        cover: "{{ url_for('server.cover') }}"
+        cover: "{{ url_for('server.cover') }}",
+        save: "{{ url_for('server.save') }}"
     }
     window.user = {
         username: "{{ user.username }}",
@@ -47,18 +48,16 @@
                                 <input type="hidden" value="{{ csrf_token() }}" name="csrf_token" />
                                 <div class="dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
-                                      选 项
+                                      保 存
                                     </button>
                                     <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item" href="{{ url_for('server.create') }}">新建草稿</a></li>
                                       {% if user.permission < Permission.CONTROL %}
-                                      <li><a class="dropdown-item" href="{{ url_for('server.create') }}">新建草稿</a></li>
-                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.WAIT }}">发布文章</a></li>
-                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.PRIVATE }}">仅我可见</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="save({{ ArticleStatus.WAIT }})">发布文章</a></li>
                                       {% else %}
-                                      <li><a class="dropdown-item" href="{{ url_for('server.create') }}">新建草稿</a></li>
-                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.NORMAL }}">发布文章</a></li>
-                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.PRIVATE }}">仅我可见</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="save({{ ArticleStatus.NORMAL }})">发布文章</a></li>
                                       {% endif %}
+                                      <li><a class="dropdown-item" href="#" onclick="save({{ ArticleStatus.PRIVATE }})">仅我可见</a></li>
                                     </ul>
                                 </div>
                             </div>

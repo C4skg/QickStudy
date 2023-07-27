@@ -3,6 +3,8 @@ from flask import abort,render_template,redirect,url_for
 from flask_login import current_user
 from flask_login import login_required
 
+from copy import deepcopy
+
 from .. import db
 from ..responseData import articleResponse
 from ..models import User,Article
@@ -83,7 +85,7 @@ def editor(id:int=None):
         "Permission": Permission
     }
 
-    return render_template('create.html',**data);
+    return render_template('article/create.html',**data);
 
 
 @server.route('/article/save',methods=['POST'])
@@ -125,6 +127,10 @@ def save():
     else:
         if tId == ArticleStatus.NORMAL or tId == ArticleStatus.NOTPASS:
             return articleResponse['7003']
+        if article.status == ArticleStatus.WAIT:
+            _clone = deepcopy(articleResponse['7001'])
+            _clone['message'] = "目前状态为审核,暂无法修改状态"
+            return _clone
 
     titleUpdate = article.updateTitle(title);
     contextUpdate = article.updateContext(context);
@@ -165,7 +171,8 @@ def changeStatus():
         if tId == ArticleStatus.PRIVATE:
             return articleResponse['7003']
             
-        article = Article.filter_by(id=id).first();
+        article = Article.query.filter_by(id=id).first();
+    
     else:
         if tId == ArticleStatus.NORMAL or tId == ArticleStatus.NOTPASS:
             return articleResponse['7003']

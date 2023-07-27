@@ -1,10 +1,11 @@
 from flask import request,current_app
-from flask import render_template,url_for,abort
+from flask import render_template,url_for,abort,render_template_string
 from flask_login import login_required
 from flask_login import current_user
 
 from . import main
-from ..models import UserExperience,Permission,ArticleStatus
+from ..models import Article,User
+from ..models import Permission,ArticleStatus,UserExperience
 
 @main.route('/',methods=['GET','POST'])
 @login_required
@@ -47,6 +48,46 @@ def index():
 
     return render_template('index.html',**datas);
 
+
+@main.route('/detail/<id>')
+def detail(id:None):
+    article = Article.query.filter_by(id=id).first();
+    if not article:
+        abort(404);
+    
+    if article.status == ArticleStatus.NORMAL:
+        pass;
+    
+    elif (
+        article.status == ArticleStatus.DRAFT
+        or
+        article.status == ArticleStatus.PRIVATE
+    ):
+        if current_user.is_authenticated:
+            if current_user.id == article.userId:
+                pass;
+            else:
+                abort(404)
+        else:
+            abort(404);
+    elif article.status == ArticleStatus.WAIT:
+        if current_user.is_authenticated:
+            if(
+                current_user.permission >= Permission.CONTROL
+                or
+                current_user.id == article.userId
+            ):
+                pass;
+            else:
+                abort(404);
+        else:
+            abort(404);
+
+    data = {
+        'user': User.query.filter_by(id=article.userId).first(),
+        'article': article
+    }
+    return render_template('article/detail.html',**data);
 
 @main.route('/about')
 def about():

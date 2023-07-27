@@ -129,7 +129,7 @@ body::-webkit-scrollbar{
     align-items: center;
     column-gap: 15px;
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
     .main .head .func .markdown{
         display: none;
     }

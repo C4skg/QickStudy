@@ -1,0 +1,87 @@
+{% extends "themes/md.html" %}
+{% block extends %}
+<script src="{{ url_for('themes.static',path='js/article/detail.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/article/detail.css') }}">
+{% endblock %}
+
+{% block title %}
+ - {{ article.title }}
+{% endblock %}
+
+{% block hscript %}
+
+{% endblock %}
+{% block navListExtends%}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('auth.userInfo') }}" target="_blank">个人中心</a>
+</li>
+{% endblock %}
+{% block body %}
+<div class="container main">
+    <!-- 内容 -->
+    <div class="context" >
+        <div class="accordion">
+            <div class="card">
+                <div class="infos">
+                    <div class="Atitle" title="{{ article.title }}" data-bs-toggle="tooltip">
+                        {{ article.title }}
+                    </div>
+                    <div class="bottom">
+                        <div class="left">
+                            <div class="usericon">
+                                <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
+                                    <img src="{{ url_for('server.logo',id=user.id) }}" alt="">
+                                </a>
+                            </div>
+                            <div class="username">
+                                <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
+                                    {{ user.username }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="center" data-type="md">{{ article.context }}</div>
+                <div class="cardBottom">
+                    <div class="time text-muted">
+                        编辑于 {{ article.lastTime.date() }}
+                    </div>
+                    <div class="func text-muted">
+                        <div class="collect" data-nums="19">
+                            收藏数
+                        </div>
+                        <div class="argree" data-nums="100">
+                            赞同数
+                        </div>
+                        <div class="watch" data-nums="19332">
+                            浏览量
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rightContainer card">
+            <div class="outlineRender">
+
+            </div>
+        </div>
+    </div>
+    <!-- 内容 -->
+</div>
+
+<!-- 右下角折叠 -->
+<div class="rightbottom hidden">
+    <div class="collapse" id="collapseBtn">
+        <div class="btn scrollTop">
+            <img src="{{ url_for('themes.static',path='img/top.png') }}" alt="" data-mode-change="true">
+        </div>
+        <div class="btn modeButton change d-block d-sm-none" >
+            <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+        </div>
+    </div>
+    <div class="btn" data-bs-toggle="collapse" data-bs-target="#collapseBtn" >
+        <img src="{{ url_for('themes.static',path='img/menu.png') }}" alt="" data-mode-change="true">
+    </div>
+</div>
+<!-- 右下角折叠 -->
+{% endblock %}

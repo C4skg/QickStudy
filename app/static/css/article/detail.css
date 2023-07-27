@@ -1,0 +1,87 @@
+/* This css file is for detail.html */
+.main .context .accordion .card{
+    overflow: hidden;
+}
+.main .context .accordion .card .center{
+    width: 80%;
+    min-height: 60vh;
+}
+.main .context .accordion .infos{
+    border-bottom: .5px solid var(--border-color);
+    padding: 10px 20px;
+}
+.accordion .infos a{
+    color: inherit;
+    font-size: inherit;
+}
+.accordion .infos .Atitle{
+    font-size: 25px;
+    width: 90%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.accordion .infos .bottom{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.accordion .infos .bottom .left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    font-size: 15px;
+}
+.accordion .infos .bottom .left .usericon{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.accordion .infos .bottom .left .usericon img{
+    width: 100%;
+    height: 100%;
+}
+
+/* card bottom */
+.accordion .card .cardBottom{
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.accordion .card .cardBottom .func{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+/* 大纲 */
+/* 大于等于991px的时候就 */
+.rightContainer{
+    max-height: 80vh;
+    position: relative;
+}
+.rightContainer .outlineRender{
+    padding: 5px 10px;
+    position: absolute;
+}
+.rightContainer .vditor-outline::before{
+    content: '目录';
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+}
+@media screen and (min-width: 992px) {
+    .rightContainer .vditor-outline {
+        width: 100%;
+        display: block !important;
+        border: 0 !important;
+        position: relative;
+    }
+}

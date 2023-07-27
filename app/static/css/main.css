@@ -1,5 +1,6 @@
 /** This css file for index.html  */
 .navbar{
+    white-space: nowrap !important;
     border-bottom: 1px solid var(--border-color);
     background: transparent!important;
 }
@@ -26,6 +27,7 @@
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
+    align-items: start;
     /* border: 1px solid var(--border-color); */
 }
 .main{
