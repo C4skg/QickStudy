@@ -37,7 +37,7 @@
                             markdown 语法已启用
                         </div>
                         <div class="status d-flex">
-                            <span class="name small text-muted noselect">状态: </span>
+                            <span class="name small text-muted noselect">状态:&nbsp;</span>
                             <span class="small text-muted noselect">
                                 {{ ArticleStatus.Desc[article.status]['name'] }}
                             </span>
@@ -47,11 +47,18 @@
                                 <input type="hidden" value="{{ csrf_token() }}" name="csrf_token" />
                                 <div class="dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
-                                      保 存
+                                      选 项
                                     </button>
                                     <ul class="dropdown-menu">
-                                      <li><a class="dropdown-item" href="#" onclick="">保存草稿</a></li>
-                                      <li><a class="dropdown-item" href="#" onclick="">发布文章</a></li>
+                                      {% if user.permission < Permission.CONTROL %}
+                                      <li><a class="dropdown-item" href="{{ url_for('server.create') }}">新建草稿</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.WAIT }}">发布文章</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.PRIVATE }}">仅我可见</a></li>
+                                      {% else %}
+                                      <li><a class="dropdown-item" href="{{ url_for('server.create') }}">新建草稿</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.NORMAL }}">发布文章</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="" data-id="{{ ArticleStatus.PRIVATE }}">仅我可见</a></li>
+                                      {% endif %}
                                     </ul>
                                 </div>
                             </div>

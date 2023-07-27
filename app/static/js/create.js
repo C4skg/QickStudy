@@ -40,6 +40,9 @@ $(function(){
         hint:{
             parse: false
         },
+        outline:{
+            enable: true
+        },
         preview:{
             hljs:{
                 enable:true,
@@ -215,5 +218,9 @@ $(function(){
             }
         })
     });
-
+})
+//when leave
+window.addEventListener('beforeunload',function(e){
+    e.preventDefault();
+    e.returnValue = ''
 })

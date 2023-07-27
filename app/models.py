@@ -52,7 +52,8 @@ class ArticleStatus:
     NOTPASS = 0; #不通过,被退回
     DRAFT   = 1; #草稿状态
     WAIT    = 2; #审核 , 及发布前
-    NORMAL  = 3; #正常发布
+    NORMAL  = 3; #已正常发布
+    PRIVATE = 4; #仅自己可见
 
     Desc = {
         NOTPASS:{
@@ -70,6 +71,10 @@ class ArticleStatus:
         NORMAL:{
             "color": "green",
             "name" : "已发布"
+        },
+        PRIVATE:{
+            "color": "primary",
+            "name": "仅我可见"
         }
     }
 
@@ -178,6 +183,10 @@ class Article(db.Model):
         return True;
 
     def updateContext(self,context:str) -> bool:
+        length = len(context)
+        if length == 0:
+            return False;
+    
         self.context = context;
         self.lastTime = datetime.now();
         db.session.add(self);
@@ -186,7 +195,9 @@ class Article(db.Model):
 
     def updateStatus(self,status:int) -> bool:
         current_status = self.status;
-        
+        if current_status == status:
+            return False;
+    
         self.status = status;
         
         db.session.add(self);

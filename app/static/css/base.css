@@ -146,3 +146,6 @@ a{
 .spinner-yellow{
     background-color: rgb(192, 192, 91);
 }
+.spinner-primary{
+    background-color: rgb(13,110,253);
+}

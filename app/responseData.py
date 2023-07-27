@@ -160,3 +160,26 @@ uploadResponse = {
         'files': []
     }
 }
+
+articleResponse = {
+    "7000":{
+        "status": 'success',
+        'message': '操作成功',
+        'route': ''
+    },
+    "7001":{
+        "status": 'error',
+        'message': '操作失败',
+        'route': ''
+    },
+    "7002":{
+        "status": 'error',
+        'message': '参数异常',
+        'route': ''
+    },
+    "7003":{
+        "status": 'error',
+        'message': '权限不足',
+        'route': ''
+    }
+}

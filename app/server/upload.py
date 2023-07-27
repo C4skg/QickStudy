@@ -150,8 +150,3 @@ def cover():
             pass;
     
     return uploadResponse['6001']
-
-@server.route('/insertArticle')
-@login_required
-def createArticle():
-    pass;
