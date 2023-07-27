@@ -47,14 +47,11 @@
                         编辑于 {{ article.lastTime.date() }}
                     </div>
                     <div class="func text-muted">
-                        <div class="collect" data-nums="19">
-                            收藏数
+                        <div class="argree item" data-nums="{{ article.argree | toLocalNumber }}">
+                            <i class="far fa-thumbs-up"></i>
                         </div>
-                        <div class="argree" data-nums="100">
-                            赞同数
-                        </div>
-                        <div class="watch" data-nums="19332">
-                            浏览量
+                        <div class="watch item" data-nums="{{ article.watch | toLocalNumber }}">
+                            <i class="fas fa-eye"></i>
                         </div>
                     </div>
                 </div>
@@ -69,19 +66,4 @@
     <!-- 内容 -->
 </div>
 
-<!-- 右下角折叠 -->
-<div class="rightbottom hidden">
-    <div class="collapse" id="collapseBtn">
-        <div class="btn scrollTop">
-            <img src="{{ url_for('themes.static',path='img/top.png') }}" alt="" data-mode-change="true">
-        </div>
-        <div class="btn modeButton change d-block d-sm-none" >
-            <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
-        </div>
-    </div>
-    <div class="btn" data-bs-toggle="collapse" data-bs-target="#collapseBtn" >
-        <img src="{{ url_for('themes.static',path='img/menu.png') }}" alt="" data-mode-change="true">
-    </div>
-</div>
-<!-- 右下角折叠 -->
 {% endblock %}

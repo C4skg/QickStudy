@@ -19,7 +19,7 @@
     }
     window.user = {
         username: "{{ user.username }}",
-        logo: "{{ url_for('server.logo') }}"
+        logo: "{{ url_for('server.logo',id=user.id) }}"
     }
     window.article = {
         id: "{{ article.id }}"

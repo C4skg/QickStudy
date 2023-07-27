@@ -6,6 +6,9 @@
     width: 80%;
     min-height: 60vh;
 }
+.main .context .accordion .card .center::-webkit-scrollbar{
+    display: none;
+}
 .main .context .accordion .infos{
     border-bottom: .5px solid var(--border-color);
     padding: 10px 20px;
@@ -51,7 +54,7 @@
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 14px;
     white-space: nowrap;
 }
 
@@ -59,9 +62,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 10px;
+    column-gap: 15px;
 }
-
+.accordion .card .cardBottom .func .item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2px;
+}
+.accordion .card .cardBottom .func .item::after{
+    content: attr(data-nums);
+    display: inline-block;
+    margin-left: 0;
+    font-size: 12px;
+}
 /* 大纲 */
 /* 大于等于991px的时候就 */
 .rightContainer{

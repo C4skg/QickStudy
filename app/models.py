@@ -47,6 +47,9 @@ class EventID:
     LOGIN    = 2;
     RESET    = 3;
     ACTIVATE = 4;
+    FOLLOW = 5;
+    SCORE = 6;
+    EXPERIENCE = 7;
 
 class ArticleStatus:
     NOTPASS = 0; #不通过,被退回
@@ -135,18 +138,95 @@ class UserAttend(db.Model):
 
     def __repr__(self):
         return '<UserAttend %s>' % self.userId
+    
+class Logs(db.Model):
+    __tablename__ = 'Qc_logs'
+    id = db.Column(db.Integer,primary_key=True)
+    eventId = db.Column(db.Integer,nullable=False,index=True);
+    desc = db.Column(db.String(1000),nullable=False);
+    nums = db.Column(db.Integer,nullable=False,default=0,index=True);
+    timestamp = db.Column(db.DateTime,default=datetime.now)
+
+    def __repr__(self):
+        return '<Qc_logs %s>' % self.id;
 
 class UserInfo(db.Model):
     __tablename__ = 'Qc_UserInfo'
     id = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);
     experience = db.Column(db.Integer,default=0);
     score = db.Column(db.Integer,default=0); #* 积分
+    
+    def addScore(self,value:int,desc:str) -> bool:
+        if value <= 0:
+            return False;
+            
+        self.score += value;
+
+        log = Logs(
+            eventId = EventID.SCORE,
+            desc = desc,
+            nums = value
+        )
+        db.session.add(log);
+        db.session.add(self);
+        return True;
+    
+    def addExperience(self,value:int,desc:str) -> bool:
+        if value <= 0:
+            return False;
+
+        self.addExperience += value;
+
+        log = Logs(
+            eventId = EventID.EXPERIENCE,
+            desc = desc,
+            nums = value
+        )
+        db.session.add(log);
+        db.session.add(self);
+        return True;
+
+    def reduceScore(self,value:int,desc:str) -> bool:
+        if value <= 0 or value > self.score:
+            return False;
+
+        self.score -= value;
+
+        log = Logs(
+            eventId = EventID.SCORE,
+            desc = desc,
+            nums = value
+        )
+        db.session.add(log);
+        db.session.add(self)
+        return True;
+
+    def reduceExperience(self,value:int,desc:str) -> bool:
+        if value <= 0 or value > self.experience:
+            return False;
+
+        self.experience -= value;
+
+        log = Logs(
+            eventId = EventID.EXPERIENCE,
+            desc = desc,
+            nums = value
+        )
+        db.session.add(log);
+        db.session.add(self)
+        return True;
+    
+    def __repr__(self):
+        return '<Qc_UserInfo %s>' % self.id;
+    
+
+    
 
 class Follow(db.Model):
     __tablename__ = 'follows'
-    followerId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);  #follow 用户
-    followTarget = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True); #被 follow 用户
-    timestamp = db.Column(db.DateTime,default=datetime.now)
+    followerId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);  #关注用户
+    followTarget = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True); #被关注用户
+    timestamp = db.Column(db.DateTime,default=datetime.now)    
 
 class Article(db.Model):
     __tablename__ = 'articles'
@@ -163,6 +243,8 @@ class Article(db.Model):
     lastTime = db.Column(db.DateTime,nullable=False,default=datetime.now);
     status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
     cover = db.Column(db.Text,nullable=True) #文章封面  路径
+    argree = db.Column(db.Integer,nullable=False,default=0);
+    watch = db.Column(db.Integer,nullable=False,default=0);
 
     def updateCover(self,path:str) -> bool:
         self.cover = path;
@@ -204,7 +286,17 @@ class Article(db.Model):
     
         return True;
 
+    def updateArgree(self) -> bool:
+        self.argree += 1;
+        db.session.add(self);
     
+        return True;
+
+    def updateWatch(self) -> bool:
+        self.watch += 1;
+        db.session.add(self);
+
+        return True;
 
     def __repr__(self):
         return '<Article_%s>' % self.id;

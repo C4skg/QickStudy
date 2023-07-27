@@ -31,7 +31,7 @@ def make_shell_context():
         Article=Article,
         Follow=Follow
     )
-    
+
 @app.before_request
 def before_request():
     id = app.config['SESSION_ID'];
@@ -39,6 +39,20 @@ def before_request():
         pass;
     else:
         session[id] = generateUID6();
+
+'''
+    self filter define
+'''
+@app.template_filter('toLocalNumber')
+def toLocalNumber(value:int):
+    if value > 9999:
+        return "1w+"
+    elif value > 999:
+        return "1k+"
+    elif value > 99:
+        return "99+"
+    
+    return str(value);
 
 def CleanUser():
     with app.app_context():

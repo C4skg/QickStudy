@@ -218,21 +218,15 @@ def reset():
 
 
 @server.route('/logo/<id>')
-@server.route('/logo/')
-@login_required
-def logo(id=None):
-
-    data = b64decode(current_user.logo);
-
-    if id != None:
-        user = User.query.filter((User.id == id)).first()
-        if user:
-            data = b64decode(user.logo)
-
-    return Response(
-                data,
-                mimetype='image/png'
-            )
+def logo(id:int):
+    user = User.query.filter_by(id=id).first();
+    if user:
+        data = b64decode(user.logo);
+        return Response(
+                    data,
+                    mimetype='image/png'
+                )
+    abort(404);
     
         
 

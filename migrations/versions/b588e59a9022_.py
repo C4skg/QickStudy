@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a68c16bbc806
+Revision ID: b588e59a9022
 Revises: 
-Create Date: 2023-07-25 16:26:15.088014
+Create Date: 2023-07-27 16:20:03.670429
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = 'a68c16bbc806'
+revision = 'b588e59a9022'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -37,6 +37,16 @@ def upgrade():
     op.create_index(op.f('ix_Qc_Users_email'), 'Qc_Users', ['email'], unique=True)
     op.create_index(op.f('ix_Qc_Users_permission'), 'Qc_Users', ['permission'], unique=False)
     op.create_index(op.f('ix_Qc_Users_username'), 'Qc_Users', ['username'], unique=True)
+    op.create_table('Qc_logs',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('eventId', sa.Integer(), nullable=False),
+    sa.Column('desc', sa.String(length=1000), nullable=False),
+    sa.Column('nums', sa.Integer(), nullable=False),
+    sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_Qc_logs_eventId'), 'Qc_logs', ['eventId'], unique=False)
+    op.create_index(op.f('ix_Qc_logs_nums'), 'Qc_logs', ['nums'], unique=False)
     op.create_table('Qc_UserAttend',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('attendDate', sa.DateTime(), nullable=True),
@@ -59,6 +69,8 @@ def upgrade():
     sa.Column('lastTime', sa.DateTime(), nullable=False),
     sa.Column('status', sa.Integer(), nullable=False),
     sa.Column('cover', sa.Text(), nullable=True),
+    sa.Column('argree', sa.Integer(), nullable=False),
+    sa.Column('watch', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['userId'], ['Qc_Users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     mysql_charset='utf8mb4',
@@ -83,6 +95,9 @@ def downgrade():
     op.drop_table('articles')
     op.drop_table('Qc_UserInfo')
     op.drop_table('Qc_UserAttend')
+    op.drop_index(op.f('ix_Qc_logs_nums'), table_name='Qc_logs')
+    op.drop_index(op.f('ix_Qc_logs_eventId'), table_name='Qc_logs')
+    op.drop_table('Qc_logs')
     op.drop_index(op.f('ix_Qc_Users_username'), table_name='Qc_Users')
     op.drop_index(op.f('ix_Qc_Users_permission'), table_name='Qc_Users')
     op.drop_index(op.f('ix_Qc_Users_email'), table_name='Qc_Users')

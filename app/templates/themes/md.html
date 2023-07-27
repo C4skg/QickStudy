@@ -13,6 +13,7 @@
     <!-- ^css -->
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/bootstrap_5.3/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('themes.static',path='Fontawesome/css/all.min.css') }}">
 
     <!-- ^hljs -->
     <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor/dist/js/highlight.js/styles/emacs.css') }}" id="hljsCodeBlockColor"> <!--^ dark: native ;  light: emacs-->
@@ -90,6 +91,24 @@
 <!-- 导航栏 -->
     {% block body%}
     {% endblock %}
+
+<!-- 右下角折叠 -->
+<div class="rightbottom hidden">
+    <div class="collapse" id="collapseBtn">
+        <div class="btn scrollTop">
+            <!-- <img src="{{ url_for('themes.static',path='img/top.png') }}" alt="" data-mode-change="true"> -->
+            <!-- <i class="fal fa-arrow-alt-from-bottom"></i> -->
+            <i class="fal fa-arrow-alt-from-bottom"></i>
+        </div>
+        <div class="btn modeButton change d-block d-sm-none" >
+            <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+        </div>
+    </div>
+    <div class="btn" data-bs-toggle="collapse" data-bs-target="#collapseBtn" >
+        <img src="{{ url_for('themes.static',path='img/menu.png') }}" alt="" data-mode-change="true">
+    </div>
+</div>
+<!-- 右下角折叠 -->
 </body>
 
 {% block style %}

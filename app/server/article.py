@@ -12,7 +12,6 @@ from ..models import ArticleStatus,Permission,EventID
 
 from . import server
 
-
 @server.route('/article/create')
 @login_required
 def create():
@@ -56,7 +55,7 @@ def editor(id:int=None):
         draft = current_user.article.filter_by(status=ArticleStatus.DRAFT).all();
         if len(draft) >= 3:
             return redirect(
-                url_for("server.create",id=draft[-1].id)
+                url_for("server.editor",id=draft[-1].id)
             )
         else:
             article = Article(
@@ -67,7 +66,7 @@ def editor(id:int=None):
             db.session.merge(current_user)
             db.session.commit();
             return redirect(
-                url_for("server.create",id=article.id)
+                url_for("server.editor",id=article.id)
             )
         
     #* if article id matches
@@ -122,7 +121,11 @@ def save():
         return articleResponse['7002']
 
     if current_user.permission >= Permission.CONTROL:
-        if tId == ArticleStatus.PRIVATE:
+        if (
+            current_user.id != article.userId
+            and
+            tId == ArticleStatus.PRIVATE
+        ):
             return articleResponse['7003']
     else:
         if tId == ArticleStatus.NORMAL or tId == ArticleStatus.NOTPASS:
