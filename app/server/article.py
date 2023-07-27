@@ -3,8 +3,6 @@ from flask import abort,render_template,redirect,url_for
 from flask_login import current_user
 from flask_login import login_required
 
-from base64 import b64encode
-
 from .. import db
 from ..responseData import articleResponse
 from ..models import User,Article
