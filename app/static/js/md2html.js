@@ -7,9 +7,15 @@ var mathJaxTrans = function(parent){
     var mathObj = div.querySelectorAll('.language-math');
     for(let element of mathObj){
         let render = element.innerHTML.decode();
-        katex.render(render,element)
-        element.setAttribute('data-syntax',render)
-        element.setAttribute('data-copy','Copy')
+        try{
+            katex.render(render,element)
+            element.setAttribute('data-allow','1')
+            element.setAttribute('data-syntax',render)
+            element.setAttribute('data-copy','Copy')
+        }catch(e){
+            element.append(e)
+        }
+        
     }
     return div;
 }
@@ -42,6 +48,7 @@ $(function(){
             ele.innerHTML = "";
             $(ele).append(t)
             let outlineElement = $(".rightContainer .outlineRender")
+            console.log(outlineElement)
             if(outlineElement.length > 0){
                 Vditor.outlineRender(
                     t,

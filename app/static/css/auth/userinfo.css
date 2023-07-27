@@ -1,5 +1,6 @@
 .main{
     /* border: 1px solid #000; */
+    max-width: 1200px;
 }
 .main img{
     width: 100% !important;
@@ -61,6 +62,11 @@
     width: 100%;
     padding: 0 5px;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main .uInfo .in .left{
+    display: flex;
 }
 .main .uInfo .in .infos{
     display: flex;
@@ -83,4 +89,8 @@
     color: var(--font-color);
     user-select: none;
     cursor: pointer;
+}
+
+.main .uInfo .in .fllow .followButton{
+    min-width: 100px;
 }

@@ -24,52 +24,61 @@
 <div class="container main">
     <div class="uInfo">
         <div class="in">
-            {% if isself%}
-            <div class="photo" data-status="normal">
-                <div class="position-center">
-                    <span class="spinner-border spinner-border-sm"></span>上传中
-                </div>                    
-                <form id="upload">
-                    <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
-                    <input class="hidden image" type="file" accept="image/*" name="file" value="">
-                </form>
-                <picture>
-                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
-                </picture>    
-            </div>
-            {% else %}
-            <div class="photo">
-                <picture>
-                    <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
-                </picture>    
-            </div>
-            {% endif %}
-            <div class="infos">
-                <div class="username">
-                    {{ user.username }}
-                    <span class="split"></span>
-                    <span class="id">{{ user.id }}</span>
-                </div>
+            <div class="left">
                 {% if isself %}
-                <div class="permission">
-                    {% if user.permission > permission.BASE %}
-                    <span class="badge bg-success" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
-                        {{ permission.DESC[user.permission]['name'] }}
-                    </span>
-                    {% else %}
-                    <span class="badge bg-danger" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
-                        {{ permission.DESC[user.permission]['name'] }}
-                    </span>
-                    {% endif %}
+                <div class="photo" data-status="normal">
+                    <div class="position-center">
+                        <span class="spinner-border spinner-border-sm"></span>上传中
+                    </div>                    
+                    <form id="upload">
+                        <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
+                        <input class="hidden image" type="file" accept="image/*" name="file" value="">
+                    </form>
+                    <picture>
+                        <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
+                    </picture>    
                 </div>
                 {% else %}
-                <div class="permission">
-                    <span class="badge bg-secondary" title="???" data-bs-toggle="tooltip">
-                        ???
-                    </span>
+                <div class="photo">
+                    <picture>
+                        <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
+                    </picture>    
                 </div>
                 {% endif %}
+                <div class="infos">
+                    <div class="username">
+                        {{ user.username }}
+                        <span class="split"></span>
+                        <span class="id">{{ user.id }}</span>
+                    </div>
+                    {% if isself %}
+                    <div class="permission">
+                        {% if user.permission > permission.BASE %}
+                        <span class="badge bg-success" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
+                            {{ permission.DESC[user.permission]['name'] }}
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger" title="{{ permission.DESC[user.permission]['desc'] }}" data-bs-toggle="tooltip">
+                            {{ permission.DESC[user.permission]['name'] }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="permission">
+                        <span class="badge bg-secondary" title="???" data-bs-toggle="tooltip">
+                            ???
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
+            {% if not isself %}
+            <div class="fllow">
+                <div class="followButton btn btn-primary">
+                    关 注
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -68,7 +68,20 @@ a{
     text-decoration: none !important;
     color: var(--important-font-color) ;
 }
-
+.svg{
+    width: 25px;
+    height: 25px;
+    fill: var(--font-color);
+}
+.svg svg{
+    width: inherit ;
+    height: inherit;
+    display: block;
+    fill: inherit !important;
+}
+.search svg{
+    fill: white;
+}
 .logo{
     display: flex;
     justify-content: center;

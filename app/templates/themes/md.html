@@ -13,7 +13,6 @@
     <!-- ^css -->
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('themes.static',path='css/bootstrap_5.3/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('themes.static',path='Fontawesome/css/all.min.css') }}">
 
     <!-- ^hljs -->
     <link rel="stylesheet" href="{{ url_for('themes.static',path='Vditor/dist/js/highlight.js/styles/emacs.css') }}" id="hljsCodeBlockColor"> <!--^ dark: native ;  light: emacs-->
@@ -74,12 +73,20 @@
                 </li>
             </ul>
             <div class="btn modeButton change d-none d-sm-block">
-                <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+                <span class="svg sun">
+                    {{ getIcon('sun') | safe}}
+                </span>
+                <span class="svg moon">
+                    {{ getIcon('moon') | safe}}
+                </span>
             </div>
             <form class="d-flex">
                 <input class="form-control me-2" type="text" placeholder="Search">
                 <button class="btn btn-primary" type="button">
-                    <img src="{{ url_for('themes.static',path='img/search.png') }}" alt="">
+                    <!-- <img src="{{ url_for('themes.static',path='img/search.png') }}" alt=""> -->
+                    <span class="svg search">
+                        {{ getIcon('search') | safe}}
+                    </span>
                 </button>
             </form>
             {% block navExtends%}
@@ -91,21 +98,29 @@
 <!-- 导航栏 -->
     {% block body%}
     {% endblock %}
+    <i class="far fa-album" ></i>
 
 <!-- 右下角折叠 -->
 <div class="rightbottom hidden">
     <div class="collapse" id="collapseBtn">
         <div class="btn scrollTop">
-            <!-- <img src="{{ url_for('themes.static',path='img/top.png') }}" alt="" data-mode-change="true"> -->
-            <!-- <i class="fal fa-arrow-alt-from-bottom"></i> -->
-            <i class="fal fa-arrow-alt-from-bottom"></i>
+            <span class="svg sun">
+                {{ getIcon('arrow_up') | safe}}
+            </span>
         </div>
         <div class="btn modeButton change d-block d-sm-none" >
-            <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+            <span class="svg sun">
+                {{ getIcon('sun') | safe}}
+            </span>
+            <span class="svg moon">
+                {{ getIcon('moon') | safe}}
+            </span>
         </div>
     </div>
     <div class="btn" data-bs-toggle="collapse" data-bs-target="#collapseBtn" >
-        <img src="{{ url_for('themes.static',path='img/menu.png') }}" alt="" data-mode-change="true">
+        <span class="svg menu">
+            {{ getIcon('menu') | safe}}
+        </span>
     </div>
 </div>
 <!-- 右下角折叠 -->

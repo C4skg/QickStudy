@@ -48,22 +48,27 @@
                     </div>
                     <div class="func text-muted">
                         <div class="argree item" data-nums="{{ article.argree | toLocalNumber }}">
-                            <i class="far fa-thumbs-up"></i>
+                            <i class="far fa-arrow-alt-to-top"></i>
+                            <span class="svg argree">
+                                {{ getIcon('argree') | safe}}
+                            </span>
                         </div>
                         <div class="watch item" data-nums="{{ article.watch | toLocalNumber }}">
-                            <i class="fas fa-eye"></i>
+                            <!-- <i class="fas fa-eye"></i> -->
+                            <span class="svg watch">
+                                {{ getIcon('watch') | safe}}
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="rightContainer card">
-            <div class="outlineRender">
-
-            </div>
+            <div class="outlineRender"></div>
         </div>
     </div>
     <!-- 内容 -->
+
 </div>
 
 {% endblock %}

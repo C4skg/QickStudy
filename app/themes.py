@@ -5,6 +5,8 @@ from flask.helpers import safe_join,send_file
 
 import os
 
+from .func import Icon
+
 themes = Blueprint('themes',__name__)
 
 @themes.route('/static/<path:path>')

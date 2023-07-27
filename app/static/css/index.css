@@ -77,11 +77,11 @@ blockquote{
     width: 100% !important;
 }
 
-.center .language-math:hover{
+.center .language-math[data-allow='1']:hover{
     color: transparent !important;
     user-select: none;
 }
-.center .language-math::after{
+.center .language-math[data-allow='1']::after{
     content: attr(data-syntax);
     position: absolute;
     color: var(--font-color);
@@ -99,12 +99,12 @@ blockquote{
     overflow: hidden;
     cursor: pointer;
 }
-.center .language-math:hover::after{
+.center .language-math[data-allow='1']:hover::after{
     display: block;
     border: 2px dashed var(--border-color);
 }
 
-.center .language-math::before{
+.center .language-math[data-allow='1']::before{
     content: attr(data-copy);
     position: absolute;
     color: black;
@@ -116,14 +116,14 @@ blockquote{
     top: 50%;
     transform: translateY(-50%);
 }
-.center .language-math:hover::before{
+.center .language-math[data-allow='1']:hover::before{
     display: block;
 }
-.center .language-math .katex{
+.center .language-math[data-allow='1'] .katex{
     display: block;
     width: 100% !important;
 }
-.center .language-math .katex::after{
+.center .language-math[data-allow='1'] .katex::after{
     content: '';
     position: absolute;
     left: 80%;
@@ -134,7 +134,7 @@ blockquote{
     border-color: transparent var(--border-color) transparent transparent;
     display: none;
 }
-.center .language-math:hover .katex::after{
+.center .language-math[data-allow='1']:hover .katex::after{
     display: block;
 }
 

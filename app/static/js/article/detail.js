@@ -3,7 +3,6 @@ $(function(){
 
     window.addEventListener('scroll',(e)=>{
         let pos = ScrollPos();
-        console.log(pos)
         if(pos.top >= 100){
             $('.rightContainer').css({
                 'left': 0,

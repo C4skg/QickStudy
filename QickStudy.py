@@ -2,7 +2,7 @@ from flask_migrate import Migrate,MigrateCommand,upgrade
 from flask_script import Manager
 from flask import session
 
-from app.func import generateUID6
+from app.func import generateUID6,Icon
 from app.models import initDB
 from app.models import User,Permission,UserAttend,Article,Follow
 from app import create_app
@@ -53,6 +53,13 @@ def toLocalNumber(value:int):
         return "99+"
     
     return str(value);
+
+@app.template_global()
+def getIcon(name:str):
+    if hasattr(Icon,name):
+        return getattr(Icon,name)
+    else:
+        return '';
 
 def CleanUser():
     with app.app_context():

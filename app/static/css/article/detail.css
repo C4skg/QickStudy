@@ -68,13 +68,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 2px;
+    position: relative;
+    margin-right: 15px;
 }
+
 .accordion .card .cardBottom .func .item::after{
     content: attr(data-nums);
-    display: inline-block;
-    margin-left: 0;
+    position: absolute;
+    left: calc(100% + 5px);
     font-size: 12px;
+}
+.accordion .card .cardBottom .func .item .svg{
+    width: 20px;
+    height: 20px;
+    fill: var(--font-color);
+}
+.accordion .card .cardBottom .func .item .argree{
+    /* fill: var(--border-color); */
+    /* fill: var(--back); */
 }
 /* 大纲 */
 /* 大于等于991px的时候就 */
