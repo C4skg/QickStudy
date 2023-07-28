@@ -47,13 +47,16 @@ $(function(){
             emitHighlight(t);
             ele.innerHTML = "";
             $(ele).append(t)
-            let outlineElement = $(".rightContainer .outlineRender")
-            console.log(outlineElement)
+            let outlineElement = $(".rightContainer .outlineRender") 
             if(outlineElement.length > 0){
-                Vditor.outlineRender(
+                let outlineStatus = Vditor.outlineRender(
                     t,
                     outlineElement[0]
                 )
+                if(outlineStatus == ''){
+                    outlineElement.parent().remove();
+                    $('.context .accordion').css('width','100%')
+                }
             }
         });
     }

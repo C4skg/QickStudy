@@ -1,4 +1,6 @@
 var page = 1;
+var loadSignal = false;
+var over = false;
 $(function(){
     window.addEventListener('scroll',(e)=>{
         let pos = window.ScrollPos();
@@ -13,39 +15,59 @@ $(function(){
                 'top': 0
             })
         }
+
+        //lazyloading
+        
+        if(pos.top + window.innerHeight >= (document.body.scrollHeight - 100)){
+            // allow load
+            if(loadSignal || over) return false;
+
+            loadSignal = true
+            $(".main .detail").append('<div id="_lazyload" style="text-align:center;padding: 50px 0;"><span class="spinner-border spinner-border-sm"></span></div>');
+            getArticle(page)
+        }
     })
     
-    function getArticle(){
+    function getArticle(page=1){
         $.ajax({
             url: window.server.getArticle,
             type: 'get',
+            data: {
+                "page": page
+            },
             success: (e)=>{
                 if(typeof e === 'string') e = JSON.parse(e);
-                for(let id in e){
-                    $('.context .NoneTxt').remove();
-                    const article = e[id];
-                    generateArticleCard(
-                        article.title,
-                        article.context,
-                        article.auth.logo,
-                        article.auth.username,
-                        article.lasttime,
-                        article.agree,
-                        article.watch,
-                        article.cover,
-                        article.detailPath,
-                        article.auth.url
-                    )
+                if(e['length'] > 0){
+                    let articleList = e['articles'];
+                    page++;
+                    for(let id in articleList){
+                        $('.context .NoneTxt').remove();
+                        const article = articleList[id];
+                        generateArticleCard(
+                            article.title,
+                            article.context,
+                            article.auth.logo,
+                            article.auth.username,
+                            article.lasttime,
+                            article.agree,
+                            article.watch,
+                            article.cover,
+                            article.detailPath,
+                            article.auth.url
+                        )
+                    }
+                }else{
+                    over = true;
                 }
             },
             error: (e)=>{
-
+                over = true;
             },
             complete: (e)=>{
-
+                loadSignal = false;
+                $('#_lazyload').remove();
             }
         })
-        page++;
     }
 
     getArticle();

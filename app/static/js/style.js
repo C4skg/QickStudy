@@ -14,7 +14,6 @@ $(function(){
     })(document,window);
 
     $(".modeButton").click(function(){
-        console.log('1')
         var mode = isDark() ? '' : 'dark';
         changeMode(mode);
     })
@@ -39,11 +38,9 @@ $(function(){
         var btn = $('.modeButton');
         if(btn.length >= 1){
             for(let eve of btn){
-                // var children = $(eve).children('span[data-]');
                 let sun = $(eve).children('.sun')
                 let moon = $(eve).children('.moon')
                 if(mode == 'dark'){
-                    // attr = attr.replace('sun.png','moon.png')
                     sun.css('display','block')
                     moon.css('display','none')
                 }else{

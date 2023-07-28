@@ -205,7 +205,8 @@ def getArticle():
     page = 1 if page <= 0 else page;
     articleList = Article.query.filter_by(status=ArticleStatus.NORMAL).offset((page-1)*10).limit(10).all()
     data = {
-        
+        'length': len(articleList),
+        'articles':{}
     }
     for i in articleList:
         user = User.query.filter_by(id=i.userId).first();
@@ -225,6 +226,6 @@ def getArticle():
             'detailPath': url_for('main.detail',id=i.id)
         }
 
-        data[i.id] = temp;
+        data['articles'][i.id] = temp;
     
     return json.dumps(data);

@@ -13,7 +13,12 @@
     </h2>
     <P>如果忘记密码，可通过邮箱号进行重置</P>
     <div class="btn modeButton change">
-        <img src="{{ url_for('themes.static',path='img/sun.png') }}" alt="">
+        <span class="svg sun">
+            {{ getIcon('sun') | safe}}
+        </span>
+        <span class="svg moon">
+            {{ getIcon('moon') | safe}}
+        </span>
     </div>
     <form id="login-form" class="was-validated formarea">
         <input type="hidden" value="{{ step }}" name="step">
