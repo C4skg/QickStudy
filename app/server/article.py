@@ -203,7 +203,7 @@ def changeStatus():
 def getArticle():
     page = request.args.get('page',1,type=int);
     page = 1 if page <= 0 else page;
-    articleList = Article.query.filter_by(status=ArticleStatus.NORMAL).order_by(Article.id).offset((page-1)*10).limit(10).all()
+    articleList = Article.query.filter_by(status=ArticleStatus.NORMAL).order_by(Article.id.desc()).offset((page-1)*10).limit(10).all()
     data = {
         'length': len(articleList),
         'articles':{}
