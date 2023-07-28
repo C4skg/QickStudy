@@ -257,7 +257,8 @@ var save = function(type){
             if(e['status']=='success'){
                 swal("成功！","文章已保存", "success").then(()=>{
                     window.removeEventListener('beforeunload',beforeunload)
-                    window.location.reload();
+                    window.location = e['route']
+                    // window.location.reload();
                 })
             }else{
                 swal("失败",e['message'], "error").then(()=>{

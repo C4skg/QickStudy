@@ -61,23 +61,28 @@ class ArticleStatus:
     Desc = {
         NOTPASS:{
             "color": "red",
-            "name" : "未通过"
+            "name" : "未通过",
+            "desc" : "文章未通过审核,可能存在不恰当内容,请检查后重新申请审核"
         },
         DRAFT:{
             "color": "mute",
-            "name" : "草稿"
+            "name" : "草稿",
+            "desc" : "文章为草稿状态,仅自己可见"
         },
         WAIT:{
             "color": "yellow",
-            "name" : "审核中"
+            "name" : "审核中",
+            "desc" : "文章审核中,耐心等待"
         },
         NORMAL:{
             "color": "green",
-            "name" : "已发布"
+            "name" : "已发布",
+            "desc" : "文章已正常发布"
         },
         PRIVATE:{
             "color": "primary",
-            "name": "私有"
+            "name": "私有",
+            "desc" : "该文章内容仅你自己可见"
         }
     }
 

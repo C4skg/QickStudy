@@ -17,6 +17,11 @@
 </li>
 {% endblock %}
 {% block body %}
+{% if tips.enable %}
+<div class="bottomtips tips-{{tips.type}}">
+    {{ tips.context }}
+</div>
+{% endif %}
 <div class="container main">
     <!-- 内容 -->
     <div class="context" >
@@ -68,6 +73,7 @@
         </div>
     </div>
     <!-- 内容 -->
+    
 
 </div>
 

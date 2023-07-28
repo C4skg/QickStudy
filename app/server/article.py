@@ -147,7 +147,9 @@ def save():
         statusUpdate
     ):
         db.session.commit();
-        return articleResponse['7000'];
+        _clone = deepcopy(articleResponse['7000'])
+        _clone['route'] = url_for('main.detail',id=article.id);
+        return _clone;
 
     else:
         pass;
@@ -213,6 +215,7 @@ def getArticle():
             'title': i.title,
             'context': i.context[:100]+'...',
             'auth':{
+                'url': url_for('auth.userInfo',id=user.id),
                 'username': user.username,
                 'logo': url_for('server.logo',id=user.id)
             },

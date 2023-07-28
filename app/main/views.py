@@ -16,22 +16,6 @@ def index():
             'now': UserExperience.getLevel(current_user.userInfo[0].experience),
             'value': current_user.userInfo[0].experience
         },
-        'context' : {
-            'Inner文章内容内容内容内容':{
-                'type': 'article',
-                'author': 'C4skg',
-                'time': '2023-06-01',
-                'level': '0',
-                'readme': open(f'WorkSpace/Test.md','r',encoding='utf-8').read()
-            },
-            # '紧急公告2':{
-            #     'type': 'notice',
-            #     'author': 'Admin',
-            #     'time': '2023-06-01',
-            #     'level': 2,
-            #     'context': open(f'WorkSpace/notice.md','r',encoding='utf-8').read()
-            # }
-        },
         'ArticleStatus': ArticleStatus
     }
     datas['level']['nextV'] = UserExperience.getNextValue(datas['level']['now'])
@@ -48,6 +32,16 @@ def detail(id:None):
     if not article:
         abort(404);
     
+    data = {
+        'user': User.query.filter_by(id=article.userId).first(),
+        'article': article,
+        'tips': {
+            'enable': False,
+            'type': ArticleStatus.Desc[article.status]['color'],
+            'context': ArticleStatus.Desc[article.status]['desc']
+        }
+    }
+
     if article.status == ArticleStatus.NORMAL:
         pass;
     
@@ -58,28 +52,29 @@ def detail(id:None):
     ):
         if current_user.is_authenticated:
             if current_user.id == article.userId:
-                pass;
+                data['tips']['enable'] = True
             else:
                 abort(404)
         else:
             abort(404);
-    elif article.status == ArticleStatus.WAIT:
+    elif (
+        article.status == ArticleStatus.WAIT
+        or 
+        article.status == ArticleStatus.NOTPASS
+    ):
         if current_user.is_authenticated:
             if(
                 current_user.permission >= Permission.CONTROL
                 or
                 current_user.id == article.userId
             ):
-                pass;
+                data['tips']['enable'] = True
             else:
                 abort(404);
         else:
             abort(404);
 
-    data = {
-        'user': User.query.filter_by(id=article.userId).first(),
-        'article': article
-    }
+    
     return render_template('article/detail.html',**data);
 
 @main.route('/about')

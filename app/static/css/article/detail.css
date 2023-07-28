@@ -84,6 +84,28 @@
     fill: var(--font-color);
 }
 
+.bottomtips{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.tips-mute{
+    background-color: #ccc;
+}
+.tips-green{
+    background-color: green;
+}
+.tips-red{
+    background-color: red;
+}
+.tips-yellow{
+    background-color: rgb(192, 192, 91);
+}
+.tips-primary{
+    background-color: rgb(13,110,253);
+}
 
 .rightContainer{
     max-height: 80vh;

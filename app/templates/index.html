@@ -30,73 +30,13 @@
 <div class="container main">
     <!-- 内容 -->
     <div class="context">
-        {% if context|length == 0 %}
-        <div class="NoneTxt">
-            <p class="h1">Nothing here~</p>
-        </div>
-        {% else %}
         <div class="accordion detail">
-            <div class="card">
+            <div class="NoneTxt card">
                 <div class="p-2">
-                    <div class="aBody">
-                        <div class="cover">
-                            <img src="{{ url_for('server.logo',id=user.id) }}" alt="">
-                        </div>
-                        <div class="main">
-                            <div class="title">
-                                <a href="">测试测试测试2测试测试测试2测试测试测试2测试测试测试2测试测试测试2测试测试测试2测试测试测试2测试测试测试2</a>
-                            </div>
-                            <div class="contextDept text-muted">
-                                文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-                                文章内容
-                                文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-                                文章内容文章内容文章内容文章内容文章内容
-                                文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-                                文章内容
-                                文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容
-                                文章内容文章内容文章内容文章内容文章内容
-                            </div>
-                            <div class="extends">
-                                <div class="userinfo">
-                                    <div class="logo">
-                                        <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
-                                    </div>
-                                    <div class="username">
-                                        <span class="username text-muted">
-                                            C4skg  
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="articleInfo text-muted">
-                                    <div class="step">
-                                        <div class="item">
-                                            <span class="svg time">
-                                                {{ getIcon('time') | safe}}
-                                            </span>
-                                            2023/07/24
-                                        </div>
-                                    </div>
-                                    <div class="step">
-                                        <div class="item" data-num="123">
-                                            <span class="svg agree text-muted" >
-                                                {{ getIcon('agree') | safe }}
-                                            </span>
-                                        </div>
-                                        
-                                        <div class="item" data-num="123">
-                                            <span class="svg watch text-muted" data-num="123">
-                                                {{ getIcon('watch') | safe }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="h1">Nothing here~</p>
                 </div>
             </div>
         </div>
-        {% endif %}
     <!-- 内容 -->
         <!--* 用户信息 -->
         <div class="rightContainer">

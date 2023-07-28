@@ -1,4 +1,7 @@
 /** This css file for index.html  */
+a{
+    color: inherit;
+}
 .navbar{
     white-space: nowrap !important;
     border-bottom: 1px solid var(--border-color);
@@ -30,6 +33,12 @@
     align-items: start;
     /* border: 1px solid var(--border-color); */
 }
+.context .NoneTxt{
+    width: 100%;
+    background-color: #00000040;
+    text-align: center;
+    padding: 170px 0;
+}
 .main{
     margin-top: 50px;
 }
@@ -51,17 +60,17 @@
 }
 
 .accordion .card .aBody .cover{
-    width: 200px;
+    width: 240px;
     height: 140px;
     overflow: hidden;
     border-radius: 8px;
 }
-@media screen and (max-width: 760px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
+@media screen and (max-width:770px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
     .accordion .card .aBody{
         flex-direction: column;
     }
     .accordion .card .aBody .cover{
-        width: 90% !important;
+        width: 70% !important;
         height: 120px;
         margin-bottom: 10px;
     }
@@ -73,7 +82,6 @@
     .accordion .card .aBody .main .extends .articleInfo .step:nth-child(2){
         display: none;
     }
-
 }
 .accordion .card .aBody .cover img{
     width: 100%;
@@ -96,9 +104,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.accordion .card .aBody .main .title a{
-    color: inherit;
-}
+
 .accordion .card .aBody .main .contextDept{
     font-size: 15px;
     display: -webkit-box;
@@ -119,6 +125,12 @@
     align-items: center;
     font-size: 13px;
     column-gap: 10px;
+}
+.accordion .card .aBody .main .extends .userinfo .username{
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .accordion .card .aBody .main .extends .userinfo .logo{
     width: 30px;
@@ -187,6 +199,10 @@
     height: 80px;
 }
 .container-User .userInfo .username{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 80%;
     font-size: 20px;
 }
 .container-User .userInfo .user-logo img{

@@ -21,8 +21,8 @@ $(function(){
             type: 'get',
             success: (e)=>{
                 if(typeof e === 'string') e = JSON.parse(e);
-                console.log(e);
                 for(let id in e){
+                    $('.context .NoneTxt').remove();
                     const article = e[id];
                     generateArticleCard(
                         article.title,
@@ -33,7 +33,8 @@ $(function(){
                         article.agree,
                         article.watch,
                         article.cover,
-                        article.detailPath
+                        article.detailPath,
+                        article.auth.url
                     )
                 }
             },
@@ -49,17 +50,20 @@ $(function(){
 
     getArticle();
 
-    function generateArticleCard(title,context,userimgPath,username,lasttime,agreenum,watchnum,coverPath,detailPath){
+    function generateArticleCard(title,context,userimgPath,username,lasttime,agreenum,watchnum,coverPath,detailPath,authUrl){
         var card = $(`
         <div class="card">
             <div class="p-2">
                 <div class="aBody">
-                    <div class="cover ${coverPath == null ? 'hidden' : ''}">
-                        <img src="${coverPath}" alt="">
-                    </div>
-                    <div class="main" data-max='true'>
+                    ${coverPath == null ? '' : 
+                    `   <div class="cover">
+                            <img src="${coverPath}" alt="">
+                        </div>
+                    `
+                    }
+                    <div class="main" data-max='${coverPath ? '' : 'true'}'>
                         <div class="title">
-                            <a href="${detailPath}" target="_blank" data-bs-toggle="tooltip" title="${title}" >${title}</a>
+                            <a href="${detailPath}" target="_blank">${title}</a>
                         </div>
                         <div class="contextDept text-muted">
                             ${context}
@@ -71,7 +75,7 @@ $(function(){
                                 </div>
                                 <div class="username">
                                     <span class="username text-muted">
-                                        ${username}
+                                        <a href="${authUrl}" target="_blank">${username}</a>
                                     </span>
                                 </div>
                             </div>
