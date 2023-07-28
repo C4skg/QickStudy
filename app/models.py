@@ -240,6 +240,7 @@ class Article(db.Model):
         'mysql_charset': 'utf8mb4',
         'mysql_collate': 'utf8mb4_general_ci'
     }
+    
 
     id = db.Column(db.Integer,primary_key = True);
     userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'));
@@ -250,6 +251,10 @@ class Article(db.Model):
     cover = db.Column(db.Text,nullable=True) #文章封面  路径
     agree = db.Column(db.Integer,nullable=False,default=0);
     watch = db.Column(db.Integer,nullable=False,default=0);
+
+    __mapper_args__ = {
+        "order_by": id.desc()
+    }
 
     def updateCover(self,path:str) -> bool:
         self.cover = path;
