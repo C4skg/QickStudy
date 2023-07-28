@@ -31,14 +31,23 @@
    cd requirements
    pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
-2. 启动命令
+2. 准备
 
-   1.启动前需开启 `mysql` 数据库，并编辑 `config.py` 中的 `SQLALCHEMY_DATABASE_URI` 值
+   + 启动前需开启 `mysql` 数据库,并编辑 `config.py` 中的值
 
    ```python
-   SQLALCHEMY_DATABASE_URI = 'mysql+pymsql://用户名:密码@ip:port/数据库名'
+   SQL_USER = "root"          #目标数据库用户名
+   SQL_PASSWORD = "123456"    #目标数据库密码
+   SQL_PORT = "3306"          #目标数据库端口
+   SQL_SCHEMA = "QickStudy"   #目标数据库
    ```
-   2.项目依赖了 `redis` 作为中间件
+   + 项目依赖了 `redis` 作为中间件,编辑 `config.py` 中的值对项目的 `redis` 进行配置
+
+   ```python
+   REDIS_URI = "127.0.0.1"       #redis 地址
+   REDIS_PORT = 6379             #redis 端口
+   REDIS_PASSWORD = "QickStudy"  #redis 密码
+   ```
    
    其中，`REDIS_PORT` 字段为 `int` 类型
    ```python
@@ -47,23 +56,24 @@
    REDIS_PORT = port
    ```
 
-   部署
-
+3. 部署
+   部署前请开启数据库和中间件 `redis` 服务
    ```bash
-   python QickStudy.py db deploy
+   python QickStudy.py deploy
    ```
 
-   启动服务
+4. 启动服务
 
    ```bash
    python QickStudy.py runserver -h ip -p port --threaded
    ```
 
-### 0x04 所参考的开源项目
+### 0x04 致谢
 
-+ `flasky`
+项目依赖了以下(但不限于以下)开源项目
 
-  [https://github.com/miguelgrinberg/flasky](https://github.com/miguelgrinberg/flasky)
 + `vditor`
-
   [https://github.com/Vanessa219/vditor](https://github.com/Vanessa219/vditor)
+
++ `Flask`
+  [https://github.com/pallets/flask](https://github.com/pallets/flask)
