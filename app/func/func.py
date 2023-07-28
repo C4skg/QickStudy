@@ -60,6 +60,16 @@ def generateUID32() -> str:
     return str(uuid4());
 
 
+def getLocalNumber(value:int):
+    if value > 9999:
+        return "1w+"
+    elif value > 999:
+        return "1k+"
+    elif value > 99:
+        return "99+"
+    
+    return str(value);
+
 '''
 生成随机id
 '''

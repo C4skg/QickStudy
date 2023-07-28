@@ -83,12 +83,8 @@
     height: 20px;
     fill: var(--font-color);
 }
-.accordion .card .cardBottom .func .item .argree{
-    /* fill: var(--border-color); */
-    /* fill: var(--back); */
-}
-/* 大纲 */
-/* 大于等于991px的时候就 */
+
+
 .rightContainer{
     max-height: 80vh;
     position: relative;

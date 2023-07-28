@@ -2,7 +2,7 @@ from flask_migrate import Migrate,MigrateCommand,upgrade
 from flask_script import Manager
 from flask import session
 
-from app.func import generateUID6,Icon
+from app.func import generateUID6,getLocalNumber,Icon
 from app.models import initDB
 from app.models import User,Permission,UserAttend,Article,Follow
 from app import create_app
@@ -45,14 +45,7 @@ def before_request():
 '''
 @app.template_filter('toLocalNumber')
 def toLocalNumber(value:int):
-    if value > 9999:
-        return "1w+"
-    elif value > 999:
-        return "1k+"
-    elif value > 99:
-        return "99+"
-    
-    return str(value);
+    return getLocalNumber(value);
 
 @app.template_global()
 def getIcon(name:str):

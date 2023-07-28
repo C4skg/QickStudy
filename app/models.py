@@ -145,7 +145,7 @@ class Logs(db.Model):
     eventId = db.Column(db.Integer,nullable=False,index=True);
     desc = db.Column(db.String(1000),nullable=False);
     nums = db.Column(db.Integer,nullable=False,default=0,index=True);
-    timestamp = db.Column(db.DateTime,default=datetime.now)
+    timestamp = db.Column(db.DateTime(),default=datetime.now)
 
     def __repr__(self):
         return '<Qc_logs %s>' % self.id;
@@ -226,7 +226,7 @@ class Follow(db.Model):
     __tablename__ = 'follows'
     followerId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);  #关注用户
     followTarget = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True); #被关注用户
-    timestamp = db.Column(db.DateTime,default=datetime.now)    
+    timestamp = db.Column(db.DateTime(),default=datetime.now)    
 
 class Article(db.Model):
     __tablename__ = 'articles'
@@ -240,10 +240,10 @@ class Article(db.Model):
     userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'));
     title = db.Column(db.String(100),nullable=False);
     context = db.Column(LONGTEXT,nullable=False);
-    lastTime = db.Column(db.DateTime,nullable=False,default=datetime.now);
+    lastTime = db.Column(db.DateTime(),nullable=False,default=datetime.now);
     status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
     cover = db.Column(db.Text,nullable=True) #文章封面  路径
-    argree = db.Column(db.Integer,nullable=False,default=0);
+    agree = db.Column(db.Integer,nullable=False,default=0);
     watch = db.Column(db.Integer,nullable=False,default=0);
 
     def updateCover(self,path:str) -> bool:
@@ -286,8 +286,8 @@ class Article(db.Model):
     
         return True;
 
-    def updateArgree(self) -> bool:
-        self.argree += 1;
+    def updateAgree(self) -> bool:
+        self.agree += 1;
         db.session.add(self);
     
         return True;

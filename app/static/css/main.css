@@ -33,6 +33,7 @@
 .main{
     margin-top: 50px;
 }
+
 /* 文章标签样式 */
 .accordion{
     width: 75%;
@@ -40,44 +41,125 @@
 .accordion .card{
     margin: 5px 0px;
 }
-.accordion .title{
+.accordion .card .aBody{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    column-gap: 20px;
+}
+
+.accordion .card .aBody .cover{
+    width: 200px;
+    height: 140px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+@media screen and (max-width: 760px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
+    .accordion .card .aBody{
+        flex-direction: column;
+    }
+    .accordion .card .aBody .cover{
+        width: 90% !important;
+        height: 120px;
+        margin-bottom: 10px;
+    }
+    .accordion .card .aBody .main{
+        width: 90% !important;
+    }
+}
+@media screen and (max-width: 400px) {
+    .accordion .card .aBody .main .extends .articleInfo .step:nth-child(2){
+        display: none;
+    }
+
+}
+.accordion .card .aBody .cover img{
+    width: 100%;
+    height: 100%;
+}
+.accordion .card .aBody .main{
+    margin: 0;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 10px;
+}
+.accordion .card .aBody .main[data-max='true']{
+    width: 100%;
+}
+.accordion .card .aBody .main .title{
     font-size: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
-.accordion .title:hover{
-    text-decoration: underline;
+.accordion .card .aBody .main .title a{
+    color: inherit;
 }
-.accordion .collapse{
-    border-top: 1px solid var(--border-color);
+.accordion .card .aBody .main .contextDept{
+    font-size: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-box-orient: vertical; /* 文本排列方向 */
+    margin: 5px 0;
+    height: 67px;
 }
-.accordion .card .actions{
-    margin-top: 30px;
+.accordion .card .aBody .main .extends{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.accordion .card .actions .function .vote button{
-    color: rgba(5,109,232);
-    background-color: rgba(5,109,232,.1);
-}
-.accordion .card .actions .function .vote button[--is-activate]{
-    color: white;
-    background-color: #056de8;
-}
-.accordion .card .about{
+.accordion .card .aBody .main .extends .userinfo{
     display: flex;
     align-items: center;
     font-size: 13px;
-    color: var(--second-font-color);
+    column-gap: 10px;
+}
+.accordion .card .aBody .main .extends .userinfo .logo{
+    width: 30px;
+    height: 30px;
+}
+.accordion .card .aBody .main .extends .userinfo .logo img{
+    width: 100%;
+    height: 100%;
+}
+.accordion .card .aBody .main .extends .articleInfo{
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+.accordion .card .aBody .main .extends .articleInfo .step{
+    display: flex;
+    font-size: 10px;
+    align-items: center;
+    column-gap: 5px;
+}
+.accordion .card .aBody .main .extends .articleInfo .step .svg{
+    fill: var(--bs-secondary-color);
+    width: 20px;
+    height: 20px;
+}
+.accordion .card .aBody .main .extends .articleInfo .step .item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1px;
+}
+.accordion .card .aBody .main .extends .articleInfo .step:nth-child(2) .item::after{
+    content: attr(data-num);
+    color: var(--bs-secondary-color);
+    display: inline-block;
+    white-space: nowrap;
+    width: 1.5rem;
 }
 /* 文章标签样式 */
 
-/* 公告标签样式 */
-.notice{
-    padding: 0 5%;
-}
-.releaseTime{
-    padding: 0 5%;
-    display: flex;
-    justify-content: space-between;
-    color: var(--second-font-color);
-}
+
 /* rightContainer */
 .rightContainer{
     width: 25%;
@@ -85,6 +167,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+    position: relative;
 }
 /* rightContainer */
 /* user */

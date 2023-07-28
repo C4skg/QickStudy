@@ -80,7 +80,7 @@ a{
     fill: inherit !important;
 }
 .search svg{
-    fill: white;
+    fill: white !important;
 }
 .logo{
     display: flex;

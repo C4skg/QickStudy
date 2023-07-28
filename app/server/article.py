@@ -1,5 +1,6 @@
 from flask import request,current_app
 from flask import abort,render_template,redirect,url_for
+from flask import json
 from flask_login import current_user
 from flask_login import login_required
 
@@ -9,6 +10,7 @@ from .. import db
 from ..responseData import articleResponse
 from ..models import User,Article
 from ..models import ArticleStatus,Permission,EventID
+from ..func import getLocalNumber
 
 from . import server
 
@@ -193,3 +195,33 @@ def changeStatus():
     return articleResponse['7001'];
 
     
+
+
+@server.route('/article/getArticle')
+def getArticle():
+    page = request.args.get('page',1,type=int);
+    page = 1 if page <= 0 else page;
+    articleList = Article.query.filter_by(status=ArticleStatus.NORMAL).offset((page-1)*10).limit(10).all()
+    data = {
+        
+    }
+    for i in articleList:
+        user = User.query.filter_by(id=i.userId).first();
+        temp = {
+            'id': i.id,
+            'cover': url_for('themes.upload',path=i.cover) if i.cover else None,
+            'title': i.title,
+            'context': i.context[:100]+'...',
+            'auth':{
+                'username': user.username,
+                'logo': url_for('server.logo',id=user.id)
+            },
+            'lasttime': i.lastTime.strftime("%Y/%m/%d"),
+            'agree': getLocalNumber(i.agree),
+            'watch': getLocalNumber(i.watch),
+            'detailPath': url_for('main.detail',id=i.id)
+        }
+
+        data[i.id] = temp;
+    
+    return json.dumps(data);

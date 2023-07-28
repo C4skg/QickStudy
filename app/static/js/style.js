@@ -90,7 +90,7 @@ $(function(){
     }
 
     function checkDev(){
-        let top = ScrollPos().top,
+        let top = window.ScrollPos().top,
             hidened = true;
         let dev = $('.rightbottom');
         if(dev.length == 0) return;
@@ -132,11 +132,3 @@ $(function(){
         )
     }
 })
-
-var ScrollPos = function(){
-    // 浏览器适配
-    return {
-        left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
-        top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-    };
-}
