@@ -21,6 +21,12 @@
 6. 自动生成好文海报，快速分享知识
 7. 多主题一键切换
 
+<div align="center"><img src='img/1.png'></div>
+<div align="center"><img src='img/2.png'></div>
+<div align="center"><img src='img/3.png'></div>
+<div align="center"><img src='img/4.png'></div>
+
+
 ### 0x03 部署
 
 1. 安装依赖
@@ -73,7 +79,9 @@
 项目依赖了以下(但不限于以下)开源项目
 
 + `vditor`
+  
   [https://github.com/Vanessa219/vditor](https://github.com/Vanessa219/vditor)
 
 + `Flask`
+  
   [https://github.com/pallets/flask](https://github.com/pallets/flask)
