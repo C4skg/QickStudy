@@ -14,7 +14,7 @@ a{
 }
 .navbar .userInfo .user-logo{
     width: 40px;
-    padding: 5px 0;
+    height: 40px;
 }
 .navbar .userInfo .user-logo img{
     width: 100%;
