@@ -34,11 +34,12 @@
     justify-content: center;
     align-items: center;
     column-gap: 10px;
-    font-size: 15px;
+    font-size: 14px;
+    color: var(--bs-secondary-color);
 }
 .accordion .infos .bottom .left .usericon{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     overflow: hidden;
 }

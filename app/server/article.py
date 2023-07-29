@@ -214,7 +214,7 @@ def getArticle():
             'id': i.id,
             'cover': url_for('themes.upload',path=i.cover) if i.cover else None,
             'title': i.title,
-            'context': i.context[:100]+'...',
+            'context': i.context[:300]+'...',
             'auth':{
                 'url': url_for('auth.userInfo',id=user.id),
                 'username': user.username,

@@ -75,7 +75,7 @@ a{
         flex-direction: column;
     }
     .accordion .card .aBody .cover{
-        width: 70% !important;
+        width: 60% !important;
         height: 120px;
         margin-bottom: 10px;
     }
@@ -114,7 +114,7 @@ a{
     text-overflow: ellipsis;
     overflow: hidden;
     -webkit-box-orient: vertical; /* 文本排列方向 */
-    margin: 5px 0;
+    margin: 10px 0;
     height: 67px;
 }
 .accordion .card .aBody .main .extends{
