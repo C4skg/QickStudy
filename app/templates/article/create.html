@@ -65,14 +65,26 @@
                 </div>
                 <div class="articleInfos card container">
                     <div class="title">
-                        <input id="title"  type="text" placeholder="在这里输入文章标题" name="title" oninput="titleCount()" value="{{ article.title }}">
+                        <div class="input-group mt-3 mb-3">
+                            <select class="formselect" id="ArtType" name="typeId">
+                                {% if ArticleType | length == 0 %}
+                                    <option value="0">无文章类型选项</option>
+                                {% else %}
+                                    {% for type in  ArticleType %}
+                                        <option value="{{ type.id }}">{{type.typeName}}</option>
+                                    {% endfor %}
+                                {% endif %}
+                                
+                            </select>
+                            <input id="title" class="form-control"  type="text" placeholder="在这里输入文章标题" name="title" oninput="titleCount()" value="{{ article.title }}">
+                        </div>
                         <label for="title">
                             {{article.title | length}}/100
                         </label>
                     </div>
                     <div class="extend">
                         <div class="fm" data-status="normal" data-desc="设置封面" onclick="setCover()">
-                            <div class="position-center">
+                            <div class="position-center">--bs-body-bg
                                 <span class="spinner-border spinner-border-sm"></span>上传中
                             </div>                    
                             <input id="cover" class="hidden" type="file" accept="image/*" name="file" value="">

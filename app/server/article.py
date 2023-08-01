@@ -8,7 +8,7 @@ from copy import deepcopy
 
 from .. import db
 from ..responseData import articleResponse
-from ..models import User,Article
+from ..models import User,Article,Art_types
 from ..models import ArticleStatus,Permission,EventID
 from ..func import getLocalNumber
 
@@ -83,7 +83,8 @@ def editor(id:int=None):
         'user': current_user,
         "article": article,
         "ArticleStatus": ArticleStatus,
-        "Permission": Permission
+        "Permission": Permission,
+        "ArticleType": Art_types.query.all()
     }
 
     return render_template('article/create.html',**data);
@@ -98,6 +99,7 @@ def save():
         @param: title - article's title
         @param: context - article's context
         @param: tId - article's status
+        @param: typeId - article's typeId
     '''
     if current_user.permission < Permission.USER:
         return articleResponse['7003']
@@ -121,6 +123,10 @@ def save():
     tId = request.form.get('tId',None,type=int);
     if not tId:
         return articleResponse['7002']
+    
+    typeId = request.form.get('typeId')
+    if not typeId:
+        return articleResponse['7002'] 
 
     if current_user.permission >= Permission.CONTROL:
         if (
@@ -140,12 +146,15 @@ def save():
     titleUpdate = article.updateTitle(title);
     contextUpdate = article.updateContext(context);
     statusUpdate = article.updateStatus(tId);
-
+    typeUpdate = article.updateType(typeId);
+    print(typeUpdate)
     if (
         titleUpdate and
         contextUpdate and 
-        statusUpdate
+        statusUpdate and
+        typeUpdate
     ):
+        print('commit')
         db.session.commit();
         _clone = deepcopy(articleResponse['7000'])
         _clone['route'] = url_for('main.detail',id=article.id);

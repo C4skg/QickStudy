@@ -45,7 +45,7 @@ var tips = {
         let alerts = document.createElement('div');
         alerts.className = `alert col-sm-3 alert-${type}`
         alerts.id = _id
-        alerts.setAttribute('style','position: absolute;bottom: 0;right: 0;z-index: 999999;');
+        alerts.setAttribute('style','position: fixed;bottom: 0;right: 5px;z-index: 999999;');
         let text = document.createElement('strong');
         text.innerText = context;
         alerts.appendChild(

@@ -44,9 +44,26 @@ body::-webkit-scrollbar{
 .main .articleInfos .title{
     position: relative;
 }
+.main .articleInfos .title .formselect{
+    box-shadow: none;
+    outline: none;
+    border-radius: 0 !important;
+    border: 1px solid var(--border-color);
+    border-right: 0;
+    padding: 5px;
+    background-color: var(--bs-body-bg) !important;
+    color: var(--font-color);
+}
+.main .articleInfos .title select option{
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
 .main .articleInfos .title input{
-    width: 100%;
-    border: 1px solid transparent;
+    box-shadow: none;
+    border-radius: 0;
+    border: 1px solid var(--border-color);
+    border-left: 0;
     outline: none;
     font-size: large;
     color: var(--font-color);
@@ -54,9 +71,7 @@ body::-webkit-scrollbar{
     padding-bottom: 5px;
     background-color: transparent;
 }
-.main .articleInfos .title input:focus{
-    border-bottom: 1px solid var(--border-color);
-}
+
 .main .articleInfos .title label{
     font-size: large;
     position: absolute;

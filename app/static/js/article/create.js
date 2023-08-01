@@ -6,7 +6,7 @@ function titleCount(){
         `${len}/100`
     )
     let color = (len > 100 || len == 0) ? "red" : "var(--border-color)";
-    input.css('border-bottom',`1px solid ${color}`)
+    // input.css('border-color',`${color}`)
     label.css('color',color)
     window.title = Boolean(
         len < 100 && len != 0
@@ -161,15 +161,6 @@ $(function(){
     //init insert
     
 
-    var coverStyle = function(){
-        const fm = $(".extend")
-        if(!window.cover){
-            fm.css('border','1px solid red');
-        }else{
-            fm.css('border','1px solid var(--border-color)');
-        }
-    };
-
 
     //cover upload
     const input = $("#cover")[0];
@@ -195,7 +186,7 @@ $(function(){
                     setTimeout(()=>{
                         let img = $('.extend picture img')[0]
                         img.src = e['files'][0]['path'];
-                    },2000)
+                    },1000)
                     
                 }else{
                     $('.extend .fm').attr('data-status','error')
@@ -212,7 +203,7 @@ $(function(){
                 setTimeout(()=>{
                     $('.extend .fm').attr('data-status','normal')
                     $('.extend .fm').attr('data-desc','设置封面')
-                },2000)
+                },1000)
             }
         })
     });
@@ -230,7 +221,8 @@ var save = function(type){
     if(!window.title){
         return false;
     }
-    const title = $(".title input").val()
+    const title = $(".title input").val(),
+          typeId = $("#ArtType").val();
     var context = "";
     try{
         context = window.vditor.getValue();
@@ -246,6 +238,7 @@ var save = function(type){
     form.append('context',context)
     form.append('csrf_token',window.csrf_token)
     form.append('tId',type)
+    form.append('typeId',typeId)
     form.append('id',window.article.id)
     $.ajax({
         url : window.upload.save,
