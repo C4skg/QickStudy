@@ -231,9 +231,6 @@ class Follow(db.Model):
     __tablename__ = 'follows'
     followerId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True);  #关注用户
     followTarget = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'),primary_key=True); #被关注用户
-<<<<<<< Updated upstream
-    timestamp = db.Column(db.DateTime(),default=datetime.now)    
-=======
     time = db.Column(db.DateTime(),default=datetime.now)
 
 
@@ -268,7 +265,6 @@ class Art_comment(db.Model):
         return '<Art_comment_%s>' % self.id;
 
 
->>>>>>> Stashed changes
 
 class Article(db.Model):
     __tablename__ = 'articles'
@@ -286,10 +282,6 @@ class Article(db.Model):
     lastTime = db.Column(db.DateTime(),nullable=False,default=datetime.now);
     status = db.Column(db.Integer,nullable=False,default=ArticleStatus.DRAFT,index=True)
     cover = db.Column(db.Text,nullable=True) #文章封面  路径
-<<<<<<< Updated upstream
-    agree = db.Column(db.Integer,nullable=False,default=0);
-    watch = db.Column(db.Integer,nullable=False,default=0);
-=======
     agree = db.relationship('Art_agree',backref='Article',lazy='dynamic',order_by='Art_agree.time');
 
     # 文章类型
@@ -297,7 +289,6 @@ class Article(db.Model):
 
     comments = db.relationship('Art_comment',backref='Article',lazy='dynamic')
     
->>>>>>> Stashed changes
 
     __mapper_args__ = {
         "order_by": id.desc()
@@ -349,11 +340,6 @@ class Article(db.Model):
     
         return True;
 
-<<<<<<< Updated upstream
-    def updateWatch(self) -> bool:
-        self.watch += 1;
-        db.session.add(self);
-=======
     def updateType(self,n:int) -> bool:
         if Art_types.query.filter_by(id=n).first():
             self.typeId = n;
@@ -363,7 +349,6 @@ class Article(db.Model):
             return False;
         
 
->>>>>>> Stashed changes
 
         return True;
 
@@ -398,12 +383,8 @@ class User(UserMixin,db.Model):
     followTarget = db.relationship('Follow',foreign_keys=[Follow.followTarget],lazy='select') #关注的用户
     followers = db.relationship('Follow',foreign_keys=[Follow.followerId],lazy='select')      #被哪些用户关注
 
-<<<<<<< Updated upstream
-    article = db.relationship('Article',backref='Article',lazy='dynamic',order_by='Article.id')
-=======
     article = db.relationship('Article',backref='User',lazy='dynamic',order_by='Article.id')
     comments = db.relationship('Art_comment',backref='User',lazy='dynamic')
->>>>>>> Stashed changes
 
     userInfo = db.relationship('UserInfo',backref='User',lazy='select')
 
