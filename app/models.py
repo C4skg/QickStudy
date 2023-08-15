@@ -478,6 +478,20 @@ class User(UserMixin,db.Model):
         
         return True;
 
+
+    def changeUserName(self,data:str):
+        '''
+            data is plain text
+        '''
+        if len(data) > 25:
+            return False
+        
+        self.username = data
+        db.session.merge(self)
+
+        return True
+
+
     @staticmethod
     def resetPassword(token,newPassword):
         try:
