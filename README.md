@@ -21,13 +21,22 @@
 6. 自动生成好文海报，快速分享知识
 7. 多主题一键切换
 
-<div align="center"><img src='img/1.png'></div>
-<div align="center"><img src='img/2.png'></div>
-<div align="center"><img src='img/3.png'></div>
-<div align="center"><img src='img/4.png'></div>
+
+### 0x03 样式展示
++ 主页面 `night`
+   <div align="center"><img src='img/1.png'></div>
+
++ 文章详情 `night`
+   <div align="center"><img src='img/2.png'></div>
+
++ 在线编辑 `night`
+   <div align="center"><img src='img/3.png'></div>
+
++ 登录
+   <div align="center"><img src='img/4.png'></div>
 
 
-### 0x03 部署
+### 0x04 部署
 
 1. 安装依赖
 
@@ -41,28 +50,29 @@
 
    + 启动前需开启 `mysql` 数据库,并编辑 `config.py` 中的值
 
-   ```python
-   SQL_USER = "root"          #目标数据库用户名
-   SQL_PASSWORD = "123456"    #目标数据库密码
-   SQL_PORT = "3306"          #目标数据库端口
-   SQL_SCHEMA = "QickStudy"   #目标数据库
-   ```
+      ```python
+      SQL_USER = "root"          #目标数据库用户名
+      SQL_PASSWORD = "123456"    #目标数据库密码
+      SQL_PORT = "3306"          #目标数据库端口
+      SQL_SCHEMA = "QickStudy"   #目标数据库
+      ```
    + 项目依赖了 `redis` 作为中间件,编辑 `config.py` 中的值对项目的 `redis` 进行配置
 
-   ```python
-   REDIS_URI = "127.0.0.1"       #redis 地址
-   REDIS_PORT = 6379             #redis 端口
-   REDIS_PASSWORD = "QickStudy"  #redis 密码
-   ```
+      ```python
+      REDIS_URI = "127.0.0.1"       #redis 地址
+      REDIS_PORT = 6379             #redis 端口
+      REDIS_PASSWORD = "QickStudy"  #redis 密码
+      ```
    
-   其中，`REDIS_PORT` 字段为 `int` 类型
-   ```python
-   #REDIS
-   REDIS_URI = "ip"
-   REDIS_PORT = port
-   ```
+      其中，`REDIS_PORT` 字段为 `int` 类型
+      ```python
+      #REDIS
+      REDIS_URI = "ip"
+      REDIS_PORT = port
+      ```
 
 3. 部署
+   
    部署前请开启数据库和中间件 `redis` 服务
    ```bash
    python QickStudy.py deploy
@@ -74,9 +84,9 @@
    python QickStudy.py runserver -h ip -p port --threaded
    ```
 
-### 0x04 致谢
+### 0x05 致谢
 
-项目依赖了以下(但不限于以下)开源项目
+本项目或使用、或参考了以下，但不限于以下的开源项目，下面列出了主要的参考和使用开源项目（项目中的 `python` 所使用的第三方开源库并未罗列）
 
 + `vditor`
   
