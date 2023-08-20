@@ -580,7 +580,7 @@ def initDB():
         )
     else:
         print(
-            colorama.Fore.RED
+            colorama.Fore.RED + 
             '''
                 Your db has already init
             '''
