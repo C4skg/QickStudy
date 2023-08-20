@@ -3,15 +3,18 @@ services:
   app:
     build: .
     ports:
-      - 8000:8080
+      - "8000:8080"
     depends_on:
       - mysql
       - redis
     restart: always
     environment:
       - FLASK_MODE=ProductionEnv
+    networks:
+      - qick
 
   mysql:
+    container_name: "mysql_db"
     image: mysql:5.7
     ports:
       - 3306:3306
@@ -22,10 +25,19 @@ services:
       - MYSQL_DATABASE=QickStudy
     volumes:
       - ./mysql-data:/var/lib/mysql
+    networks:
+      - qick
 
   redis:
     image: redis:latest
+    container_name: "redis_db"
     ports:
       - 6379:6379
     volumes:
       - ./redis-data:/data
+    networks:
+      - qick
+
+networks:
+  qick:
+    driver: bridge
