@@ -1,3 +1,4 @@
+import colorama
 from authlib.jose import jwt , JoseError
 from flask import current_app
 from flask_login import UserMixin,AnonymousUserMixin
@@ -10,6 +11,8 @@ from sqlalchemy import event
 from .func import generateImgByName,getRandomStr
 
 from . import db , loginManager
+
+colorama.init(autoreset=True)
 
 class Permission:
     BASE    = 0;  #!对于违反某些规定的用于给予最低权限，无法发布文章，仅能看文章和关注用户
@@ -572,11 +575,12 @@ def initDB():
         db.session.add(user)
         db.session.commit()
         print( 
-            'username:','admin',
-            'password:',cache
+            colorama.Fore.GREEN + 'username:','admin',
+            colorama.Fore.GREEN + 'password:',cache
         )
     else:
         print(
+            colorama.Fore.RED
             '''
                 Your db has already init
             '''

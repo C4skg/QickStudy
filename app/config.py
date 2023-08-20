@@ -17,8 +17,8 @@ class Config:
     COMPRESS_LEVEL = 9
 
     #SQL
-    SQL_USER = "root"
-    SQL_PASSWORD = "123456"
+    SQL_USER = "qickstudy"
+    SQL_PASSWORD = "qickstudy"
     SQL_PORT = "3306"
     SQL_SCHEMA = "QickStudy"
     SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{SQL_USER}:{SQL_PASSWORD}@127.0.0.1:{SQL_PORT}/{SQL_SCHEMA}?charset=utf8mb4'
