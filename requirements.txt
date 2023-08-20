@@ -15,3 +15,4 @@ Werkzeug==2.0.3
 Pillow==9.5.0
 redis==4.6.0
 Flask-Compress==1.13
+APScheduler==3.10.1
