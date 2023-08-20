@@ -6,7 +6,7 @@ class Config:
     MAIL_SERVER='smtp.qq.com'
     MAIL_PORT='465'
     MAIL_USERNAME='C4skg@qq.com'
-    MAIL_PASSWORD='fhxgqmfgnryliabf'  #!可在邮箱设置中获取
+    MAIL_PASSWORD='xxxxxxxxxx'  #!可在邮箱设置中获取
     MAIL_USE_SSL=True
     MAIL_USE_TLS=False
     MAIL_DEBUG = False
