@@ -1,4 +1,13 @@
 #!/bin/bash
+
+cd /QickStudy/libs
+unzip flask-uploads-master.zip
+cd flask-uploads-master/
+python setup.py build
+python setup.py install
+cd .. && rm -rf flask-uploads-master
+cd /QickStudy
+
 service mysql start
 service redis-server start
 sleep 5
