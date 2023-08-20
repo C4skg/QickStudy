@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 WORKDIR /QickStudy/libs
 
-RUN unzip flask-uploads-master.zip \
+CMD unzip flask-uploads-master.zip \
     && python flask-uploads-master/setup.py build \
     && python flask-uploads-master/setup.py install \
     && rm -rf flask-uploads-master
