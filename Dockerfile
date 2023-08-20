@@ -8,17 +8,6 @@ COPY . .
 
 RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-
-WORKDIR /QickStudy/libs
-
-CMD unzip flask-uploads-master.zip \
-    && python flask-uploads-master/setup.py build \
-    && python flask-uploads-master/setup.py install \
-    && rm -rf flask-uploads-master
-
-
-WORKDIR /QickStudy
-
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     redis-server
