@@ -4,7 +4,7 @@ MAINTAINER C4skg <C4skg@qq.com>
 
 WORKDIR /QickStudy
 
-COPY . /QickStudy
+COPY . .
 
 RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
@@ -25,7 +25,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get install -y default-mysql-client
 
-RUN chmod +x /QickStudy/start.sh
+RUN chmod +x start.sh
+
+EXPOSE 8000
 
 # 设置入口命令
-ENTRYPOINT ["start.sh"]
+ENTRYPOINT ["/bin/bash","start.sh"]
