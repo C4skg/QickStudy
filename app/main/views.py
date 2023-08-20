@@ -74,12 +74,6 @@ def detail(id:None):
         else:
             abort(404);
 
-<<<<<<< Updated upstream
-    
-=======
-    # print('a',Art)
-
->>>>>>> Stashed changes
     return render_template('article/detail.html',**data);
 
 @main.route('/about')
