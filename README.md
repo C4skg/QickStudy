@@ -37,7 +37,17 @@
 
 
 ### 0x04 部署
+#### 使用 `Docker` 部署
+在项目根目录下使用以下命令
+```bash
+docker build -t qickstudy:latest .
+```
+进入 `Docker` 镜像后
+```bash
+docker-compose up
+```
 
+#### 本地部署
 1. 安装依赖
 
    ```bash

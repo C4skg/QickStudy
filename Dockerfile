@@ -1,18 +1,20 @@
 FROM python:3.8
 
+MAINTAINER C4skg <C4skg@qq.com>
+
 WORKDIR /QickStudy
 
-COPY . .
+COPY . /QickStudy
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 WORKDIR /QickStudy/libs
 
-RUN unzip flask-uploads-master.zip
-RUN python flask-uploads-master/setup.py build
-RUN python flask-uploads-master/setup.py install
-RUN rm -rf flask-uploads-master
+RUN unzip flask-uploads-master.zip \
+    && python flask-uploads-master/setup.py build \
+    && python flask-uploads-master/setup.py install \
+    && rm -rf flask-uploads-master
 
 
 WORKDIR /QickStudy
@@ -21,8 +23,9 @@ RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     redis-server
 
-RUN apt-get install -y mysql-client
+RUN apt-get install -y default-mysql-client
 
+RUN chmod +x /QickStudy/start.sh
 
 # 设置入口命令
 ENTRYPOINT ["start.sh"]
