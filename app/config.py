@@ -21,14 +21,15 @@ class Config:
     SQL_PASSWORD = "qickstudy"
     SQL_PORT = "3306"
     SQL_SCHEMA = "QickStudy"
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{SQL_USER}:{SQL_PASSWORD}@127.0.0.1:{SQL_PORT}/{SQL_SCHEMA}?charset=utf8mb4'
+    SQL_HOST = "mysql_db"
+    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{SQL_USER}:{SQL_PASSWORD}@{SQL_HOST}:{SQL_PORT}/{SQL_SCHEMA}?charset=utf8mb4'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
     #REDIS
-    REDIS_URI = "127.0.0.1"
+    REDIS_URI = "redis_db"
     REDIS_PORT = 6379
-    REDIS_PASSWORD = "QickStudy"
+    REDIS_PASSWORD = "qickstudy"
 
     #用户全局 ID - session
     SESSION_ID = '_s_id'
