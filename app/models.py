@@ -240,37 +240,8 @@ class Follow(db.Model):
 '''
 for Article table
 '''
-class Art_agree(db.Model):
-    __tablename__ = 'Qc_art_Agree'
-    id = db.Column(db.Integer,primary_key=True);
-    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
-    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
-    time = db.Column(db.DateTime(),default=datetime.now)
-
-
-class Art_types(db.Model):
-    __tablename__ = 'Qc_art_Types'
-    id = db.Column(db.Integer,primary_key=True)
-    typeName = db.Column(db.String(50))
-
-
-class Art_comment(db.Model):
-    __tablename__ = 'Qc_comment'
-    id = db.Column(db.Integer,primary_key=True)
-    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
-    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
-    context = db.Column(db.String(1000));
-    parentId = db.Column(db.Integer,default=0,index=True);
-    replyId = db.Column(db.Integer,default=0,index=True);
-    time = db.Column(db.DateTime(),default=datetime.now)
-
-    def __repr__(self):
-        return '<Art_comment_%s>' % self.id;
-
-
-
 class Article(db.Model):
-    __tablename__ = 'articles'
+    __tablename__ = 'Qc_articles'
 
     __table_args__ = {
         'mysql_charset': 'utf8mb4',
@@ -350,13 +321,38 @@ class Article(db.Model):
             return True;
         else:
             return False;
-        
-
-
-        return True;
 
     def __repr__(self):
         return '<Article_%s>' % self.id;
+
+class Art_agree(db.Model):
+    __tablename__ = 'Qc_art_Agree'
+    id = db.Column(db.Integer,primary_key=True);
+    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
+    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
+    time = db.Column(db.DateTime(),default=datetime.now)
+
+
+class Art_types(db.Model):
+    __tablename__ = 'Qc_art_Types'
+    id = db.Column(db.Integer,primary_key=True)
+    typeName = db.Column(db.String(50))
+
+
+class Art_comment(db.Model):
+    __tablename__ = 'Qc_comment'
+    id = db.Column(db.Integer,primary_key=True)
+    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
+    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
+    context = db.Column(db.String(1000));
+    parentId = db.Column(db.Integer,default=0,index=True);
+    replyId = db.Column(db.Integer,default=0,index=True);
+    time = db.Column(db.DateTime(),default=datetime.now)
+
+    def __repr__(self):
+        return '<Art_comment_%s>' % self.id;
+
+
 
 class User(UserMixin,db.Model):
     __tablename__ = 'Qc_Users'

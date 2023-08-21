@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "8000:8080"
+      - 8000:8080
     depends_on:
       - mysql
       - redis
@@ -14,7 +14,7 @@ services:
       - qick
 
   mysql:
-    container_name: "mysql_db"
+    container_name: mysql_db
     image: mysql:5.7
     ports:
       - 3306:3306
@@ -30,7 +30,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: "redis_db"
+    container_name: redis_db
     ports:
       - 6379:6379
     environment:
