@@ -75,7 +75,7 @@ a{
         flex-direction: column;
     }
     .accordion .card .aBody .cover{
-        width: 60% !important;
+        width: 85% !important;
         height: 120px;
         margin-bottom: 10px;
     }

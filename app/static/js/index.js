@@ -50,7 +50,7 @@ $(function(){
                             article.auth.username,
                             article.lasttime,
                             article.agree,
-                            article.watch,
+                            article.comments,
                             article.cover,
                             article.detailPath,
                             article.auth.url
@@ -72,7 +72,7 @@ $(function(){
 
     getArticle();
 
-    function generateArticleCard(title,context,userimgPath,username,lasttime,agreenum,watchnum,coverPath,detailPath,authUrl){
+    function generateArticleCard(title,context,userimgPath,username,lasttime,agreenum,comments,coverPath,detailPath,authUrl){
         Vditor.md2html(
             context,
             {
@@ -123,8 +123,8 @@ $(function(){
                                                 ${window.icon.agree}
                                             </span>
                                         </div>
-                                        <div class="item" data-num="${watchnum}">
-                                            <span class="svg watch text-muted" data-num="123">
+                                        <div class="item" data-num="${comments}">
+                                            <span class="svg watch text-muted">
                                                 ${window.icon.watch}
                                             </span>
                                         </div>

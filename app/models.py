@@ -240,6 +240,34 @@ class Follow(db.Model):
 '''
 for Article table
 '''
+class Art_agree(db.Model):
+    __tablename__ = 'Qc_art_Agree'
+    id = db.Column(db.Integer,primary_key=True);
+    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
+    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
+    time = db.Column(db.DateTime(),default=datetime.now)
+
+
+class Art_types(db.Model):
+    __tablename__ = 'Qc_art_Types'
+    id = db.Column(db.Integer,primary_key=True)
+    typeName = db.Column(db.String(50))
+
+
+class Art_comment(db.Model):
+    __tablename__ = 'Qc_comment'
+    id = db.Column(db.Integer,primary_key=True)
+    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
+    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
+    context = db.Column(db.String(1000));
+    parentId = db.Column(db.Integer,default=0,index=True);
+    replyId = db.Column(db.Integer,default=0,index=True);
+    time = db.Column(db.DateTime(),default=datetime.now)
+
+    def __repr__(self):
+        return '<Art_comment_%s>' % self.id;
+
+
 class Article(db.Model):
     __tablename__ = 'Qc_articles'
 
@@ -315,7 +343,8 @@ class Article(db.Model):
         return True;
 
     def updateType(self,n:int) -> bool:
-        if Art_types.query.filter_by(id=n).first():
+        print('updateType model',type(n))
+        if Art_types.query.filter_by(id=n).first() or int(n)==0:
             self.typeId = n;
             db.session.add(self);
             return True;
@@ -325,32 +354,6 @@ class Article(db.Model):
     def __repr__(self):
         return '<Article_%s>' % self.id;
 
-class Art_agree(db.Model):
-    __tablename__ = 'Qc_art_Agree'
-    id = db.Column(db.Integer,primary_key=True);
-    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
-    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
-    time = db.Column(db.DateTime(),default=datetime.now)
-
-
-class Art_types(db.Model):
-    __tablename__ = 'Qc_art_Types'
-    id = db.Column(db.Integer,primary_key=True)
-    typeName = db.Column(db.String(50))
-
-
-class Art_comment(db.Model):
-    __tablename__ = 'Qc_comment'
-    id = db.Column(db.Integer,primary_key=True)
-    articleId = db.Column(db.Integer,db.ForeignKey('Qc_articles.id'))
-    userId = db.Column(db.Integer,db.ForeignKey('Qc_Users.id'))
-    context = db.Column(db.String(1000));
-    parentId = db.Column(db.Integer,default=0,index=True);
-    replyId = db.Column(db.Integer,default=0,index=True);
-    time = db.Column(db.DateTime(),default=datetime.now)
-
-    def __repr__(self):
-        return '<Art_comment_%s>' % self.id;
 
 
 

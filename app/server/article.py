@@ -147,7 +147,10 @@ def save():
     contextUpdate = article.updateContext(context);
     statusUpdate = article.updateStatus(tId);
     typeUpdate = article.updateType(typeId);
-    print(typeUpdate)
+    print(
+        typeId,
+        typeUpdate
+    )
     if (
         titleUpdate and
         contextUpdate and 
@@ -230,8 +233,8 @@ def getArticle():
                 'logo': url_for('server.logo',id=user.id)
             },
             'lasttime': i.lastTime.strftime("%Y/%m/%d"),
-            'agree': getLocalNumber(i.agree),
-            'watch': getLocalNumber(i.watch),
+            'agree': getLocalNumber(len(i.agree.all())),
+            'comments': getLocalNumber(len(i.comments.all())),
             'detailPath': url_for('main.detail',id=i.id)
         }
 
