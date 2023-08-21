@@ -29,7 +29,6 @@ class Config:
     #REDIS
     REDIS_URI = "redis_db"
     REDIS_PORT = 6379
-    REDIS_PASSWORD = "qickstudy"
 
     #用户全局 ID - session
     SESSION_ID = '_s_id'

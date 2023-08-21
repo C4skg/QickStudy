@@ -18,7 +18,7 @@ loginManager.login_view = 'auth.login'
 photos = UploadSet('photos',IMAGES)
 
 #^ set redis')
-redisClient = redis.Redis(host=Config.REDIS_URI,port=Config.REDIS_PORT,password=Config.REDIS_PASSWORD)
+redisClient = redis.Redis(host=Config.REDIS_URI,port=Config.REDIS_PORT)
 
 
 

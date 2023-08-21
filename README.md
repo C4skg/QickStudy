@@ -42,6 +42,10 @@
 ```bash
 docker-compose up
 ```
+第一次启动成功后，变可停止服务并于后台重新运行
+```bash
+docker-compose up -d
+```
 
 #### 本地部署
 1. 安装依赖

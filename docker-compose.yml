@@ -2,12 +2,11 @@ version: '3'
 services:
   app:
     build: .
+    container_name: QickStudy
     ports:
       - 8000:8080
     depends_on:
       - mysql
-      - redis
-    restart: always
     environment:
       - FLASK_MODE=ProductionEnv
     networks:
@@ -18,6 +17,7 @@ services:
     image: mysql:5.7
     ports:
       - 3306:3306
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=qickstudy
       - MYSQL_USER=qickstudy
@@ -31,10 +31,9 @@ services:
   redis:
     image: redis:latest
     container_name: redis_db
+    restart: always
     ports:
       - 6379:6379
-    environment:
-      - REDIS_PASSWORD=qickstudy
     volumes:
       - ./redis-data:/data
     networks:
