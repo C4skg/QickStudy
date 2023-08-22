@@ -104,10 +104,18 @@ docker-compose up -d
    ```
 
 4. 启动服务
+   
+   + 对外
 
-   ```bash
-   python QickStudy.py runserver -h ip -p port --threaded
-   ```
+      ```bash
+      python QickStudy.py runserver -h 0.0.0.0 -p port --threaded
+      ```
+   
+   + 对内
+
+      ```bash
+      python QickStudy.py runserver -h 127.0.0.1 -p port --threaded
+      ```
 
 ### 0x05 致谢
 
