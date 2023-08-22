@@ -67,7 +67,7 @@ docker-compose up -d
    python flask-uploads-master/setup.py install
    ```
 
-  使用命令 `pip list | grep flask-Uploads` 查看是否成功安装
+   使用命令 `pip list | grep flask-Uploads` 查看是否成功安装
 
 2. 准备
 
