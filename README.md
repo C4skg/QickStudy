@@ -84,14 +84,6 @@ docker-compose up -d
       ```python
       REDIS_URI = "127.0.0.1"       #redis 地址
       REDIS_PORT = 6379             #redis 端口
-      REDIS_PASSWORD = "QickStudy"  #redis 密码
-      ```
-   
-      其中，`REDIS_PORT` 字段为 `int` 类型
-      ```python
-      #REDIS
-      REDIS_URI = "ip"
-      REDIS_PORT = port
       ```
 
 3. 部署
