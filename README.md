@@ -56,6 +56,18 @@ docker-compose up -d
    cd requirements
    pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
+
+  由于 `Flask-Uploads` 插件在 `pip` 上的版本更新并不及时，所以需要收到另外安装
+  项目包中已经将合适的版本放在 `libs` 目录下
+  通过以下命令安装
+
+  ```bash
+  unzip flask-uploads-master.zip
+  python flask-uploads-master/setup.py build
+  python flask-uploads-master/setup.py install
+  ```
+
+  使用命令 `pip list | grep flask-Uploads` 查看是否成功安装
 2. 准备
 
    + 启动前需开启 `mysql` 数据库,并编辑 `config.py` 中的值
@@ -83,7 +95,9 @@ docker-compose up -d
 
 3. 部署
    
-   部署前请开启数据库和中间件 `redis` 服务
+   部署前请确保 `MySQL` 和 `Redis` 处于正常运行
+   使用以下命令部署
+
    ```bash
    python QickStudy.py deploy
    ```
