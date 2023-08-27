@@ -40,7 +40,6 @@
 .accordion .infos .bottom .left .usericon{
     width: 35px;
     height: 35px;
-    border-radius: 50%;
     overflow: hidden;
 }
 .accordion .infos .bottom .left .usericon img{

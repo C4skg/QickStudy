@@ -221,7 +221,7 @@ def getArticle():
         'articles':{}
     }
     for i in articleList:
-        user = User.query.filter_by(id=i.userId).first();
+        user = User.query.filter_by(id=i.userId).first();        
         temp = {
             'id': i.id,
             'cover': url_for('themes.upload',path=i.cover) if i.cover else None,

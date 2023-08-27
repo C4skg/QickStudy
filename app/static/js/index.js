@@ -100,7 +100,7 @@ $(function(){
                             <div class="extends">
                                 <div class="userinfo">
                                     <div class="logo">
-                                        <img src="${userimgPath}" class="rounded-circle" alt="">
+                                        <img src="${userimgPath}" class="rounded" alt="">
                                     </div>
                                     <div class="username">
                                         <span class="username text-muted">

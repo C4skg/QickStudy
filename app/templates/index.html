@@ -44,7 +44,7 @@
                 <div class="userInfo">
                     <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
                         <div class="user-logo">
-                            <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded-circle" alt="">
+                            <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
                         </div>
                     </a>
                     <div class="username">{{ user.username }}</div>
