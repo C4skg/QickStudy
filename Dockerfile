@@ -18,5 +18,5 @@ RUN chmod +x start.sh
 
 EXPOSE 8000
 
-# 设置入口命令
+
 ENTRYPOINT ["/bin/bash","start.sh"]
