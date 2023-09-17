@@ -40,13 +40,6 @@
     <!-- 内容 -->
         <!--* 用户信息 -->
         <div class="rightContainer">
-<<<<<<< Updated upstream
-            <div class="container-User card">
-                <div class="userInfo">
-                    <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
-                        <div class="user-logo">
-                            <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
-=======
             <div class="fixed">
                 <div class="container-User card">
                     <div class="userInfo">
@@ -61,7 +54,6 @@
                         <div class="level-now">Lv.{{ level.now }}</div>
                         <div class="level-process progress" title="{{level.value}}/{{level.nextV}}" data-bs-toggle="tooltip">
                             <div class="progress-bar" style="width: {{level.length}}%"></div>
->>>>>>> Stashed changes
                         </div>
                         <div class="level-next">Lv.{{ level.now+1 }}</div>
                     </div>
