@@ -91,7 +91,7 @@ body::-webkit-scrollbar{
     overflow: hidden;
 }
 .main .articleInfos .extend .fm{
-    width: 120px;
+    width: 200px;
     height: 120px;
     cursor: pointer;
     border-right: 1px solid var(--border-color);

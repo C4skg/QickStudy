@@ -75,7 +75,7 @@ a{
         flex-direction: column;
     }
     .accordion .card .aBody .cover{
-        width: 85% !important;
+        width: 75% !important;
         height: 120px;
         margin-bottom: 10px;
     }
@@ -178,10 +178,15 @@ a{
 .rightContainer{
     width: 25%;
     margin: 5px 0 5px 5px;
+    position: relative;
+}
+
+.rightContainer .fixed{
+    width: auto;
     display: flex;
     flex-direction: column;
     row-gap: 5px;
-    position: relative;
+    position: static;
 }
 /* rightContainer */
 /* user */

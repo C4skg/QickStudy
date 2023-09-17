@@ -3,16 +3,19 @@ var loadSignal = false;
 var over = false;
 $(function(){
     window.addEventListener('scroll',(e)=>{
-        let pos = window.ScrollPos();
+        let pos = window.ScrollPos(),
+            width = $('.rightContainer').width();
         if(pos.top >= 100){
-            $('.rightContainer').css({
-                'left': 0,
-                'top': pos.top - 100
+            $('.rightContainer .fixed').css({
+                'position': 'fixed',
+                'width': `${width}px`,
+                'top': '10px'
             })
         }else{
-            $('.rightContainer').css({
-                'left': 0,
-                'top': 0
+            $('.rightContainer .fixed').css({
+                'position': 'static',
+                'width': '100%',
+                'top': '0'
             })
         }
 

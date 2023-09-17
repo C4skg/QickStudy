@@ -20,12 +20,34 @@ var mathJaxTrans = function(parent){
     return div;
 }
 
+var extend_link = function(ele){ //ele: document object
+    let children = ele.querySelectorAll('a');
+    children.forEach(element => {
+        let je = $(element)
+        let link = je.attr('href'),
+            desc = je.html();
+        je.html('')
+        je.append(
+            `<div class='link'>
+                <div class='desc'>
+                    ${desc}
+                </div>
+                <div class='website'>
+                    ${link}
+                </div>
+            </div>`
+        )
+    })
+
+    return ele;
+}
+
 var emitHighlight = function(ele){ //ele: document object
     let children = ele.querySelectorAll('pre code');
     children.forEach(element => {     
         hljs.highlightElement(element);
         hljs.lineNumbersBlock(element);
-        hljs.addCopyButton(element);  
+        hljs.addCopyButton(element);
     })
 }
 
@@ -45,6 +67,7 @@ $(function(){
         ).then(function(e){
             let t = mathJaxTrans(e);
             emitHighlight(t);
+            t = extend_link(t);
             ele.innerHTML = "";
             $(ele).append(t)
             let outlineElement = $(".rightContainer .outlineRender") 

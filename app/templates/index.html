@@ -40,43 +40,53 @@
     <!-- 内容 -->
         <!--* 用户信息 -->
         <div class="rightContainer">
+<<<<<<< Updated upstream
             <div class="container-User card">
                 <div class="userInfo">
                     <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
                         <div class="user-logo">
                             <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
+=======
+            <div class="fixed">
+                <div class="container-User card">
+                    <div class="userInfo">
+                        <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank">
+                            <div class="user-logo">
+                                <img src="{{ url_for('server.logo',id=user.id) }}" class="rounded" alt="">
+                            </div>
+                        </a>
+                        <div class="username">{{ user.username }}</div>
+                    </div>
+                    <div class="level">
+                        <div class="level-now">Lv.{{ level.now }}</div>
+                        <div class="level-process progress" title="{{level.value}}/{{level.nextV}}" data-bs-toggle="tooltip">
+                            <div class="progress-bar" style="width: {{level.length}}%"></div>
+>>>>>>> Stashed changes
                         </div>
-                    </a>
-                    <div class="username">{{ user.username }}</div>
-                </div>
-                <div class="level">
-                    <div class="level-now">Lv.{{ level.now }}</div>
-                    <div class="level-process progress" title="{{level.value}}/{{level.nextV}}" data-bs-toggle="tooltip">
-                        <div class="progress-bar" style="width: {{level.length}}%"></div>
+                        <div class="level-next">Lv.{{ level.now+1 }}</div>
                     </div>
-                    <div class="level-next">Lv.{{ level.now+1 }}</div>
-                </div>
-                <div class="follower">
-                    <div class="follower-num content">
-                        <span class="num">{{ user.followers | length }}</span><span class="type">粉丝</span>
+                    <div class="follower">
+                        <div class="follower-num content">
+                            <span class="num">{{ user.followers | length }}</span><span class="type">粉丝</span>
+                        </div>
+                        <div class="followed-num content">
+                            <span class="num">{{ user.followTarget | length }}</span><span class="type">关注</span>
+                        </div>
+                        <div class="article-num content">
+                            <span class="num">{{ user.article.filter_by(status=ArticleStatus.NORMAL).all() | length }}</span><span class="type">文章</span>
+                        </div>
                     </div>
-                    <div class="followed-num content">
-                        <span class="num">{{ user.followTarget | length }}</span><span class="type">关注</span>
-                    </div>
-                    <div class="article-num content">
-                        <span class="num">{{ user.article.filter_by(status=ArticleStatus.NORMAL).all() | length }}</span><span class="type">文章</span>
+                    <div class="nav">
+                        <a href="{{ url_for('auth.attend') }}" target="_blank"><div class="btn">每日签到</div></a>
+                        <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank"><div class="btn">个人中心</div></a>
+                        <a href="{{ url_for('server.logout') }}"><div class="btn">退出登录</div></a>
                     </div>
                 </div>
-                <div class="nav">
-                    <a href="{{ url_for('auth.attend') }}" target="_blank"><div class="btn">每日签到</div></a>
-                    <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank"><div class="btn">个人中心</div></a>
-                    <a href="{{ url_for('server.logout') }}"><div class="btn">退出登录</div></a>
+                <div class="container-article card">
+                    <a href="{{ url_for('server.create') }}" target="_blank"><div class="btn">🎉️ 灵感爆发</div></a>
+                    <span class="line" ></span>
+                    <a href="#" target="_blank"><div class="btn">🚀️ 创作中心</div></a>
                 </div>
-            </div>
-            <div class="container-article card">
-                <a href="{{ url_for('server.create') }}" target="_blank"><div class="btn">🎉️ 灵感爆发</div></a>
-                <span class="line" ></span>
-                <a href="#" target="_blank"><div class="btn">🚀️ 创作中心</div></a>
             </div>
         </div>
         <!--* 用户信息 -->
