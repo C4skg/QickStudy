@@ -30,6 +30,11 @@ class Config:
     REDIS_URI = "redis_db"
     REDIS_PORT = 6379
 
+    #Elasticsearch
+    ELASTICSEARCH_HOST = 'https://xxxxx:9200'
+    ELASTICSEARCH_USER = 'xxxxx'
+    ELASTICSEARCH_PASSWORD = 'xxxxx'
+
     #用户全局 ID - session
     SESSION_ID = '_s_id'
 
