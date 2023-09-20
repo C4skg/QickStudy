@@ -1,46 +1,90 @@
 from . import server
-from ..config import Config
-
 from flask import current_app,request
-from flask import render_template
-from elasticsearch import Elasticsearch
+from flask import render_template,jsonify
+from flask_login import login_required
+from flask_login import current_user
+from .. import EsClient
 
-client = Elasticsearch(
-    [Config.ELASTICSEARCH_HOST],
-    http_auth=(Config.ELASTICSEARCH_USER,Config.ELASTICSEARCH_PASSWORD),
-    sniff_on_start=False,
-    sniff_on_connection_fail=False,
-    sniffer_timeout=None
-)
 
-class EsBasic:
-    index = 'Qick_index'
+class SearchServiceError(ValueError):
+    pass;
 
-@current_app.cli.command()
-def create_index():
-    client.indices.create(index=EsBasic.index)
 
-@server.route('/search',methods=['POST'])
+@server.route('/search')
+@login_required
 def search():
     '''
-        @search for user
         @search for article
-        @search for all infos
+        @area: all user
     '''
+    response = {
+        'code': 400,
+        'result': ''
+    }
 
-    pass;
+    query = request.args.get('q','',str);
+    if query == '' or not query:
+        return response;
+
+    try:
+        result = EsClient.search(
+            index=current_app.config.get('ELASTICSEARCH_INDEX') or '' ,
+            query={
+                'regexp': {
+                    'context': f'.*{query}.*'
+                }
+            }
+        )
+        response['code'] = 200
+        response['result'] = result
+    except:
+        response['result'] = 'error';
+        
+    
+    return response;
 
 
-@server.route('/<user>/search',methods=['POST'])
-def usearch():
+@server.route('/<int:userid>/search')
+@login_required
+def usearch(userid:int):
     '''
-        @search for <user> 's info
-    ''' 
-    pass;
+        @search for <user> 's article
+    '''
+    response = {
+        'code': 400,
+        'result': ''
+    }
+
+    print(userid)
+
+    query = request.args.get('q','',str);
+    if query == '' or not query:
+        return jsonify(response);
+
+    try:
+        result = EsClient.search(
+            index=current_app.config.get('ELASTICSEARCH_INDEX') or '' ,
+            query={
+                'regexp': f'.*{query}.*'
+            }
+        )
+
+        response['code'] = 200
+        response['result'] = result
+    
+    except:
+        response['result'] = 'error'
+    
+    return jsonify(response);
 
 
 '''
-@methods exports
+    @ search views with html document
 '''
-def add_document():
-    pass
+@server.route('/view/search')
+@login_required
+def searchView():
+    data = {}
+    return render_template(
+        'search/search.html',**data
+    )

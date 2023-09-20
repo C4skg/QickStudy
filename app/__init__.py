@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_compress import Compress
 from flask_uploads import UploadSet,IMAGES
 from flask_uploads import configure_uploads
+from elasticsearch import Elasticsearch
 
 import redis
 from .config import Config,config
@@ -19,6 +20,15 @@ photos = UploadSet('photos',IMAGES)
 
 #^ set redis')
 redisClient = redis.Redis(host=Config.REDIS_URI,port=Config.REDIS_PORT)
+
+#^ set elasticsearch ')
+EsClient = Elasticsearch(
+    [Config.ELASTICSEARCH_HOST],
+    http_auth=(Config.ELASTICSEARCH_USERNAME, Config.ELASTICSEARCH_PASSWORD),
+    sniff_on_start=False,
+    sniff_on_connection_fail=False,
+    sniffer_timeout=None
+)
 
 
 
@@ -46,6 +56,7 @@ def create_app( envname:str = 'ProductionEnv' ):
     mail.init_app(app)
     db.init_app(app)
     loginManager.init_app(app)
+    
 
     #^ register bluemap
     from .server import server as server_BluePrint

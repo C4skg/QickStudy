@@ -79,6 +79,7 @@ def login():
                     except InfoError as e:
                         logout_user();
                         return activateResponse['4001'];
+            
                 else:
                     e['route'] = request.args.get('next',url_for('main.index'),type=str);
                 '''

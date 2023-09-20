@@ -2,10 +2,19 @@
 .main .context .accordion .card{
     overflow: hidden;
 }
+
+
 .main .context .accordion .card .center{
     width: 80%;
     min-height: 60vh;
 }
+@media screen and (max-width: 600px) {
+    .main .context .accordion .card .center{
+        width: 95%;
+    }
+}
+
+
 .main .context .accordion .card .center::-webkit-scrollbar{
     display: none;
 }

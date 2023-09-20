@@ -76,8 +76,11 @@ def detail(id:None):
 
     return render_template('article/detail.html',**data);
 
+
 @main.route('/about')
 def about():
+    # pass;
+    return '';
     data = {
         'title': '关于 QickStudy',
         'context': open('WorkSpace/about.md',encoding='utf-8').read()
@@ -89,6 +92,6 @@ def about():
 def help():
     data = {
         'title': '帮助中心',
-        'context': ''''''
+        'context': '''1'''
     }
     return render_template('about.html',**data);

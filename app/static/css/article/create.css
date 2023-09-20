@@ -53,6 +53,7 @@ body::-webkit-scrollbar{
     padding: 5px;
     background-color: var(--bs-body-bg) !important;
     color: var(--font-color);
+    max-width: 200px;
 }
 .main .articleInfos .title select option{
     background-color: inherit !important;

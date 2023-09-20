@@ -38,7 +38,6 @@
     <!-- !extends -->
     {% block extends %}
     {% endblock %}
-
     <title>
         QickStudy
         {% block title %}
@@ -47,6 +46,9 @@
 {% block hscript %}
 {% endblock %}
 </head>
+<script>
+    const searchURI = "{{ url_for('server.search') }}"
+</script>
 <body>
     <!-- 导航栏 -->
 <nav class="navbar navbar-expand-sm">
@@ -81,14 +83,16 @@
                     {{ getIcon('moon') | safe}}
                 </span>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Search">
-                <button class="btn btn-primary" type="button">
-                    <!-- <img src="{{ url_for('themes.static',path='img/search.png') }}" alt=""> -->
-                    <span class="svg search">
-                        {{ getIcon('search') | safe}}
-                    </span>
-                </button>
+            <form class="d-flex" id="search" method="post">
+                <div class="searchForms">
+                    <input class="form-control" id="globalSearch" type="text" placeholder="键入 / 来查询" name="q">
+                    <button class="btn btn-primary" type="submit" id="toSearch">
+                        <!-- <img src="{{ url_for('themes.static',path='img/search.png') }}" alt=""> -->
+                        <span class="svg search">
+                            {{ getIcon('search') | safe}}
+                        </span>
+                    </button>
+                </div>
             </form>
             {% block navExtends%}
             {% endblock %}

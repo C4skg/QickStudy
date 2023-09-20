@@ -162,3 +162,35 @@ a{
 .spinner-primary{
     background-color: rgb(13,110,253);
 }
+
+
+/* search Style */
+@media (max-width: 576px) {
+    .navbar .searchForms{
+        display: flex;
+        width: 100%;
+    }
+    .navbar .searchForms[data-focus='true']{
+        position: static !important;
+    }
+}
+.navbar .navbar-collapse{
+    position: relative;
+}
+.navbar .searchForms{
+    display: flex;
+}
+.navbar .searchForms[data-focus='true']{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+.searchForms #globalSearch{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.searchForms .btn{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

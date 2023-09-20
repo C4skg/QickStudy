@@ -110,6 +110,7 @@ $(function(){
 
     // 置顶公告
     function topNotice(){
+        return false;
         let accordion = $('.accordion'),
             children = accordion.children();
         accordion.empty();
@@ -128,4 +129,39 @@ $(function(){
            ready 
         )
     }
+    
+
+    `
+        @search input focus
+        @search with '\'
+    `
+    var search = document.getElementById('globalSearch'),
+        isFocus = false,
+        searchButton = document.getElementById('toSearch');
+    window.onkeydown = function(e){
+        if(e.keyCode == 191 && !isFocus){ // `/`
+            search.focus();
+            return false;
+        }else if(e.keyCode == 27){ //esc
+            search.blur();
+            return false;
+        }else if(e.keyCode == 13){ //enter
+            searchButton.click();
+            return false;
+        }
+    }
+    searchButton.click = function(e){
+        var page = window.open(
+            `${searchURI}?q=${search.value}`
+        );
+    }
+
+    search.addEventListener('focusin',function(e){
+        $('.navbar .searchForms').attr('data-focus','true')
+        isFocus = true;
+    })
+    search.addEventListener('focusout',function(e){
+        $('.navbar .searchForms').attr('data-focus','false')
+        isFocus = false;
+    })
 })

@@ -147,17 +147,13 @@ def save():
     contextUpdate = article.updateContext(context);
     statusUpdate = article.updateStatus(tId);
     typeUpdate = article.updateType(typeId);
-    print(
-        typeId,
-        typeUpdate
-    )
+
     if (
         titleUpdate and
         contextUpdate and 
         statusUpdate and
         typeUpdate
     ):
-        print('commit')
         db.session.commit();
         _clone = deepcopy(articleResponse['7000'])
         _clone['route'] = url_for('main.detail',id=article.id);
@@ -167,6 +163,16 @@ def save():
         pass;
     
     return articleResponse['7001']
+
+@server.route('/article/rtSave',methods=['POST'])
+@login_required
+def realTimeSave():
+    '''
+        connect by websocket
+        realtime save article
+    '''
+
+    return '';
 
 
 @server.route('/article/c_status',methods=['POST'])

@@ -1,4 +1,5 @@
 import colorama
+import tqdm
 from authlib.jose import jwt , JoseError
 from flask import current_app
 from flask_login import UserMixin,AnonymousUserMixin
@@ -7,12 +8,12 @@ from datetime import datetime
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy import event
 
-
 from .func import generateImgByName,getRandomStr
-
-from . import db , loginManager
+from .config import Config
+from . import db , loginManager,EsClient
 
 colorama.init(autoreset=True)
+
 
 class Permission:
     BASE    = 0;  #!对于违反某些规定的用于给予最低权限，无法发布文章，仅能看文章和关注用户
@@ -343,7 +344,6 @@ class Article(db.Model):
         return True;
 
     def updateType(self,n:int) -> bool:
-        print('updateType model',type(n))
         if Art_types.query.filter_by(id=n).first() or int(n)==0:
             self.typeId = n;
             db.session.add(self);
@@ -536,7 +536,11 @@ class User(UserMixin,db.Model):
         '''
         return self.id;
 
-def beforeInsertEvent(mapper, connection, target):
+'''
+    sql event listener
+'''
+
+def user_beforeInsertEvent(mapper, connection, target):
     '''
         generate the logo by username while creating user;
         create userInfo;
@@ -549,7 +553,65 @@ def beforeInsertEvent(mapper, connection, target):
         do not need `db.session.commit()`;
     '''
 
-event.listen(User,'before_insert',beforeInsertEvent);
+event.listen(User,'before_insert',user_beforeInsertEvent);
+
+
+'''
+    ElasticSearch Upload
+'''
+def ArticleDocumentUpload(id:int,title:str,context:str,author:int,type:int=0,methods:str='add') -> bool:
+    if methods not in ['add','update']:
+        return False;
+    
+    try:
+        EsClient.index(
+            index = Config.ELASTICSEARCH_INDEX,
+            id=id,
+            document={
+                'title': title,
+                'context': context,
+                'author': str(author),
+                'type': str(type)
+            }
+        )
+    except:
+        return False;
+    
+    return True;
+
+
+def article_afterInsert(mapper,connection,target):
+    uploadStatus = ArticleDocumentUpload(
+        id=target.id,
+        title=target.title,
+        context=target.context,
+        type=target.typeId,
+        author=target.userId
+    )
+    print(
+        colorama.Fore.GREEN + 'insert article success'
+    )
+
+event.listen(Article,'after_insert',article_afterInsert);
+
+
+
+def article_afterUpdate(mapper,connection,target):
+    updateStatus = ArticleDocumentUpload(
+        id=target.id,
+        title=target.title,
+        context=target.context,
+        type=target.typeId,
+        author=target.userId,
+        methods='update'
+    );
+    print(
+        colorama.Fore.GREEN + 'update article success'
+    )
+
+event.listen(Article,'after_update',article_afterUpdate);
+
+
 
 
 class AnonymousUser(AnonymousUserMixin):
@@ -566,6 +628,27 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+def insertDocument():
+    '''
+        @insert article by query article db
+    '''
+    articles = Article.query.filter_by(status=ArticleStatus.NORMAL).all()
+    for article in tqdm.tqdm(articles):
+        result = ArticleDocumentUpload(
+            id=article.id,
+            title=article.title,
+            context=article.context,
+            author=article.userId,
+            type=article.typeId
+        )
+        if not result:
+            print(colorama.Fore.RED + 'article: ' + article.id,'error!');
+            exit(0);
+
+    print(
+        colorama.Fore.GREEN + 'insert success!'
+    );
+
 def initDB():
     admin = User.query.filter_by(username='admin').first()
     if not admin:
@@ -573,10 +656,11 @@ def initDB():
         user = User(username='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
         db.session.add(user)
         db.session.commit()
-        print( 
+        print(
             colorama.Fore.GREEN + 'username:','admin',
             colorama.Fore.GREEN + 'password:',cache
         )
+        
     else:
         print(
             colorama.Fore.RED + 
