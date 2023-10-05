@@ -2,9 +2,6 @@
 h1,h2,h3,h4,h5,h6{
     margin: 20px 0px;
 }
-h1{
-    border-bottom: 1px dashed var(--border-color);
-}
 
 /* markdown table */
 table:not(.hljs-ln){
