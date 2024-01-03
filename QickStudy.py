@@ -54,6 +54,7 @@ def create_index():
 def toLocalNumber(value:int):
     return getLocalNumber(value);
 
+
 @app.template_global()
 def getIcon(name:str):
     if hasattr(Icon,name):
