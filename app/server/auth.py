@@ -167,40 +167,42 @@ def reset():
             email = request.form.get('email','',type=str);
             if email and isVaildEmail(email):
                 user = User.query.filter_by(email=email).first()
-                if user:
-                    if (
-                        redisClient.exists(email) and
-                        int(redisClient.hget(email,'type').decode()) == EventID.RESET and 
-                        (datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode()))) < timedelta(minutes=2)
-                    ):
-                        return resetResponse['3001'];
-                    else:
-                        if user.resetTime == user.sinceTime or (datetime.now() - user.resetTime).days >= 1:
-                            token = user.generateResetToken()
-                            #! 发送邮件
-                            mailInfo = {
-                                'title': '重置密码',
-                                'context': '请确实是本人操作，并根据下面提示进行重置密码',
-                                'tips': '点击下方按钮进行密码重置',
-                                'button': '点击此处重置密码',
-                                'user': user,
-                                'host': request.url_root,
-                                'link': url_for('auth.reset',token=token,step=2),
-                                'token': token
-                            }
-                            redisClient.hset(email,'time',datetime.now().timestamp())
-                            redisClient.hset(email,'type',EventID.RESET)
-                            redisClient.expire(email,20)
-                            send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
-                            '''
-                            发送邮件后删除验证码
-                            '''
-                            redisClient.delete(id);
-                            return resetResponse['3000'];
-                        else:
-                            return resetResponse['3006'];
-            #* 若无法匹配邮箱
-            return resetResponse['3004'];
+                if not user:
+                    return resetResponse['3004'];
+            
+                if (
+                    redisClient.exists(email) and
+                    int(redisClient.hget(email,'type').decode()) == EventID.RESET and 
+                    (datetime.now() - datetime.fromtimestamp(float(redisClient.hget(email,'time').decode()))) < timedelta(minutes=2)
+                ):
+                    #发送时间 < 2分钟
+                    return resetResponse['3001'];
+            
+                if user.resetTime == user.sinceTime or (datetime.now() - user.resetTime).days >= 1:
+                    token = user.generateResetToken()
+                    #! 发送邮件
+                    mailInfo = {
+                        'title': '重置密码',
+                        'context': '请确实是本人操作，并根据下面提示进行重置密码',
+                        'tips': '点击下方按钮进行密码重置',
+                        'button': '点击此处重置密码',
+                        'user': user,
+                        'host': request.url_root,
+                        'link': url_for('auth.reset',token=token,step=2),
+                        'token': token
+                    }
+                    redisClient.hset(email,'time',datetime.now().timestamp())
+                    redisClient.hset(email,'type',EventID.RESET)
+                    redisClient.expire(email,20)
+                    send_email(user.email,'重置密码','auth/mail/confirm.html',**mailInfo)
+                    '''
+                    发送邮件后删除验证码
+                    '''
+                    redisClient.delete(id);
+                    return resetResponse['3000'];
+                else:
+                    return resetResponse['3006'];
+            
         #* 步骤判断
         elif step == 2:
             pwd = request.form.get('pwd','',type=str);
