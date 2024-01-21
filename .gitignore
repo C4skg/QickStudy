@@ -3,3 +3,5 @@ upload
 *.pyc
 myconfig
 WorkSpace
+localtest
+__pycache__

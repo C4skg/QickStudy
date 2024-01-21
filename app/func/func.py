@@ -9,7 +9,8 @@ from PIL import Image,ImageFont,ImageDraw
 from uuid import uuid4
 from random import randint,sample
 from string import digits,ascii_letters
-
+from hashlib import md5
+from pathlib import Path
 '''
 更具字符串首个字符生成图片
 '''
@@ -80,7 +81,19 @@ def generateUID6() -> str:
     hash_obj = hashlib.sha256(rand_bytes + timestamp_bytes + salt)
     hash_str = hash_obj.hexdigest()
     return hash_str[:6]
+
+def getFinger(data:bytes) -> str:
+    generater = md5()
+    generater.update(data)
+    return generater.hexdigest()
     
+def getFiletype(filename:str) -> str:
+    '''
+        @return filetype with '.'
+        >>> getFiletype('E:\abc\abc.jpg')
+        '.jpg'
+    '''
+    return Path(filename).suffix
 
 class verifyImgCode:
     '''

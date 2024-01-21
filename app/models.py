@@ -2,6 +2,7 @@ import colorama
 import tqdm
 from authlib.jose import jwt , JoseError
 from flask import current_app
+from flask import url_for
 from flask_login import UserMixin,AnonymousUserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
@@ -354,7 +355,20 @@ class Article(db.Model):
     def __repr__(self):
         return '<Article_%s>' % self.id;
 
+class Images(db.Model):
+    __tablename__ = 'Qc_images'
 
+    __table_args__ = {
+        'mysql_charset': 'utf8mb4',
+        'mysql_collate': 'utf8mb4_general_ci'
+    }
+
+    id = db.Column(db.Integer,primary_key = True)
+    finger = db.Column(db.Text)
+    path = db.Column(db.Text)
+
+    def getImagePath(self):
+        return url_for('themes.upload',path=self.path)
 
 
 class User(UserMixin,db.Model):
