@@ -4,7 +4,7 @@ from flask import session
 
 from app.func import generateUID6,getLocalNumber,Icon
 from app.models import initDB,insertDocument
-from app.models import User,Permission,UserAttend,Article,Follow
+from app.models import User,Permission,UserAttend,Article,Follow,Images
 from app import create_app
 from app import db,EsClient
 
@@ -29,7 +29,8 @@ def make_shell_context():
         Permission=Permission,
         UserAttend=UserAttend,
         Article=Article,
-        Follow=Follow
+        Follow=Follow,
+        Image=Images
     )
 
 @app.before_request

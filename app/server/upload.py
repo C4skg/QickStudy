@@ -8,9 +8,9 @@ from werkzeug.exceptions import RequestEntityTooLarge
 from copy import deepcopy
 from base64 import b64encode
 
-from ..func import getDate
+from ..func import getDate,getFinger,getFiletype
 from ..models import Permission
-from ..models import InfoError,UploadFileTooLarge
+from ..models import InfoError,UploadFileTooLarge,Images
 from ..responseData import uploadResponse
 from .. import photos,db
 from . import server
@@ -68,25 +68,44 @@ def upload():
     if 'file' in request.files:
         childFolder = getDate();
         _clone = deepcopy(uploadResponse['6000'])
-
         for file in request.files.getlist('file'):
             try:
-                size = len(file.read());
+                data = file.read()
+                size = len(data);
                 if size > UPLOAD_MAX_SIZE:
                     raise(UploadFileTooLarge('The file is too large'));
-
-                file.seek(0);
-                path = photos.save(
-                    file,
-                    folder=childFolder
-                )
-                _clone['files'].append(
-                    {
-                        'filename': file.filename,
-                        'status': 'success',
-                        'path': url_for('themes.upload',path=path)
-                    }
-                )
+                finger = getFinger(data)
+                images = Images.query.filter_by(finger = finger).first()
+                if images:
+                    _clone['files'].append(
+                        {
+                            'filename': file.filename,
+                            'status': 'success',
+                            'path': images.getImagePath()
+                        }
+                    )
+                    continue
+                else:
+                    file.seek(0);
+                    sufix = getFiletype(file.filename)
+                    path = photos.save(
+                        file,
+                        folder=childFolder,
+                        name=finger + sufix
+                    )
+                    newImage = Images(
+                        finger = finger,
+                        path = path
+                    )
+                    db.session.add(newImage)
+                    db.session.commit()
+                    _clone['files'].append(
+                        {
+                            'filename': file.filename,
+                            'status': 'success',
+                            'path': url_for('themes.upload',path=path)
+                        }
+                    )
             except:
                 _clone['files'].append(
                     {
@@ -114,33 +133,54 @@ def cover():
         _clone = deepcopy(uploadResponse['6000'])
         file = request.files.get('file')
         try:
-            size = len(file.read())
+            data = file.read()
+            size = len(data)
             if size > UPLOAD_MAX_SIZE:
                 raise(UploadFileTooLarge('The file is too large'));
-
-            file.seek(0);
-            A_id = request.form.get('articleId',-1,type=int)
-            article = current_user.article.filter_by(id=A_id).first();
-            if article:
-                path = photos.save(
-                    file,
-                    folder=childFolder
-                )
-                article.updateCover(path);
-                db.session.commit();
+            finger = getFinger(data)
+            images = Images.query.filter_by(finger = finger).first()
+            if images:
+                path = images.getImagePath()
                 _clone['files'].append(
                     {
                         'filename': file.filename,
                         'status': 'success',
-                        'path': url_for('themes.upload',path=path)
+                        'path': path
                     }
                 )
-                return _clone;
+                article.updateCover(path)
             else:
-                '''
-                    if not match article
-                '''
-                raise( InfoError("No article's id is %s" % str(A_id)) )
+                file.seek(0);
+                sufix = getFiletype(file.filename)
+                A_id = request.form.get('articleId',-1,type=int)
+                article = current_user.article.filter_by(id=A_id).first();
+                if article:
+                    path = photos.save(
+                        file,
+                        folder=childFolder,
+                        name=finger + sufix
+                    )
+                    newImage = Images(
+                        finger = finger,
+                        path = path
+                    )
+                    db.session.add(newImage)
+                    article.updateCover(path)
+                    _clone['files'].append(
+                        {
+                            'filename': file.filename,
+                            'status': 'success',
+                            'path': url_for('themes.upload',path=path)
+                        }
+                    )
+                else:
+                    '''
+                        if not match article
+                    '''
+                    raise( InfoError("No article's id is %s" % str(A_id)) )
+
+            db.session.commit();
+            return _clone;
         except UploadFileTooLarge as e:
             print(e)
             pass;
