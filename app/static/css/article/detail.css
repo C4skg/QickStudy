@@ -129,6 +129,10 @@
     display: block;
     border-bottom: 1px solid var(--border-color);
 }
+.rightContainer .outlineRender ul span[data-target-id]:hover{
+    border-radius: 5px;
+    background-color: var(--btn-hover-background);
+}
 @media screen and (min-width: 992px) {
     .rightContainer .vditor-outline {
         width: 100%;
