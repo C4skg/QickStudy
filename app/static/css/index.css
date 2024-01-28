@@ -98,7 +98,7 @@ blockquote{
     box-sizing: border-box;
     border: 2px dashed transparent;
     position: relative;
-    width: 100% !important;
+    /* width: 100% !important; */
 }
 
 .center .language-math[data-allow='1']:hover{
