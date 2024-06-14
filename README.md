@@ -1,4 +1,5 @@
 # QickStudy(快学平台)
+> OpenSourceID: HM807VSRFM
 
 <div align="center"><img src='img/logo.png' width="50px"></div>
 <br>
