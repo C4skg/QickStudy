@@ -101,10 +101,10 @@ blockquote{
     /* width: 100% !important; */
 }
 
-.center .language-math[data-allow='1']:hover{
+/* .center .language-math[data-allow='1']:hover{
     color: transparent !important;
     user-select: none;
-}
+} */
 .center .language-math[data-allow='1']::after{
     content: attr(data-syntax);
     position: absolute;
