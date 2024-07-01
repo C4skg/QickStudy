@@ -21,23 +21,23 @@ var mathJaxTrans = function(parent){
 }
 
 var extend_link = function(ele){ //ele: document object
-    let children = ele.querySelectorAll('a');
-    children.forEach(element => {
-        let je = $(element)
-        let link = je.attr('href'),
-            desc = je.html();
-        je.html('')
-        je.append(
-            `<div class='link'>
-                <div class='desc'>
-                    ${desc}
-                </div>
-                <div class='website'>
-                    ${link}
-                </div>
-            </div>`
-        )
-    })
+    // let children = ele.querySelectorAll('a');
+    // children.forEach(element => {
+    //     let je = $(element)
+    //     let link = je.attr('href'),
+    //         desc = je.html();
+    //     je.html('')
+    //     je.append(
+    //         `<div class='link'>
+    //             <div class='desc'>
+    //                 ${desc}
+    //             </div>
+    //             <div class='website'>
+    //                 ${link}
+    //             </div>
+    //         </div>`
+    //     )
+    // })
 
     return ele;
 }
