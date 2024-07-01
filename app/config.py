@@ -32,7 +32,7 @@ class Config:
 
     #Elasticsearch
     ELASTICSEARCH_HOST = 'https://xxxxx:9200'
-    ELASTICSEARCH_USER = 'xxxxx'
+    ELASTICSEARCH_USERNAME = 'xxxxx'
     ELASTICSEARCH_PASSWORD = 'xxxxx'
 
     #用户全局 ID - session
