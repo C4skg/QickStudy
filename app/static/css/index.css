@@ -104,6 +104,7 @@ blockquote{
 .center div[class='language-math']{
     width: 100%;
     text-align: center;
+    overflow-x: auto;
 }
 
 /*.center .language-math[data-allow='1']:hover{*/
@@ -151,8 +152,6 @@ blockquote{
 .center .language-math[data-allow='1'] .katex{
     display: block;
     width: 100% !important;
-    overflow-x: auto;
-    overflow-y: hidden;
 }
 .center .language-math .katex-html{
     display: inline-block;
