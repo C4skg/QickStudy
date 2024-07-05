@@ -173,6 +173,11 @@ blockquote{
 /*    display: block;*/
 /*}*/
 
+.center .hljs-ln{
+    display: block;
+    overflow: auto;
+}
+
 .center .hljs-ln-numbers{
     text-align: center;
     color: #ccc;
