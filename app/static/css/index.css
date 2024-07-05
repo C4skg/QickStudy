@@ -4,20 +4,20 @@ h1,h2,h3,h4,h5,h6{
 }
 
 /* markdown table */
-table:not(.hljs-ln){
+.center[data-type='md'] table:not(.hljs-ln){
     display: block;
     max-width: 700px;
     margin: 10px 0px;
     overflow: auto;
 }
-table:not(.hljs-ln) td,
-table:not(.hljs-ln) th
+.center[data-type='md'] table:not(.hljs-ln) td,
+.center[data-type='md'] table:not(.hljs-ln) th
 {
     padding: 6px 13px;
     border: 1px solid var(--border-color);
 }
 
-table:not(.hljs-ln) tr:nth-child(2n)
+.center[data-type='md'] table:not(.hljs-ln) tr:nth-child(2n)
 {
     background-color: var(--table-tr-2-background);
 }
@@ -28,7 +28,7 @@ table,tbody{
     white-space: inherit;
     font-size: inherit;
 }
-code{
+.center[data-type='md'] code{
     max-width: 100% !important;
     background-color: var(--code--back-color);
     padding: 0.1em 0.4em;
@@ -39,26 +39,26 @@ code{
     /* white-space: pre; */
     font-family: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols";
 }
-pre{
+.center[data-type='md'] pre{
     max-width: 100%;
     min-width: 300px;
     /* width: 700px; */
     white-space: pre;
 }
-pre code{
+.center[data-type='md'] pre code{
     border-radius: 5px;
     padding: .5em;
     white-space: pre;
 }
 
-pre code::-webkit-scrollbar{
+.center[data-type='md'] pre code::-webkit-scrollbar{
     height: 5px;
 }
-pre code::-webkit-scrollbar-thumb{
+.center[data-type='md'] pre code::-webkit-scrollbar-thumb{
     border-radius: 8px;
     background-color: var(--scroll-bar-color);
 }
-blockquote{
+.center[data-type='md'] blockquote{
     padding: 0px 10px;
     border-radius: 0px 3px 3px 0px;
     border-left: 5px solid var(--block-left-border) !important;
@@ -68,11 +68,11 @@ blockquote{
 }
 
 /* 链接 */
-.center a{
+.center[data-type='md'] a{
     display: inline-block;
     width: 100%;
 }
-.center .link{
+.center[data-type='md'] .link{
     width: 100%;
     max-width: 400px;
     border-radius: 8px;
@@ -80,20 +80,20 @@ blockquote{
     background-color: var(--block-background-color);
     overflow: hidden;
 }
-.center .link .desc,
-.center .link .website{
+.center[data-type='md'] .link .desc,
+.center[data-type='md'] .link .website{
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.center .link .website{
+.center[data-type='md'] .link .website{
     margin-top: 10px;
     font-size: 14px;
     color: var(--border-color);
 }
 
-.center .language-math{
+.center[data-type='md'] .language-math{
     display: inline-block;
     padding: 6px 2px;
     box-sizing: border-box;
@@ -101,7 +101,7 @@ blockquote{
     position: relative;
     
 }
-.center div[class='language-math']{
+.center[data-type='md'] div[class='language-math']{
     width: 100%;
     text-align: center;
     overflow-x: auto;
@@ -111,7 +111,7 @@ blockquote{
 /*    color: transparent !important;*/
 /*    user-select: none;*/
 /*}*/
-.center .language-math[data-allow='1']::after{
+.center[data-type='md'] .language-math[data-allow='1']::after{
     content: attr(data-syntax);
     position: absolute;
     color: var(--font-color);
@@ -134,7 +134,7 @@ blockquote{
 /*    border: 2px dashed var(--border-color);*/
 /*}*/
 
-.center .language-math[data-allow='1']::before{
+.center[data-type='md'] .language-math[data-allow='1']::before{
     content: attr(data-copy);
     position: absolute;
     color: black;
@@ -149,16 +149,16 @@ blockquote{
 /*.center .language-math[data-allow='1']:hover::before{*/
 /*    display: block;*/
 /*}*/
-.center .language-math[data-allow='1'] .katex{
+.center[data-type='md'] .language-math[data-allow='1'] .katex{
     display: block;
     width: 100% !important;
 }
-.center .language-math .katex-html{
+.center[data-type='md'] .language-math .katex-html{
     display: inline-block;
     width: 90% !important;
     white-space: nowrap;
 }
-.center .language-math[data-allow='1'] .katex::after{
+.center[data-type='md'] .language-math[data-allow='1'] .katex::after{
     content: '';
     position: absolute;
     left: 80%;
@@ -173,12 +173,12 @@ blockquote{
 /*    display: block;*/
 /*}*/
 
-.center .hljs-ln{
+.center[data-type='md'] .hljs-ln{
     display: block;
     overflow: auto;
 }
 
-.center .hljs-ln-numbers{
+.center[data-type='md'] .hljs-ln-numbers{
     text-align: center;
     color: #ccc;
     border-right: 1px solid #ccc;
@@ -195,7 +195,7 @@ blockquote{
     margin-right: .2em;
 }
 
-.center{
+.center[data-type='md']{
     width: 100%;
     margin: 0 auto;
     overflow-y: auto;
@@ -203,7 +203,7 @@ blockquote{
 }
 
 
-.center img{
+.center[data-type='md'] img{
     max-width: 100%;
     width: 100%;
     border-radius: 5px;

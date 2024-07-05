@@ -140,28 +140,7 @@ a{
     white-space: nowrap !important;
 }
 
-.spinner{
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 5px;
-}
-.spinner-mute{
-    background-color: #ccc;
-}
-.spinner-green{
-    background-color: green;
-}
-.spinner-red{
-    background-color: red;
-}
-.spinner-yellow{
-    background-color: rgb(192, 192, 91);
-}
-.spinner-primary{
-    background-color: rgb(13,110,253);
-}
+
 
 
 /* search Style */

@@ -69,15 +69,15 @@
                         </div>
                     </div>
                     <div class="nav">
-                        <a href="{{ url_for('auth.attend') }}" target="_blank"><div class="btn">每日签到</div></a>
-                        <a href="{{ url_for('auth.userInfo',id=user.id) }}" target="_blank"><div class="btn">个人中心</div></a>
+                        <a href="#"><div class="btn">每日签到</div></a>
+                        <a href="{{ url_for('auth.userInfo',id=user.id) }}"><div class="btn">个人中心</div></a>
                         <a href="{{ url_for('server.logout') }}"><div class="btn">退出登录</div></a>
                     </div>
                 </div>
                 <div class="container-article card">
-                    <a href="{{ url_for('server.create') }}" target="_blank"><div class="btn">🎉️ 灵感爆发</div></a>
+                    <a href="{{ url_for('server.create') }}"><div class="btn">🎉️ 灵感爆发</div></a>
                     <span class="line" ></span>
-                    <a href="#" target="_blank"><div class="btn">🚀️ 创作中心</div></a>
+                    <a href="{{ url_for('server.center') }}"><div class="btn">🚀️ 创作中心</div></a>
                 </div>
             </div>
         </div>

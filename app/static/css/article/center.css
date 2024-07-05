@@ -1,0 +1,74 @@
+.theme-color{
+    color: var(--font-color);
+}
+
+.theme-color:hover{
+    background-color: var(--btn-hover-background);
+}
+.enabled{
+    background-color: var(--btn-hover-background);
+}
+.spinner{
+    width: 5px !important;
+    height: 5px !important;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0 !important;
+}
+.spinner-mute{
+    background-color: #ccc !important;
+}
+.spinner-green{
+    background-color: green !important;
+}
+.spinner-red{
+    background-color: red !important;
+}
+.spinner-yellow{
+    background-color: rgb(192, 192, 91) !important;
+}
+.spinner-primary{
+    background-color: rgb(13,110,253) !important;
+} 
+.main{
+    gap: 5px;
+}
+.main .tabs{
+    width: 25%;
+}
+.main .shows{
+    width: 75%;
+}
+.main .card{
+    padding: 5px 10px;
+}
+.main .articles .models{
+    flex-direction: column;
+    padding: 50px 0;
+    width: 100% !important;
+}
+.main .articles .models .table{
+    width: 100% !important;
+}
+.main .articles .models .table .rname{
+    padding: 5px 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.main .articles .models .table .rname div{
+    width: 33%;
+    text-align: center;
+}
+.main .articles .models .table .context{
+    padding: 5px 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.main .articles .models .table .context .status{
+
+}
+.main .articles .models .table .context .each{
+    width: 33%;
+    text-align: center;
+}

@@ -18,7 +18,7 @@ from . import server
 @login_required
 def create():
     '''
-        This api is to create a new draft
+        This api will create a new draft
         if your draft's number is more than 3,
         we will back the last draft you created
         else, we will create for you a new one
@@ -39,6 +39,28 @@ def create():
             url_for("server.editor")
         )
 
+@server.route('/article/delete/',methods=['POST'])
+@login_required
+def delete():
+    id = request.form.get('id',None);
+    if id == None or not id:
+        return articleResponse['7002'];
+
+    article = Article.query.filter_by(id=id).first();
+    if not article:
+        return articleResponse['7002'];
+    if (
+        current_user.id != article.userId
+        or
+        current_user.permission < Permission.CONTROL
+    ):
+        return articleResponse['7003'];
+
+    db.session.delete(article);
+
+    db.session.commit();
+
+    return articleResponse['7000'];
 
 
 @server.route('/article/editor/<id>')
@@ -53,7 +75,7 @@ def editor(id:int=None):
         abort(403);
     
     #* if id is None,we will create a new article as draft
-    if  id == None:
+    if id == None:
         draft = current_user.article.filter_by(status=ArticleStatus.DRAFT).all();
         if len(draft) >= 3:
             return redirect(
@@ -61,7 +83,7 @@ def editor(id:int=None):
             )
         else:
             article = Article(
-                title = "",
+                title = "草稿文章专用标题",
                 context = '''%s''' % open('app/static/context/first.md',encoding='utf-8').read()
             )
             current_user.article.append(article);

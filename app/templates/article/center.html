@@ -1,0 +1,157 @@
+{% extends "themes/md.html" %}
+
+{% block extends %}
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/article/center.css') }}">
+{% endblock %}
+
+{% block title %}
+- {{ user.username }}的创作中心
+{% endblock %}
+
+{% block hscript %}
+<script>
+    const csrf_token = "{{ csrf_token() }}"
+    const delteURI = "{{ url_for('server.delete') }}"
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container main d-flex justify-content-between">
+    <div class="tabs">
+        <div class="card">
+            <div class="btn theme-color enabled"><a href="">文章管理</a></div>
+        </div>
+    </div>
+    <div class="shows">
+        <div class="card">
+            <div class="articles">
+                <div class="classify">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            {% if args.type == "all" %}
+                                <a class="nav-link theme-color enabled" href="?type=all">全部文章({{ user.article.all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?type=all">全部文章({{ user.article.all() | length }})</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            {% if args.type == "wait" %}
+                                <a class="nav-link theme-color enabled" href="?type=wait">审核中({{ user.article.filter_by(status=ArticleStatus.WAIT).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?type=wait">审核中({{ user.article.filter_by(status=ArticleStatus.WAIT).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            {% if args.type == "private" %}
+                                <a class="nav-link theme-color enabled" href="?type=private">仅我可见({{ user.article.filter_by(status=ArticleStatus.PRIVATE).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?type=private">仅我可见({{ user.article.filter_by(status=ArticleStatus.PRIVATE).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            {% if args.type == "draft" %}
+                                <a class="nav-link theme-color enabled" href="?type=draft">草稿({{ user.article.filter_by(status=ArticleStatus.DRAFT).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?type=draft">草稿({{ user.article.filter_by(status=ArticleStatus.DRAFT).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="models d-flex align-items-center justify-content-center">
+                    {% if articles|length == 0%}
+                        <div class="alert alert-secondary" role="alert">
+                            还没有文章？点击下面按钮，开启第一篇文章，同时编辑器中自带教程
+                        </div>                      
+                        <div class="btn btn-primary">
+                            <a href="{{ url_for('server.create') }}">🎉️开启我的第一篇文章</a>
+                        </div>
+                    {% else %}
+                        <div class="table">
+                            <div class="rname d-flex align-items-center justify-content-around">
+                                <div class="ID">文章编号</div>
+                                <div class="title">文章标题</div>
+                                <div class="status">当前状态</div>
+                                <div class="control">管理文章</div>
+                            </div>
+                            {% for art in articles %}
+                                <div class="context d-flex align-items-center justify-content-around">
+                                    <div class="id each text-overflow">{{ art.id }}</div>
+                                    <div class="title each text-overflow">{{ art.title }}</div>
+                                    <div class="status each d-flex align-items-center justify-content-center">
+                                        {{ ArticleStatus.Desc[art.status]['name'] }}
+                                        <span class="icon spinner spinner-{{ ArticleStatus.Desc[art.status]['color'] }}"></span>
+                                    </div>
+                                    <div class="control d-flex justify-content-center align-items-center each">
+                                        {% if art.status!=ArticleStatus.WAIT  %}
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
+                                            文章操作
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{{ url_for('main.detail',id=art.id) }}" target="_blank">前往查看</a></li>
+                                                <li><a class="dropdown-item" href="{{ url_for('server.editor',id=art.id) }}" target="_blank">编辑文章</a></li>
+                                                <li><a class="dropdown-item" data-id="{{ art.id }}" onclick="delArticle(this)" href="javascript: void(0)">删除文章</a></li>
+                                            </ul>
+                                        </div>
+                                        {% else %}
+                                        <div class="wraper">
+                                            <button type="button" class="btn btn-danger btn-sm" disabled>不可操作</button>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    function delArticle(e){
+        var id = e.getAttribute('data-id');
+        swal("确定删除该文章吗？", {
+            icon: "warning",
+            dangerMode: true,
+            buttons: ["取消","确定"],
+        }).then((e)=>{
+            if(!e && typeof e !== "boolean"){
+                return false;
+            }
+            $.ajax({
+                url: delteURI,
+                method: 'POST',
+                data:{
+                    'csrf_token': csrf_token,
+                    'id': id
+                },
+                success: function(e){
+                    if(e['status'] == 'success'){
+                        swal("删除成功",{
+                            icon: "success"
+                        }).then((e)=>{
+                            window.location.reload();
+                        });
+                    }else{
+                        swal(e['message'],{
+                            icon: "error"
+                        });
+                    }
+                },
+                complete: function(e){
+                    swal("操作失败",{
+                        icon: "error"
+                    });
+                }
+            })
+        })
+    }
+</script>
+{% endblock %}

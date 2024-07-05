@@ -10,7 +10,7 @@ from ..models import Permission,ArticleStatus,UserExperience
 @main.route('/',methods=['GET','POST'])
 @login_required
 def index():
-    datas = {
+    data = {
         'user': current_user,
         'level': {
             'now': UserExperience.getLevel(current_user.userInfo[0].experience),
@@ -18,12 +18,12 @@ def index():
         },
         'ArticleStatus': ArticleStatus
     }
-    datas['level']['nextV'] = UserExperience.getNextValue(datas['level']['now'])
-    datas['level']['length'] = (datas['level']['value'] / (1 if datas['level']['nextV'] == 0 else datas['level']['nextV'])) * 100
+    data['level']['nextV'] = UserExperience.getNextValue(data['level']['now'])
+    data['level']['length'] = (data['level']['value'] / (1 if data['level']['nextV'] == 0 else data['level']['nextV'])) * 100
     
 
 
-    return render_template('index.html',**datas);
+    return render_template('index.html',**data);
 
 
 @main.route('/detail/<id>')
