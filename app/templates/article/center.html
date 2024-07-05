@@ -133,6 +133,15 @@
                     'id': id
                 },
                 success: function(e){
+                    if (typeof e === "string"){
+                        try{
+                            e = JSON.parse(e);
+                        }catch{
+                            swal("操作失败",{
+                                icon: "error"
+                            });
+                        }
+                    }
                     if(e['status'] == 'success'){
                         swal("删除成功",{
                             icon: "success"
@@ -146,9 +155,34 @@
                     }
                 },
                 complete: function(e){
-                    swal("操作失败",{
-                        icon: "error"
-                    });
+                    if(e.status == 200){
+                        var data = e.responseText;
+                        if (typeof data === "string"){
+                            try{
+                                data = JSON.parse(data);
+
+                            }catch{
+                                swal("网络响应错误",{
+                                    icon: "error"
+                                });
+                            }
+                        }
+                        if(e['status'] == 'success'){
+                            swal("删除成功",{
+                                icon: "success"
+                            }).then((e)=>{
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(e['message'],{
+                                icon: "error"
+                            });
+                        }
+                    }else{
+                        swal("网络响应错误",{
+                            icon: "error"
+                        });
+                    }
                 }
             })
         })
