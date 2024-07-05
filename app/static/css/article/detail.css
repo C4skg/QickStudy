@@ -5,12 +5,14 @@
 
 
 .main .context .accordion .card .center{
-    width: 80%;
+    /*width: 80%;*/
     min-height: 60vh;
+    padding: 0 20px;
 }
 @media screen and (max-width: 600px) {
     .main .context .accordion .card .center{
         width: 95%;
+        padding: 0;
     }
 }
 
