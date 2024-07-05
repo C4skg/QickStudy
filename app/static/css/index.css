@@ -28,7 +28,7 @@ table,tbody{
     white-space: inherit;
     font-size: inherit;
 }
-.center[data-type='md'] code{
+.center[data-type='md'] code:not(.hljs){
     max-width: 100% !important;
     background-color: var(--code--back-color);
     padding: 0.1em 0.4em;
