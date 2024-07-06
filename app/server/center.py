@@ -21,13 +21,13 @@ def center():
 
     gettype = request.args.get("type","all");
     if gettype == "all":
-        articles =  Article.query.order_by(Article.id.desc()).all()
+        articles =  current_user.article.order_by(Article.id.desc()).all()
     elif gettype == "wait":
-        articles =  Article.query.filter_by(status=ArticleStatus.WAIT).order_by(Article.id.desc()).all()
+        articles =  current_user.article.filter_by(status=ArticleStatus.WAIT).order_by(Article.id.desc()).all()
     elif gettype == "private":
-        articles =  Article.query.filter_by(status=ArticleStatus.PRIVATE).order_by(Article.id.desc()).all()
+        articles =  current_user.article.filter_by(status=ArticleStatus.PRIVATE).order_by(Article.id.desc()).all()
     elif gettype == "draft":
-        articles =  Article.query.filter_by(status=ArticleStatus.DRAFT).order_by(Article.id.desc()).all()
+        articles =  current_user.article.filter_by(status=ArticleStatus.DRAFT).order_by(Article.id.desc()).all()
     else:
         return redirect(
             url_for(
