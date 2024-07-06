@@ -76,6 +76,25 @@ $(function(){
     getArticle();
 
     function generateArticleCard(title,context,userimgPath,username,lasttime,agreenum,comments,coverPath,detailPath,authUrl){
+        var container = $(".main .detail");
+        var card = $(`
+                <div class="card" data-title="${title}">
+                    
+                </div>
+            `)
+        card.html(`
+                <div class="p-2">
+                    <div class="Skeleton Skeleton-mm Skeleton-w-75"></div>
+                    <div class="Skeleton Skeleton-sm"></div>
+                    <div class="Skeleton Skeleton-sm"></div>
+                    <div class="Skeleton Skeleton-sm"></div>
+                    <div class="d-flex justify-content-between">
+                        <div class="Skeleton Skeleton-w-25 Skeleton-mm"></div>
+                        <div class="Skeleton Skeleton-w-25 Skeleton-mm"></div>
+                    </div>
+                </div>
+            `)
+        container.append(card);
         Vditor.md2html(
             context,
             {
@@ -83,8 +102,7 @@ $(function(){
             }
         ).then(function(html){
             html = filterXSS($(html).text());
-            var card = $(`
-            <div class="card">
+            var context = $(`
                 <div class="p-2">
                     <div class="aBody">
                         ${coverPath == null ? '' : 
@@ -137,9 +155,9 @@ $(function(){
                         </div>
                     </div>
                 </div>
-            </div>
             `)
-            $(".main .detail").append(card);
+            
+            card.html(context);
         })        
     }
 })

@@ -368,7 +368,7 @@ class Images(db.Model):
     path = db.Column(db.Text)
 
     def getImagePath(self):
-        return url_for('themes.upload',path=self.path)
+        return self.path;
 
 
 class User(UserMixin,db.Model):

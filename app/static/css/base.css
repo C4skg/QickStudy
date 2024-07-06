@@ -36,6 +36,10 @@
     --block-background-color: #fafafa;
     --table-tr-2-background: #f6f8fa;
     --btn-hover-background: #ccc;
+
+    --skeleton-color: #eee;
+    --skeleton-color-start: #eee;
+    --skeleton-color-end: #ddd;
 }
 :root[data-bs-theme="dark"]{
     /* dark */
@@ -52,6 +56,10 @@
     --block-background-color: #00000030;
     --table-tr-2-background: #161b22;
     --btn-hover-background: #0b0d0f;
+
+    --skeleton-color: rgba(255, 255, 255, 0.12);
+    --skeleton-color-start: rgba(255, 255, 255, 0.12);
+    --skeleton-color-end: rgba(255, 255, 255, 0.18);
 }
 
 body{
@@ -140,6 +148,7 @@ a{
     white-space: nowrap !important;
 }
 
+/* status spinner */
 .spinner{
     width: 5px;
     height: 5px;
@@ -162,6 +171,48 @@ a{
 .spinner-primary{
     background-color: rgb(13,110,253);
 }
+/* status spinner end */
+
+/* Skeleton */
+.Skeleton{
+    padding: 20px 0;
+    background-color: var(--skeleton-color-start);
+    border-radius: 5px;
+    margin: 10px 0;
+    animation: 2s skeleton-loading infinite cubic-bezier(0.36, 0, 0.64, 1);
+}
+.Skeleton-w-25{
+    width: 25%;
+}
+.Skeleton-w-50{
+    width: 50%;
+}
+.Skeleton-w-75{
+    width: 75%;
+}
+.Skeleton-mm{
+    padding: 15px 0;
+}
+.Skeleton-sm{
+    padding: 10px 0;
+    margin: 5px 0;
+}
+@keyframes skeleton-loading {
+    0% {
+        background: var(--skeleton-color-start);
+    }
+    40% {
+        background: var(--skeleton-color-end);
+    }
+    80% {
+        background: var(--skeleton-color-start);
+    }
+    100% {
+        background: var(--skeleton-color-start);
+    }
+}
+
+/* Skeleton end */
 
 
 /* search Style */

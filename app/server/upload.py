@@ -128,65 +128,68 @@ def cover():
     if current_user.permission < Permission.USER:
         return uploadResponse['6003'];
 
-    if 'file' in request.files:
-        childFolder = getDate();
-        _clone = deepcopy(uploadResponse['6000'])
-        file = request.files.get('file')
-        try:
-            data = file.read()
-            size = len(data)
-            if size > UPLOAD_MAX_SIZE:
-                raise(UploadFileTooLarge('The file is too large'));
-            finger = getFinger(data)
-            images = Images.query.filter_by(finger = finger).first()
-            if images:
-                path = images.getImagePath()
-                _clone['files'].append(
-                    {
-                        'filename': file.filename,
-                        'status': 'success',
-                        'path': path
-                    }
-                )
-                article.updateCover(path)
-            else:
-                file.seek(0);
-                sufix = getFiletype(file.filename)
-                A_id = request.form.get('articleId',-1,type=int)
-                article = current_user.article.filter_by(id=A_id).first();
-                if article:
-                    path = photos.save(
-                        file,
-                        folder=childFolder,
-                        name=finger + sufix
-                    )
-                    newImage = Images(
-                        finger = finger,
-                        path = path
-                    )
-                    db.session.add(newImage)
-                    article.updateCover(path)
-                    _clone['files'].append(
-                        {
-                            'filename': file.filename,
-                            'status': 'success',
-                            'path': url_for('themes.upload',path=path)
-                        }
-                    )
-                else:
-                    '''
-                        if not match article
-                    '''
-                    raise( InfoError("No article's id is %s" % str(A_id)) )
+    if 'file' not in request.files:
+        return uploadResponse['6001'];
 
-            db.session.commit();
-            return _clone;
-        except UploadFileTooLarge as e:
-            print(e)
-            pass;
-        
-        except InfoError as e:
-            print(e)
-            pass;
+    _clone = deepcopy(uploadResponse['6000'])
+    file = request.files.get('file')
+    A_id = request.form.get('articleId',-1,type=int)
+    article = current_user.article.filter_by(id=A_id).first();
     
-    return uploadResponse['6001']
+    try:
+        if not article:
+            '''
+                if not match article
+            '''
+            raise( InfoError("No article's id is %s" % str(A_id)) )
+        
+        data = file.read()
+        size = len(data)
+        if size > UPLOAD_MAX_SIZE:
+            raise(UploadFileTooLarge('The file is too large'));
+        finger = getFinger(data)
+        images = Images.query.filter_by(finger = finger).first()
+        if images:
+            path = images.getImagePath()
+            _clone['files'].append(
+                {
+                    'filename': file.filename,
+                    'status': 'success',
+                    'path': path
+                }
+            )
+            article = current_user.article.filter_by(id=A_id).first();
+            article.updateCover(path)
+        else:
+            file.seek(0);
+            sufix = getFiletype(file.filename)
+            path = photos.save(
+                file,
+                folder=getDate(),
+                name=finger + sufix
+            )
+            newImage = Images(
+                finger = finger,
+                path = path
+            )
+            db.session.add(newImage)
+            article.updateCover(path)
+            _clone['files'].append(
+                {
+                    'filename': file.filename,
+                    'status': 'success',
+                    'path': url_for('themes.upload',path=path)
+                }
+            )
+            
+
+        db.session.commit();
+        return _clone;
+
+    except UploadFileTooLarge as e:
+        print(e)
+        return uploadResponse["6002"];
+
+    except InfoError as e:
+        return uploadResponse["6001"];
+    
