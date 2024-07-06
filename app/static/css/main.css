@@ -72,13 +72,13 @@ a{
     width: 100% !important;
     height: 100% !important;
 }
-@media screen and (max-width:770px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
+@media screen and (max-width:700px) { /*当屏幕尺寸小于1400px时，应用下面的CSS样式*/
     .accordion .card .aBody{
         flex-direction: column;
     }
     .accordion .card .aBody .cover{
-        width: 75% !important;
-        height: 120px;
+        width: 90% !important;
+        height: 140px;
         margin-bottom: 10px;
     }
     .accordion .card .aBody .main{
