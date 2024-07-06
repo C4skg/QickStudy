@@ -158,7 +158,6 @@ def cover():
                     'path': path
                 }
             )
-            article = current_user.article.filter_by(id=A_id).first();
             article.updateCover(path)
         else:
             file.seek(0);
