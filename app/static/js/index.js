@@ -43,9 +43,10 @@ $(function(){
                 if(e['length'] > 0){
                     window.page++;
                     let articleList = e['articles'];
-                    for(let id in articleList){
+                    for(let id=0;id<articleList.length;id++){
                         $('.context .NoneTxt').remove();
                         const article = articleList[id];
+                        console.log({article})
                         generateArticleCard(
                             article.title,
                             article.context,
