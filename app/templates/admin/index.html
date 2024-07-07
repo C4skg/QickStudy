@@ -1,19 +1,469 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{{ url_for('themes.static',path='js/jquery-3.6.3.min.js') }}"></script>
-    <script src="{{ url_for('themes.static',path='js/style.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('themes.static',path='css/base.css') }}">
+{% extends "themes/md.html" %}
+
+{% block extends %}
+<link rel="stylesheet" href="{{ url_for('themes.static',path='css/admin/index.css') }}">
+{% endblock %}
+
+
+{% block title %}
+- 欢迎管理员 {{ user.username }}
+{% endblock %}
+
+
+{% block hscript %}
+<script>
+    const csrf_token = "{{ csrf_token() }}"
+    const delteURI = "{{ url_for('server.delete') }}"
+    const changeURI = "{{ url_for('server.changeStatus') }}"
+
+    const permissionURI = "{{ url_for('admin.modify_permission') }}"
+</script>
+{% endblock %}
+
+
+{% block body %}
+<div class="container main d-flex justify-content-between">
+    <div class="tabs">
+        <div class="card">
+            {% if args.action == "articles" %}
+                <div class="btn theme-color m-2 enabled"><a href="?action=articles">文章状态管理</a></div>
+            {% else %}
+                <div class="btn theme-color m-2"><a href="?action=articles">文章状态管理</a></div>
+            {% endif %}
+            {% if user.permission >= Permission.ADMIN %}
+                <span class="line" ></span>
+                {% if args.action == "permission" %}
+                    <div class="btn theme-color m-2 enabled"><a href="?action=permission">所有用户管理</a></div>
+                {% else %}
+                    <div class="btn theme-color m-2"><a href="?action=permission">所有用户管理</a></div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="shows">
+        <div class="card">
+        {% if args.action == "articles" %}
+            <div class="articles">
+                <div class="classify">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            {% if args.type == "release" or not args %}
+                                <a class="nav-link theme-color enabled" href="?action=articles&type=release">已发布({{ Articles.query.filter_by(status=ArticleStatus.NORMAL).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?action=articles&type=release">已发布({{ Articles.query.filter_by(status=ArticleStatus.NORMAL).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            {% if args.type == "wait" %}
+                                <a class="nav-link theme-color enabled" href="?action=articles&type=wait">待审核({{ Articles.query.filter_by(status=ArticleStatus.WAIT).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?action=articles&type=wait">待审核({{ Articles.query.filter_by(status=ArticleStatus.WAIT).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="models d-flex align-items-center justify-content-center">
+                    {% if articles|length == 0%}
+                        <div class="alert alert-secondary" role="alert">
+                            目前文章列表中还没有待管理的文章
+                        </div>                      
+                    {% else %}
+                        <div class="table">
+                            <div class="rname d-flex align-items-center justify-content-around">
+                                <div class="ID">文章编号</div>
+                                <div class="author">文章作者</div>
+                                <div class="title">文章标题</div>
+                                <div class="status">当前状态</div>
+                                <div class="control">管理文章</div>
+                            </div>
+                            {% for art in articles %}
+                                <div class="context d-flex align-items-center justify-content-around">
+                                    <div class="id each text-overflow">{{ art.id }}</div>
+                                    <div class="author each d-flex justify-content-center align-items-center flex-direction-col">
+                                        <a class="btn theme-color" href="{{ url_for('auth.userInfo',id=art.User.id) }}" target="_blank">
+                                            <div class="logo">
+                                                <img src="{{ url_for('server.logo',id=art.User.id) }}" class="rounded" alt="">
+                                            </div>
+                                            <div class="username">
+                                                {{ art.User.username }}
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="title each text-overflow">{{ art.title }}</div>
+                                    <div class="status each d-flex align-items-center justify-content-center">
+                                        {{ ArticleStatus.Desc[art.status]['name'] }}
+                                        <span class="icon spinner spinner-{{ ArticleStatus.Desc[art.status]['color'] }}"></span>
+                                    </div>
+                                    <div class="control d-flex justify-content-center align-items-center each">
+                                        {% if art.status!=ArticleStatus.WAIT  %}
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
+                                            文章操作
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{{ url_for('main.detail',id=art.id) }}" target="_blank">前往查看</a></li>
+                                                <li><a class="dropdown-item" data-id="{{ art.id }}" data-tid="{{ ArticleStatus.NOTPASS }}" onclick="changeStatus(this)" href="javascript: void(0)">退回文章</a></li>
+                                                <li><a class="dropdown-item" data-id="{{ art.id }}" onclick="delArticle(this)" href="javascript: void(0)">删除文章</a></li>
+                                            </ul>
+                                        </div>
+                                        {% else %}
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
+                                            文章操作
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{{ url_for('main.detail',id=art.id) }}" target="_blank">前往查看</a></li>
+                                                <li><a class="dropdown-item" data-id="{{ art.id }}" data-tid="{{ ArticleStatus.NORMAL }}" onclick="changeStatus(this)" href="javascript: void(0)">通过审核</a></li>
+                                                <li><a class="dropdown-item" data-id="{{ art.id }}" data-tid="{{ ArticleStatus.NOTPASS }}" onclick="changeStatus(this)" href="javascript: void(0)">退回文章</a></li>
+                                                <li><a class="dropdown-item" data-id="{{ art.id }}" onclick="delArticle(this)" href="javascript: void(0)">删除文章</a></li>
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% elif args.action == "permission" and user.permission >= Permission.ADMIN %}
+            <div class="permission articles">
+                <div class="classify">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            {% if args.type == "control" or not args.type %} <!-- 进阶用户： 带有操控权限-->
+                                <a class="nav-link theme-color enabled" href="?action=permission&type=control">管理用户({{ userlist.query.filter( userlist.permission >= Permission.CONTROL ).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?action=permission&type=control">管理用户({{ userlist.query.filter( userlist.permission >= Permission.CONTROL ).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            {% if args.type == "normal" %} <!-- 普通用户 -->
+                                <a class="nav-link theme-color enabled" href="?action=permission&type=normal">普通用户({{ userlist.query.filter( userlist.permission.between(Permission.USER,Permission.ADVENCE) ).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?action=permission&type=normal">普通用户({{ userlist.query.filter( userlist.permission.between(Permission.USER,Permission.ADVENCE) ).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            {% if args.type == "base" %} <!-- 受限用户 -->
+                                <a class="nav-link theme-color enabled" href="?action=permission&type=base">受限用户({{ userlist.query.filter( userlist.permission == Permission.BASE ).all() | length }})</a>
+                            {% else %}
+                                <a class="nav-link theme-color" href="?action=permission&type=base">受限用户({{ userlist.query.filter( userlist.permission == Permission.BASE ).all() | length }})</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="models d-flex align-items-center justify-content-center">
+                    {% if users|length == 0%}
+                        <div class="alert alert-secondary" role="alert">
+                            目前数据库中还没有此类用户
+                        </div>                      
+                    {% else %}
+                        <div class="table">
+                            <div class="rname d-flex align-items-center justify-content-around">
+                                <div class="ID">用户ID</div>
+                                <div class="author">用户信息</div>
+                                <div class="permission">当前权限</div>
+                                <div class="control">操作</div>
+                            </div>
+                            {% for item in users %}
+                                <div class="context d-flex align-items-center justify-content-around">
+                                    <div class="ID each text-overflow">{{ item.id }}</div>
+                                    <div class="author each d-flex justify-content-center align-items-center flex-direction-col">
+                                        <a class="btn theme-color" href="{{ url_for('auth.userInfo',id=item.id) }}" target="_blank">
+                                            <div class="logo">
+                                                <img src="{{ url_for('server.logo',id=item.id) }}" class="rounded" alt="">
+                                            </div>
+                                            <div class="username">
+                                                {{ item.username }}
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="permission each d-flex align-items-center justify-content-center">
+                                        <div class="permission">
+                                            {% if item.permission > Permission.BASE %}
+                                            <span class="badge bg-success" title="{{ Permission.DESC[item.permission]['desc'] }}" data-bs-toggle="tooltip">
+                                                {{ Permission.DESC[item.permission]['name'] }}
+                                            </span>
+                                            {% else %}
+                                            <span class="badge bg-danger" title="{{ Permission.DESC[item.permission]['desc'] }}" data-bs-toggle="tooltip">
+                                                {{ Permission.DESC[item.permission]['name'] }}
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="control d-flex justify-content-center align-items-center each">
+                                        {% if item.permission == Permission.ADMIN  %}
+                                        <div class="wraper">
+                                            <button type="button" class="btn btn-danger btn-sm" disabled>不可操作</button>
+                                        </div>
+                                        {% else %}
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown">
+                                            用户操作
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                {% if item.permission < Permission.CONTROL %}
+                                                    <li><a class="dropdown-item" data-id="{{ item.id }}" data-permission="{{ Permission.CONTROL }}" onclick="modify_permission(this)">提升为管理员</a></li>
+                                                {% else %}
+                                                    <li><a class="dropdown-item" data-id="{{ item.id }}" data-permission="{{ Permission.USER }}" onclick="modify_permission(this)">降为普通用户</a></li>
+                                                {% endif %}
+                                                {% if item.permission == Permission.BASE %}
+                                                    <li><a class="dropdown-item" data-id="{{ item.id }}" data-permission="{{ Permission.USER }}" onclick="modify_permission(this)">转为普通用户</a></li>
+                                                {% else %}
+                                                    <li><a class="dropdown-item" data-id="{{ item.id }}" data-permission="{{ Permission.BASE }}" onclick="modify_permission(this)">受限该用户</a></li>
+                                                {% endif %}
+                                                <li><a class="dropdown-item" data-id="{{ item.id }}" onclick="delete_user(this)">删除用户</a></li>
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    function delArticle(e){
+        var id = e.getAttribute('data-id');
+        swal("确定删除该文章吗？", {
+            icon: "warning",
+            dangerMode: true,
+            buttons: ["取消","确定"],
+        }).then((e)=>{
+            if(!e && typeof e !== "boolean"){
+                return false;
+            }
+            $.ajax({
+                url: delteURI,
+                method: 'POST',
+                data:{
+                    'csrf_token': csrf_token,
+                    'id': id
+                },
+                success: function(e){
+                    if (typeof e === "string"){
+                        try{
+                            e = JSON.parse(e);
+                        }catch{
+                            swal("操作失败",{
+                                icon: "error"
+                            });
+                        }
+                    }
+                    if(e['status'] == 'success'){
+                        swal("删除成功",{
+                            icon: "success"
+                        }).then((e)=>{
+                            window.location.reload();
+                        });
+                    }else{
+                        swal(e['message'],{
+                            icon: "error"
+                        });
+                    }
+                },
+                complete: function(e){
+                    if(e.status == 200){
+                        var data = e.responseText;
+                        if (typeof data === "string"){
+                            try{
+                                data = JSON.parse(data);
+
+                            }catch{
+                                swal("网络响应错误",{
+                                    icon: "error"
+                                });
+                            }
+                        }
+                        if(e['status'] == 'success'){
+                            swal("删除成功",{
+                                icon: "success"
+                            }).then((e)=>{
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(e['message'],{
+                                icon: "error"
+                            });
+                        }
+                    }else{
+                        swal("网络响应错误",{
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+    }
+    function changeStatus(e){
+        var id = e.getAttribute('data-id');
+        var tId = e.getAttribute('data-tid');
+        swal("确定修改该文章状态吗？", {
+            icon: "warning",
+            dangerMode: true,
+            buttons: ["取消","确定"],
+        }).then((e)=>{
+            if(!e && typeof e !== "boolean"){
+                return false;
+            }
+            $.ajax({
+                url: changeURI,
+                method: 'POST',
+                data:{
+                    'csrf_token': csrf_token,
+                    'id': id,
+                    'tId': tId
+                },
+                success: function(e){
+                    if (typeof e === "string"){
+                        try{
+                            e = JSON.parse(e);
+                        }catch{
+                            swal("操作失败",{
+                                icon: "error"
+                            });
+                        }
+                    }
+                    if(e['status'] == 'success'){
+                        swal("修改成功",{
+                            icon: "success"
+                        }).then((e)=>{
+                            window.location.reload();
+                        });
+                    }else{
+                        swal(e['message'],{
+                            icon: "error"
+                        });
+                    }
+                },
+                complete: function(e){
+                    if(e.status == 200){
+                        var data = e.responseText;
+                        if (typeof data === "string"){
+                            try{
+                                data = JSON.parse(data);
+
+                            }catch{
+                                swal("网络响应错误",{
+                                    icon: "error"
+                                });
+                            }
+                        }
+                        if(e['status'] == 'success'){
+                            swal("修改成功",{
+                                icon: "success"
+                            }).then((e)=>{
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(e['message'],{
+                                icon: "error"
+                            });
+                        }
+                    }else{
+                        swal("网络响应错误",{
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+    }
+
+    // 用户管理请求
+    function modify_permission(e){
+        var uid = e.getAttribute('data-id');
+        var permission = e.getAttribute('data-permission');
+
+        swal("确定修改该用户权限吗？", {
+            icon: "warning",
+            dangerMode: true,
+            buttons: ["取消","确定"],
+        }).then((e)=>{
+            if(!e && typeof e !== "boolean"){
+                return false;
+            }
+            $.ajax({
+                url: permissionURI,
+                method: 'POST',
+                data:{
+                    'csrf_token': csrf_token,
+                    'uid': uid,
+                    'permission': permission
+                },
+                success: function(e){
+                    if (typeof e === "string"){
+                        try{
+                            e = JSON.parse(e);
+                        }catch{
+                            swal("操作失败",{
+                                icon: "error"
+                            });
+                        }
+                    }
+                    if(e['status'] == 'success'){
+                        swal("修改成功",{
+                            icon: "success"
+                        }).then((e)=>{
+                            window.location.reload();
+                        });
+                    }else{
+                        swal(e['message'],{
+                            icon: "error"
+                        });
+                    }
+                },
+                complete: function(e){
+                    if(e.status == 200){
+                        var data = e.responseText;
+                        if (typeof data === "string"){
+                            try{
+                                data = JSON.parse(data);
+
+                            }catch{
+                                swal("网络响应错误",{
+                                    icon: "error"
+                                });
+                            }
+                        }
+                        if(e['status'] == 'success'){
+                            swal("修改成功",{
+                                icon: "success"
+                            }).then((e)=>{
+                                window.location.reload();
+                            });
+                        }else{
+                            swal(e['message'],{
+                                icon: "error"
+                            });
+                        }
+                    }else{
+                        swal("网络响应错误",{
+                            icon: "error"
+                        });
+                    }
+                }
+            })
+        })
+    }
+    function delete_user(e){
+
+    }
     
-    <!-- ^icon -->
-    <link rel="icon" href="{{ url_for('themes.static',path='img/logo.svg') }}">
-
-    <title> {{title}} - admin</title>
-</head>
-<body>
-
-</body>
-</html>
+</script>
+{% endblock %}

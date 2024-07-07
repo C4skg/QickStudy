@@ -80,6 +80,11 @@
                     <span class="line" ></span>
                     <a href="{{ url_for('server.center') }}"><div class="btn">🚀️ 创作中心</div></a>
                 </div>
+                {% if user.permission >= Permission.CONTROL %}
+                <div class="container-admin card">
+                    <a href="{{ url_for('admin.index') }}"><div class="btn">🪪 管理中心</div></a>
+                </div>
+                {% endif %}
             </div>
         </div>
         <!--* 用户信息 -->

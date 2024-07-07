@@ -19,7 +19,7 @@ def center():
         "args": request.args.to_dict()
     }
 
-    gettype = request.args.get("type","all");
+    gettype = request.args.get("type");
     if gettype == "all":
         articles =  current_user.article.order_by(Article.id.desc()).all()
     elif gettype == "wait":

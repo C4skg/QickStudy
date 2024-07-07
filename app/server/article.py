@@ -51,7 +51,7 @@ def delete():
         return articleResponse['7002'];
     if (
         current_user.id != article.userId
-        or
+        and
         current_user.permission < Permission.CONTROL
     ):
         return articleResponse['7003'];
@@ -206,33 +206,29 @@ def changeStatus():
         @param: id - article's id
         @param: tId - target state id
     '''
-    if current_user.permission < Permission.USER:
+    if current_user.permission < Permission.CONTROL:
         return articleResponse['7003'];
 
     id = request.form.get('id',None,type=int);
     tId = request.form.get('tId',None,type=int);
-    if not tId or not id:
+    if tId == None or id == None:
         return articleResponse['7002']
-    
-    if current_user.permission >= Permission.CONTROL:
-        if tId == ArticleStatus.PRIVATE:
-            return articleResponse['7003']
-            
-        article = Article.query.filter_by(id=id).first();
-    
-    else:
-        if tId == ArticleStatus.NORMAL or tId == ArticleStatus.NOTPASS:
-            return articleResponse['7003']
         
-        article = current_user.filter_by(id=id).first();
+    article = Article.query.filter_by(id=id).first();
 
-    if article:
-        t = article.updateStatus()
-        if t:
-            db.session.commit();
-            return articleResponse['7000'];
-    else:
-        pass;
+    if not article:
+        return articleResponse['7002'];
+
+    if article.status == ArticleStatus.PRIVATE:
+        _clone = deepcopy(articleResponse["7001"]);
+        _clone["message"] = "该文章为私有文章";
+        return _clone;
+        
+    t = article.updateStatus(tId)
+    if t:
+        db.session.commit();
+        return articleResponse['7000'];
+        
 
     return articleResponse['7001'];
 

@@ -183,3 +183,26 @@ articleResponse = {
         'route': ''
     }
 }
+
+adminAPIResponse = {
+    "8000":{
+        "status": 'success',
+        'message': '操作成功',
+        'route': ''
+    },
+    "8001":{
+        "status": 'error',
+        'message': '操作失败',
+        'route': ''
+    },
+    "8002":{
+        "status": 'error',
+        'message': '参数异常',
+        'route': ''
+    },
+    "8003":{
+        "status": 'error',
+        'message': '权限不足',
+        'route': ''
+    }
+}

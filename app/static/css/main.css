@@ -268,18 +268,22 @@ a{
 }
 /* user */
 /* article */
-.container-article{
+.container-article,
+.container-admin{
     padding: 5px 10%;
 }
-.container-article a{
+.container-article a,
+.container-admin a{
     width: 100%;
     margin: 1px auto;
 }
-.container-article .btn{
+.container-article .btn,
+.container-admin .btn{
     width: 100%;
     color: var(--font-color);
 }
-.container-article .btn:hover{
+.container-article .btn:hover,
+.container-admin .btn:hover{
     background-color: var(--btn-hover-background);
 }
 /* article */

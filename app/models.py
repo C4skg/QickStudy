@@ -46,6 +46,11 @@ class Permission:
         },
     }
 
+    def vars_to_list():
+        return [
+            value for key,value in vars(Permission).items() if not key.startswith('__') and not callable(value) and type(value) == int
+        ]
+
 class EventID:
     NONE     = -1;
     REGISTER = 1;
@@ -90,6 +95,10 @@ class ArticleStatus:
             "desc" : "该文章内容仅你自己可见"
         }
     }
+    def vars_to_list():
+        return [
+            value for key,value in vars(ArticleStatus).items() if not key.startswith('__') and not callable(value) and type(value) == int
+        ]
 
 class UserExperience:
     LEVEL = {
@@ -331,6 +340,8 @@ class Article(db.Model):
         current_status = self.status;
         if current_status == status:
             return False;
+        if not (status in ArticleStatus.vars_to_list()):
+            return False;
     
         self.status = status;
         
@@ -506,6 +517,22 @@ class User(UserMixin,db.Model):
         db.session.merge(self)
 
         return True
+    
+    def modificationPermission(self,permission:int):
+        if (
+            permission == Permission.ADMIN
+            or
+            self.permission == Permission.ADMIN
+            or
+            self.permission == permission
+            or
+            not (permission in Permission.vars_to_list())
+        ):
+            return False;
+        
+        self.permission = permission;
+        db.session.merge(self);
+        return True;
 
 
     @staticmethod

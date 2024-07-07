@@ -16,7 +16,8 @@ def index():
             'now': UserExperience.getLevel(current_user.userInfo[0].experience),
             'value': current_user.userInfo[0].experience
         },
-        'ArticleStatus': ArticleStatus
+        'ArticleStatus': ArticleStatus,
+        'Permission': Permission
     }
     data['level']['nextV'] = UserExperience.getNextValue(data['level']['now'])
     data['level']['length'] = (data['level']['value'] / (1 if data['level']['nextV'] == 0 else data['level']['nextV'])) * 100
