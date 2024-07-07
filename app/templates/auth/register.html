@@ -20,18 +20,20 @@
             {{ getIcon('moon') | safe}}
         </span>
     </div>
-    <form id="login-form" class="was-validated formarea">
+    <form id="login-form" class="formarea">
         <div class="mb-2 item">
             <label for="email" class="form-label">邮箱</label>
             <input type="text" class="form-control" id="email" placeholder="请输入邮箱" name="email" required pattern="^\w+@\w+\.[a-z]{1,}$">
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请输入正确格式的邮箱</div>
+            <div class="placeholder"></div>
         </div>
         <div class="mb-2 item">
             <label for="pwd" class="form-label">密码</label>
             <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">密码中应至少包括字母和数字且长度大于6位。</div>
+            <div class="placeholder"></div>
         </div>
         <div class="mb-3 item d-flex justify-content-between vCode">
             <div class="iitem">
@@ -39,6 +41,7 @@
                 <input type="text" class="form-control" id="code" placeholder="" name="code" required>
                 <div class="valid-feedback">有效的。</div>
                 <div class="invalid-feedback">请填写此字段。</div>
+                <div class="placeholder"></div>
             </div>
             <div class="vCodeImg">
                 <img src="{{ url_for('server.getVCodeImg') }}" style="" alt="">
@@ -83,7 +86,10 @@
     })
     button.click(function(){
         let signal = document.getElementsByTagName("form")[0].checkValidity();
-        if(!signal) return false;
+        if(!signal){
+            document.getElementsByTagName("form")[0].classList.add('was-validated');
+            return false;
+        };
 
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
@@ -93,9 +99,15 @@
             data: form.serialize(),
             success:(e)=>{
                 if(e['status'] == 'success'){
-                    swal('注册成功',e['message'],'success');
+                    swal('注册成功',e['message'],'success').then(()=>{
+                        window.location.href = "/"
+                    });
                 }else{
-                    swal('注册失败',e['message'],'error');
+                    swal('注册失败',e['message'],'error').then(()=>{
+                        if(e['message'] == "验证码错误"){
+                            $("#code").focus().val("");
+                        }
+                    });
                     reloadVerify();
                 }
             }, 

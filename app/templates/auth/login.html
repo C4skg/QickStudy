@@ -19,18 +19,20 @@
             {{ getIcon('moon') | safe}}
         </span>
     </div>
-    <form id="login-form" class="was-validated formarea">
+    <form id="login-form" class="formarea">
         <div class="mb-3 mt-3 item">
             <label for="uname" class="form-label">账号</label>
             <input type="text" class="form-control" id="uname" placeholder="请输入用户名或邮箱" name="username" required>
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请填写此字段。</div>
+            <div class="placeholder"></div>
         </div>
         <div class="mb-3 item">
             <label for="pwd" class="form-label">密码</label>
-            <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required>
+            <input type="password" class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
             <div class="valid-feedback">有效的。</div>
-            <div class="invalid-feedback">请填写此字段。</div>
+            <div class="invalid-feedback">请填写正确密码格式。</div>
+            <div class="placeholder"></div>
         </div>
         <div class="mb-3 item d-flex justify-content-between vCode">
             <div class="iitem">
@@ -38,6 +40,7 @@
                 <input type="text" class="form-control" id="code" placeholder="" name="code" required>
                 <div class="valid-feedback">有效的。</div>
                 <div class="invalid-feedback">请填写此字段。</div>
+                <div class="placeholder"></div>
             </div>
             <div class="vCodeImg">
                 <img src="{{ url_for('server.getVCodeImg') }}" style="" alt="">
@@ -70,6 +73,9 @@
 <!-- ^script -->
 {% block script %}
 <script>
+    for(let child of $(".formarea").children().find("input")){
+        // console.log($(child).)
+    }
     var button = $('#login_button');
     var form = $('#login-form');
     form.submit((e)=>{
@@ -90,7 +96,10 @@
     })
     button.click(function(){
         let signal = document.getElementsByTagName("form")[0].checkValidity();
-        if(!signal) return false;
+        if(!signal){
+            document.getElementsByTagName("form")[0].classList.add('was-validated');
+            return false;
+        };
         
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
@@ -109,7 +118,11 @@
                         window.location = router;
                     })
                 }else{
-                    swal("登录失败",e['message'], "error");
+                    swal("登录失败",e['message'], "error").then(()=>{
+                        if(e['message'] == "验证码错误"){
+                            $("#code").focus().val("");
+                        }
+                    });
                     reloadVerify();
                 }
             },

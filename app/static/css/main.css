@@ -45,6 +45,10 @@ a{
     margin-top: 50px;
 }
 
+.was-validated .placeholder{
+    display: none;
+}
+
 /* 文章标签样式 */
 .accordion{
     width: 75%;

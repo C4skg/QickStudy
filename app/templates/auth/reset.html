@@ -20,7 +20,7 @@
             {{ getIcon('moon') | safe}}
         </span>
     </div>
-    <form id="login-form" class="was-validated formarea">
+    <form id="login-form" class="formarea">
         <input type="hidden" value="{{ step }}" name="step">
         <input type="hidden" value="{{ csrf_token() }}" name="csrf_token">
         <input type="hidden" value="{{ type }}" name="type">
@@ -30,6 +30,7 @@
             <input type="text" class="form-control" id="email" placeholder="请输入邮箱" name="email" required pattern="^\w+@\w+\.[a-z]{1,}$">
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">请输入正确格式的邮箱</div>
+            <div class="placeholder"></div>
         </div>
         <div class="mb-3 item d-flex justify-content-between vCode">
             <div class="iitem">
@@ -37,6 +38,7 @@
                 <input type="text" class="form-control" id="code" placeholder="" name="code" required>
                 <div class="valid-feedback">有效的。</div>
                 <div class="invalid-feedback">请填写此字段。</div>
+                <div class="placeholder"></div>
             </div>
             <div class="vCodeImg">
                 <img src="{{ url_for('server.getVCodeImg') }}" style="" alt="">
@@ -51,6 +53,7 @@
             <input type="password" class="form-control" id="pwd" placeholder="输入新的密码" name="pwd" required pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$">
             <div class="valid-feedback">有效的。</div>
             <div class="invalid-feedback">密码中应至少包括字母和数字且长度大于6位</div>
+            <div class="placeholder"></div>
         </div>
         <input type="hidden" value="{{ token }}" name="token">
         <button id="login_button" type="submit" class="btn btn-primary mt-auto">重置
@@ -97,7 +100,10 @@
     })
     button.click(function(){
         let signal = document.getElementsByTagName("form")[0].checkValidity();
-        if(!signal) return false;
+        if(!signal){
+            document.getElementsByTagName("form")[0].classList.add('was-validated');
+            return false;
+        };
         
         button.append('<span class="spinner-border spinner-border-sm"></span>');
         button.attr('disabled','1');
@@ -112,7 +118,11 @@
                         window.location = router;
                     })
                 }else{
-                    swal("Faild",e['message'], "error");
+                    swal("Faild",e['message'], "error").then(()=>{
+                        if(e['message'] == "验证码错误"){
+                            $("#code").focus().val("");
+                        }
+                    });
                     reloadVerify();
                 }
             },

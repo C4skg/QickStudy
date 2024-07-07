@@ -165,6 +165,7 @@
                             <div class="rname d-flex align-items-center justify-content-around">
                                 <div class="ID">用户ID</div>
                                 <div class="author">用户信息</div>
+                                <div class="email">所绑邮箱</div>
                                 <div class="permission">当前权限</div>
                                 <div class="control">操作</div>
                             </div>
@@ -180,6 +181,9 @@
                                                 {{ item.username }}
                                             </div>
                                         </a>
+                                    </div>
+                                    <div class="email each">
+                                        {{ item.email }}
                                     </div>
                                     <div class="permission each d-flex align-items-center justify-content-center">
                                         <div class="permission">
