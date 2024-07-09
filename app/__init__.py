@@ -32,16 +32,19 @@ EsClient = Elasticsearch(
 
 
 
-def create_app( envname:str = 'ProductionEnv' ):
+def create_app( envname:str = "build" ):
     '''
     Default mode is productionenv
     The debug is false
     '''
+    if envname not in ["debug","build"]:
+        raise ValueError("the parameter envname must be `debug` or `build`");
+
     app = Flask(__name__)
 
     #^ set config
     app.config.from_object(
-        config.get(envname) or config.get('ProductionEnv')
+        config.get(envname)
     )
 
     #^ set uploads

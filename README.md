@@ -101,15 +101,22 @@ docker-compose up -d
    + 对外
 
       ```bash
-      python QickStudy.py runserver -h 0.0.0.0 -p port --threaded
+      python QickStudy.py runserver -h 0.0.0.0 -p 80 --threaded
       ```
    
    + 对内
 
       ```bash
-      python QickStudy.py runserver -h 127.0.0.1 -p port --threaded
+      python QickStudy.py runserver -h 127.0.0.1 -p 80 --threaded
       ```
 
+   + 注意
+   
+      代码中默认关闭了 debug 模式，如果需要开启 ，请在启动前加上 `--debug` 参数
+      
+      ```bash
+      python QickStudy.py runserver -h 0.0.0.0 -p 80 --threaded --debug
+      ```
 ### 0x05 致谢
 
 本项目或使用、或参考了以下，但不限于以下的开源项目或资源，下面列出了主要的参考和使用开源项目

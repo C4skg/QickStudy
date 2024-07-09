@@ -1,5 +1,5 @@
 from flask_migrate import Migrate,MigrateCommand,upgrade
-from flask_script import Manager
+from flask_script import Manager,Command,Option
 from flask import session
 
 from app.func import generateUID6,getLocalNumber,Icon
@@ -12,8 +12,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from datetime import datetime
 
-
-app = create_app('TestingEnv');
+app = create_app("build");
 migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)
