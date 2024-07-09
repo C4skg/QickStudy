@@ -57,7 +57,7 @@ class ProductionEnv(Config):
     DEBUG = False
 
 config = {
-    'TestingEnv': TestingEnv,
-    'ProductionEnv': ProductionEnv
+    'debug': TestingEnv,
+    'build': ProductionEnv
 }
     
