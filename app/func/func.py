@@ -133,13 +133,13 @@ class verifyImgCode:
             (0,0,0,0)
         )
         font = ImageFont.truetype(
-            os.path.join(os.getcwd() , 'font/VF-Thin.ttf'),
+            os.path.join(os.getcwd() , 'font/DK.ttf'),
             40
         )
         draw = ImageDraw.Draw(img)
         for item,v in enumerate(code):
             draw.text(
-                (5 + randint(-3,3) + 23 * item,5 + randint(-3,3)),
+                (5 + randint(-3,3) + 23 * item,randint(-3,3)),
                 text=v,
                 fill=self.rndColor(),
                 font=font

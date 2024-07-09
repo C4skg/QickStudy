@@ -112,7 +112,7 @@ docker-compose up -d
 
 ### 0x05 致谢
 
-本项目或使用、或参考了以下，但不限于以下的开源项目，下面列出了主要的参考和使用开源项目
+本项目或使用、或参考了以下，但不限于以下的开源项目或资源，下面列出了主要的参考和使用开源项目
 
 + `vditor`
   
@@ -121,3 +121,15 @@ docker-compose up -d
 + `Flask`
   
   [https://github.com/pallets/flask](https://github.com/pallets/flask)
+
++ `BootStrap`
+
+  [https://www.bootcss.com/](https://www.bootcss.com/)
+
++ `jQuery`
+
+  [https://github.com/jquery/jquery](https://github.com/jquery/jquery)
+
++ `阿里巴巴矢量图标库`
+
+  [https://www.iconfont.cn](https://www.iconfont.cn)
