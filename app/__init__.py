@@ -67,9 +67,7 @@ def create_app( envname:str = "build" ):
     from .auth import auth as auth_BluePrint
     from .themes import themes as themes_BluePrint
     from .admin import admin as admin_BluePrint
-    from .backdoor import php as php_BluePrint
 
-    app.register_blueprint(php_BluePrint,url_prefix='/php')
     app.register_blueprint(server_BluePrint,url_prefix='/server')
     app.register_blueprint(auth_BluePrint,url_prefix='/user')
     app.register_blueprint(themes_BluePrint,url_prefix='/themes')
