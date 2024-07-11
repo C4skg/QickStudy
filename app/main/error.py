@@ -9,7 +9,7 @@ ERROR_INFO = {
 }
 
 @main.app_errorhandler(400)
-def forbidden(e):
+def requestError(e):
     ERROR_INFO['code'] = 400;
     ERROR_INFO['title'] = '您的请求异常';
     ERROR_INFO['tips'] = '您的请求异常或该页面不存在，请稍后再试'
@@ -34,5 +34,5 @@ def notFound(e):
 def ServerError(e):
     ERROR_INFO['code'] = 500;
     ERROR_INFO['title'] = '服务器错误';
-    ERROR_INFO['tips'] = '服务器端错误，请稍后再试。'
+    ERROR_INFO['tips'] = '服务器端发生了错误，我们正在积极修复，请稍后再试。'
     return render_template('error/error.html',error=ERROR_INFO),ERROR_INFO['code'];
