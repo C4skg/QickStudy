@@ -5,4 +5,4 @@ myconfig
 WorkSpace
 localtest
 __pycache__
-*/config.py
+app/config.py
