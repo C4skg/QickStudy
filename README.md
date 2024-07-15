@@ -1,5 +1,7 @@
 # QickStudy(快学平台)
 > OpenSourceID: HM807VSRFM
+>
+> 这是 QickStudy 最开始的版本，可以点击 [QickStudyV2](https://github.com/C4skg/QickStudyV2) 查看V2版本
 
 <div align="center"><img src='img/logo.png' width="50px"></div>
 <br>
