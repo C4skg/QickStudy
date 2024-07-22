@@ -152,15 +152,7 @@ $(function(){
         set: function(value){
             window.location.reload();
         }
-    });
-
-    //init insert
-    (function(){
-        
-    })()
-    //init insert
-    
-
+    });    
 
     //cover upload
     const input = $("#cover")[0];
@@ -261,6 +253,44 @@ var save = function(type){
         },
         error: (e)=>{
             swal('失败','网络错误','error');
+        },
+        complete: (e)=>{
+
+        }
+    })
+}
+
+// article context with real time save
+var realTimeSaveContext = function(){
+    var form = new FormData();
+    var context = "";
+    try{
+        context = window.vditor.getValue();
+    }catch{
+        context = "";
+    }
+    if(context.length == 0){
+        window.extends.tips.create("请输入文章内容！",window.extends.tips.type.danger)
+        return false;
+    }
+    form.append('context',context)
+    form.append('csrf_token',window.csrf_token)
+    form.append('id',window.article.id)
+    $.ajax({
+        url : window.upload.save,
+        processData: false,
+        contentType: false,
+        type: 'post',
+        data: form,
+        success: (e)=>{
+            if(e['status']=='success'){
+                window.extends.tips.create("保存成功",window.extends.tips.type.success)
+            }else{
+                window.extends.tips.create("保存失败",window.extends.tips.type.danger)
+            }
+        },
+        error: (e)=>{
+            window.extends.tips.create("保存失败",window.extends.tips.type.danger)
         },
         complete: (e)=>{
 
