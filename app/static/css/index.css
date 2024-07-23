@@ -6,8 +6,8 @@ h1,h2,h3,h4,h5,h6{
 /* markdown table */
 .center[data-type='md'] table:not(.hljs-ln){
     display: block;
-    max-width: 700px;
-    margin: 10px 0px;
+    max-width: 100%;
+    margin: 10px auto;
     overflow: auto;
 }
 .center[data-type='md'] table:not(.hljs-ln) td,
