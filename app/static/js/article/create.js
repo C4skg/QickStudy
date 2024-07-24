@@ -109,6 +109,9 @@ $(function(){
             
 
         },
+        input(value){
+            console.log("input event",{value});
+        },
         toolbar: ['emoji' , 'headings' , 'bold' , 'italic' , 'strike' , '|' , 'line' , 'quote' , 'list' , 'ordered-list' , 'check' ,'outdent' ,'indent' , 'code' , 'inline-code' , 'insert-after' , 'insert-before' ,'undo' , 'redo' , 'upload' , 'link' , 'table' , 'fullscreen' , 'outline', 'devtools','|','both','edit-mode','export' , 'help',
             {
                 hotkey: '⌘S', //Ctrl + s
