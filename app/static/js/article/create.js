@@ -110,7 +110,11 @@ $(function(){
 
         },
         input(value){
-            console.log("input event",{value});
+            try{
+                realTimeSaveContext(value);
+            }catch{
+                console.error("real time save error");
+            }
         },
         toolbar: ['emoji' , 'headings' , 'bold' , 'italic' , 'strike' , '|' , 'line' , 'quote' , 'list' , 'ordered-list' , 'check' ,'outdent' ,'indent' , 'code' , 'inline-code' , 'insert-after' , 'insert-before' ,'undo' , 'redo' , 'upload' , 'link' , 'table' , 'fullscreen' , 'outline', 'devtools','|','both','edit-mode','export' , 'help',
             {
@@ -264,14 +268,9 @@ var save = function(type){
 }
 
 // article context with real time save
-var realTimeSaveContext = function(){
+var realTimeSaveContext = function(value){
     var form = new FormData();
-    var context = "";
-    try{
-        context = window.vditor.getValue();
-    }catch{
-        context = "";
-    }
+    var context = value;
     if(context.length == 0){
         window.extends.tips.create("请输入文章内容！",window.extends.tips.type.danger)
         return false;
