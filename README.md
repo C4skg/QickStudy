@@ -1,9 +1,8 @@
 # QickStudy(快学平台)
-> OpenSourceID: HM807VSRFM
->
+
 > 这是 QickStudy 最开始的版本，可以点击 [QickStudyV2](https://github.com/C4skg/QickStudyV2) 查看V2版本
 
-<div align="center"><img src='img/logo.png' width="50px"></div>
+<div align="center"><img src='img/textlogo.png' width="40%"></div>
 <br>
 <div align="center">
 <a href='https://www.murphysec.com/console/report/1674402525447217152/1674402525975699456'><img src='https://www.murphysec.com/platform3/v31/badge/1674402525975699456.svg'></a>
