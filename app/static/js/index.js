@@ -46,7 +46,6 @@ $(function(){
                     for(let id=0;id<articleList.length;id++){
                         $('.context .NoneTxt').remove();
                         const article = articleList[id];
-                        console.log({article})
                         generateArticleCard(
                             article.title,
                             article.context,
@@ -83,6 +82,7 @@ $(function(){
                     
                 </div>
             `)
+        // 骨架屏率先加载
         card.html(`
                 <div class="p-2">
                     <div class="Skeleton Skeleton-mm Skeleton-w-75"></div>
@@ -94,8 +94,10 @@ $(function(){
                         <div class="Skeleton Skeleton-w-25 Skeleton-mm"></div>
                     </div>
                 </div>
-            `)
+        `)
         container.append(card);
+        //添加防抖函数来防止多次请求 `lute.min.js`
+
         Vditor.md2html(
             context,
             {
