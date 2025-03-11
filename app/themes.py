@@ -13,7 +13,8 @@ themes = Blueprint('themes',__name__)
 def static(path):
     file = safe_join(current_app.root_path,'static',path)
     if os.path.isfile(file):
-        return send_file(file)
+        return send_file(file);
+
     abort(404);
 
 @themes.route('/upload/<path:path>')
