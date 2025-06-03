@@ -6,3 +6,4 @@ WorkSpace
 localtest
 __pycache__
 app/config.py
+.DS_Store

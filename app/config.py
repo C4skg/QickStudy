@@ -27,7 +27,7 @@ class Config:
     SQLALCHEMY_ECHO = False
 
     #REDIS
-    REDIS_URI = "redis_db"
+    REDIS_URI = "127.0.0.1"
     REDIS_PORT = 6379
 
     #Elasticsearch
