@@ -694,7 +694,7 @@ def initDB():
     admin = User.query.filter_by(username='admin').first()
     if not admin:
         cache = getRandomStr(6)
-        user = User(username='admin',pwd=cache,email='C4skg@qq.com',confirmed=True,permission=Permission.ADMIN)
+        user = User(username='admin',pwd=cache,email='admin@local.com',confirmed=True,permission=Permission.ADMIN)
         db.session.add(user)
         db.session.commit()
         print(

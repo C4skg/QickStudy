@@ -5,7 +5,7 @@ class Config:
     
     MAIL_SERVER='smtp.qq.com'
     MAIL_PORT='465'
-    MAIL_USERNAME='C4skg@qq.com'
+    MAIL_USERNAME=''
     MAIL_PASSWORD='xxxxxxxxxx'  #!可在邮箱设置中获取
     MAIL_USE_SSL=True
     MAIL_USE_TLS=False
@@ -21,7 +21,7 @@ class Config:
     SQL_PASSWORD = "qickstudy"
     SQL_PORT = "3306"
     SQL_SCHEMA = "QickStudy"
-    SQL_HOST = "mysql_db"
+    SQL_HOST = "127.0.0.1"
     SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{SQL_USER}:{SQL_PASSWORD}@{SQL_HOST}:{SQL_PORT}/{SQL_SCHEMA}?charset=utf8mb4'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
